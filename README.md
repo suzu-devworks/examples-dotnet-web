@@ -15,6 +15,7 @@ dotnet new sln -o .
 dotnet new webapi -o src/Examples.WebApi
 dotnet sln add src/Examples.WebApi/Examples.WebApi.csproj
 cd src/Examples.WebApi
+dotnet add package NLog.Extensions.Logging
 cd ../../
 
 # Examples.Domain

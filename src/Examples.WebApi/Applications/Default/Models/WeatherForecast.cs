@@ -1,6 +1,6 @@
 using System;
 
-namespace Examples.WebApi
+namespace Examples.WebApi.Applications.Default.Models
 {
     public class WeatherForecast
     {
