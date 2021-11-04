@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Examples.WebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,11 +28,17 @@ namespace Examples.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examples.WebApi", Version = "v1" });
             });
+
+            // ----- URLs Lower Case
+            services.AddRouting(options => options.LowercaseUrls = true);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
