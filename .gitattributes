@@ -1,0 +1,32 @@
+# .gitattributes
+
+# make sure everyone has the same behavior for all files
+* text=auto
+
+# set explicit behaviors for the file types we care about
+
+# for Visual Studio
+*.cs      diff=csharp
+*.csx     diff=csharp
+*.cshtml  diff=html
+*.html    diff=html
+*.css     diff=css
+*.csproj  merge=union
+*.sln     merge=union eol=crlf
+*.props   eol=crlf
+
+*.dll     binary diff=exif
+*.exe     binary diff=exif
+*.nupkg   binary
+*.pdb     binary diff=exif
+*.snk     binary
+
+# for graphics
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.tiff    binary
+*.ico     binary
+*.svg     binary
+*.eps     binary
