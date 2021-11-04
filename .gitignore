@@ -227,6 +227,8 @@ ClientBin/
 *.dbproj.schemaview
 *.jfm
 *.pfx
+*.key
+*.crt
 *.publishsettings
 orleans.codegen.cs
 
@@ -348,3 +350,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# .vscode/environment
+.vscode/
+
+# macos
+.DS_Store

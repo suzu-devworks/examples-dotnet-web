@@ -1,0 +1,3 @@
+# ADD/COPY ignore
+**/*.log
+**/*.pfx
