@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Examples.WebApi.Infrastructure.JsonSupports;
 
 namespace Examples.WebApi.Extensions
 {
@@ -15,8 +16,11 @@ namespace Examples.WebApi.Extensions
             // Read-only properties are ignored during serialization. (default false)
             options.IgnoreReadOnlyProperties = true;
 
-            // Configure a converts enumeration values to and from strings.
+            // Configure a converters enumeration values to and from strings.
             options.Converters.Add(new JsonStringEnumConverter());
+
+            // Add Custom converters. 
+            options.Converters.Add(new TimeSpanJsonConverter());
 
             return options;
         }
