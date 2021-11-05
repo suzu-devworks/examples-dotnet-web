@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Examples.WebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Examples.WebApi.Applications.LazyCommand.Extensions;
+using Examples.WebApi.Extensions;
 
 namespace Examples.WebApi
 {
@@ -36,8 +37,11 @@ namespace Examples.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examples.WebApi", Version = "v1" });
             });
 
-            // ----- URLs Lower Case
+            // ----- URLs Lower Case.
             services.AddRouting(options => options.LowercaseUrls = true);
+
+            // ----- Add Applications.
+            services.AddLazyCommand();
 
         }
 
