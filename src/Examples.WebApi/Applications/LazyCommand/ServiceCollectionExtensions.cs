@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Examples.WebApi.Applications.LazyCommand.Commands;
 using Examples.WebApi.Applications.LazyCommand.Repositories;
 
-namespace Examples.WebApi.Applications.LazyCommand.Extensions
+namespace Examples.WebApi.Applications.LazyCommand
 {
     public static class ServiceCollectionExtensions
     {
