@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Examples.WebApi.Applications.LazyCommand;
+using Examples.WebApi.Applications.Localization;
 using Examples.WebApi.Extensions;
 
 namespace Examples.WebApi
@@ -35,6 +36,7 @@ namespace Examples.WebApi
 
             // ----- Add Applications.
             services.AddLazyCommand();
+            services.AddCustomeLocalization();
 
         }
 
@@ -53,6 +55,9 @@ namespace Examples.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // ----- Use Localization.
+            app.UseCustomRequestLocalization();
 
             app.UseEndpoints(endpoints =>
             {
