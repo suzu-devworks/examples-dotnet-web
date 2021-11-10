@@ -18,7 +18,8 @@
 		"editorconfig.editorconfig",
 		"gaoshan0621.csharp-format-usings",
 		"k--kato.docomment",
-		"kreativ-software.csharpextensions"
+		"kreativ-software.csharpextensions",
+		"dominicvonk.vscode-resx-editor"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
