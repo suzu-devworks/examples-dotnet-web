@@ -352,7 +352,14 @@ MigrationBackup/
 .ionide/
 
 # .vscode/environment
-.vscode/
+.vscode/*
+!.vscode/settings.json
+##!.vscode/tasks.json
+##!.vscode/launch.json
+##!.vscode/extensions.json
 
 # macos
 .DS_Store
+
+# progject
+src/Examples.Web.Authentication/Examples.Web.Authentication.db

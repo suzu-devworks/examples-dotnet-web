@@ -20,7 +20,7 @@ RUN set -x \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     # Add Additional packages
-    && apt-get install -y openssh-client \
+    && apt-get install -y openssh-client procps \
     #
     # Clean up
     && apt-get autoremove -y \
