@@ -15,22 +15,23 @@ namespace Examples.WebApi.Controllers
     [Route("api/v1/[controller]")]
     public class CQRSController : ControllerBase
     {
-        private readonly IMediator mediator;
-        private readonly ILogger<CQRSController> logger;
+        private readonly IMediator _mediator;
+        private readonly ILogger<CQRSController> _logger;
 
         public CQRSController(IMediator mediator, ILogger<CQRSController> logger)
         {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet("ping")]
         public async Task<ActionResult<Pong>> DoPing(string message)
         {
             // do handler 1, 2, 3.
-            await mediator.Publish(new PingedEvent());
+            await _mediator.Publish(new PingedEvent());
+            _logger.LogTrace("Published: {message}", message);
 
-            var response = await mediator.Send(new PingCommand() { Message = message });
+            var response = await _mediator.Send(new PingCommand() { Message = message });
 
             return (response is not null) ? response : BadRequest();
         }
@@ -39,10 +40,11 @@ namespace Examples.WebApi.Controllers
         public async Task<ActionResult<Pong>> DoPingExtended(string message = "hoge")
         {
             // do handler 3 only.
-            await mediator.Publish(new PingedExtendEvent());
+            await _mediator.Publish(new PingedExtendEvent());
+            _logger.LogTrace("Published: {message}", message);
 
             // not found handler.
-            var response = await mediator.Send(new PingExtendCommand() { Message = message });
+            var response = await _mediator.Send(new PingExtendCommand() { Message = message });
 
             return (response is not null) ? response : BadRequest();
         }
@@ -54,7 +56,7 @@ namespace Examples.WebApi.Controllers
         [HttpGet("thrown")]
         public async Task<IActionResult> DoException()
         {
-            var response = await mediator.Send(new DoExceptionCommand());
+            _ = await _mediator.Send(new DoExceptionCommand());
             throw new ApplicationException("Exception Handled.");
         }
 

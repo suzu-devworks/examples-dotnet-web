@@ -8,14 +8,14 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
     public class RequestPostProcessorBehaviorProcessor<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
         where TRequest : notnull
     {
-        private readonly ILogger<RequestPostProcessorBehaviorProcessor<TRequest, TResponse>> logger;
+        private readonly ILogger<RequestPostProcessorBehaviorProcessor<TRequest, TResponse>> _logger;
 
         public RequestPostProcessorBehaviorProcessor(ILogger<RequestPostProcessorBehaviorProcessor<TRequest, TResponse>> logger)
-            => (this.logger) = (logger);
+            => (_logger) = (logger);
 
         public Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"processed {typeof(TRequest).Name} - {typeof(TResponse).Name}");
+            _logger.LogInformation("Processed {request} to {response}.", typeof(TRequest).Name, typeof(TResponse).Name);
             return Task.CompletedTask;
         }
 

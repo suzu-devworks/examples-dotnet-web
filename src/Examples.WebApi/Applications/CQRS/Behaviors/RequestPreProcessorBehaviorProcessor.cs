@@ -15,7 +15,7 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
 
         public Task Process(TRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Pre-Process {typeof(TRequest).Name}");
+            _logger.LogInformation("Pre processed {request}.", typeof(TRequest).Name);
             return Task.CompletedTask;
         }
         

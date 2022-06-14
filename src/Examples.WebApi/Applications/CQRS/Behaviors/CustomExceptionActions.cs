@@ -18,7 +18,9 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
 
         public Task Execute(DoExceptionCommand request, ExceptionType exception, CancellationToken cancellationToken)
         {
-            _logger.LogError($"Action! {this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}");
+            var message = $"{this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}";
+            _logger.LogError("Action! {message}", message);
+
             return Task.CompletedTask;
         }
 
@@ -34,7 +36,8 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
 
         public Task Execute(DoExceptionCommand request, Exception exception, CancellationToken cancellationToken)
         {
-            _logger.LogError($"Action! {this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}");
+            var message = $"{this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}";
+            _logger.LogError("Action! {message}", message);
             return Task.CompletedTask;
         }
 
@@ -50,7 +53,8 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
 
         protected override void Execute(DoExceptionCommand request, ExceptionType exception)
         {
-            _logger.LogError($"Action! {this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}");
+            var message = $"{this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}";
+            _logger.LogError("Action! {message}", message);
         }
 
     }
@@ -65,7 +69,8 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
 
         protected override void Execute(DoExceptionCommand request, Exception exception)
         {
-            _logger.LogError($"Action! {this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}");
+            var message = $"{this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}";
+            _logger.LogError("Action! {message}", message);
         }
 
     }
@@ -80,7 +85,8 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
 
         protected override Task Execute(DoExceptionCommand request, Exception exception, CancellationToken cancellationToken)
         {
-            _logger.LogError($"Action! {this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}");
+            var message = $"{this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}";
+            _logger.LogError("Action! {message}", message);
             return Task.CompletedTask;
         }
 

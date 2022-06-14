@@ -16,7 +16,8 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
 
         public Task Handle(DoExceptionCommand request, Exception exception, RequestExceptionHandlerState<bool> state, CancellationToken cancellationToken)
         {
-            _logger.LogError($"Handle! {this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}");
+            var message = $"{this.GetType().Name} - {typeof(DoExceptionCommand).Name} - {exception.Message}";
+            _logger.LogError("Handle! {message}", message);
             //state.SetHandled(false);
             return Task.CompletedTask;
         }

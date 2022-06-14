@@ -49,9 +49,9 @@ namespace Examples.WebApi.Controllers
             var timestamp = DateTime.Now.ToLongDateString();
 
             var message = $"{title} - {culture} - {timestamp}";
-            logger.LogInformation($"CurrentCulture   = {CultureInfo.CurrentCulture}");
-            logger.LogInformation($"CurrentUICulture = {CultureInfo.CurrentUICulture}");
-            logger.LogInformation(message);
+            logger.LogInformation("CurrentCulture   = {culture}", CultureInfo.CurrentCulture);
+            logger.LogInformation("CurrentUICulture = {culture}", CultureInfo.CurrentUICulture);
+            logger.LogInformation("{message}", message);
 
             return message;
         }
@@ -62,8 +62,8 @@ namespace Examples.WebApi.Controllers
             [FromQuery(Name = "ui-culture")] string? _1,
             [FromBody] RegisterData param)
         {
-            logger.LogInformation($"CurrentCulture   = {CultureInfo.CurrentCulture}");
-            logger.LogInformation($"CurrentUICulture = {CultureInfo.CurrentUICulture}");
+            logger.LogInformation("CurrentCulture   = {culture}", CultureInfo.CurrentCulture);
+            logger.LogInformation("CurrentUICulture = {culture}", CultureInfo.CurrentUICulture);
             logger.LogInformation(nameof(PostForAnnotations));
 
             return Ok();
