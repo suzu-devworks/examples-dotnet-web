@@ -7,22 +7,22 @@ namespace Examples.WebApi.Infrastructure.Filters
 {
     public class MyAsyncResultFilter : IAsyncResultFilter
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public MyAsyncResultFilter(ILogger<MyAsyncResultFilter> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             if (context.Result is not EmptyResult)
             {
-                logger.LogTrace("executing.");
+                _logger.LogTrace("executing.");
 
                 var executed = await next();
 
-                logger.LogTrace("executed, Canceled={canceled}.", executed.Canceled);
+                _logger.LogTrace("executed, Canceled={canceled}.", executed.Canceled);
             }
             else
             {

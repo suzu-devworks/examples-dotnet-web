@@ -19,13 +19,13 @@ namespace Examples.WebApi.Applications.Serialization.Models
         {
             Value = value;
             Display = display;
-            this.matchExpression = (pattern is null) ? null : new(pattern, RegexOptions.Compiled);
+            _matchExpression = (pattern is null) ? null : new(pattern, RegexOptions.Compiled);
         }
 
         public int Value { get; }
         public string? Display { get; }
 
-        private readonly Regex? matchExpression;
+        private readonly Regex? _matchExpression;
 
         public override string? ToString() => this.Display;
 
@@ -42,13 +42,8 @@ namespace Examples.WebApi.Applications.Serialization.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            var entry = All.FirstOrDefault(x => x.matchExpression?.IsMatch(value) ?? false);
-            if (entry is not null)
-            {
-                return entry;
-            }
-
-            return Unknown;
+            var entry = All.FirstOrDefault(x => x._matchExpression?.IsMatch(value) ?? false);
+            return entry ?? Unknown;
         }
 
         public class LocalStatusJsonConverter : JsonConverter<LocalStatus>

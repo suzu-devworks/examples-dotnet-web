@@ -5,21 +5,21 @@ namespace Examples.WebApi.Infrastructure.Filters
 {
     public class MyActionFilter : IActionFilter
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public MyActionFilter(ILogger<MyActionFilter> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            logger.LogTrace("called.");
+            _logger.LogTrace("called.");
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            logger.LogTrace("called, Canceled={canceled}", context.Canceled);
+            _logger.LogTrace("called, Canceled={canceled}", context.Canceled);
         }
 
 

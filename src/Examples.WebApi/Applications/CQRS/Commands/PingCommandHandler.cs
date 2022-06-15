@@ -1,6 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
+
 using Examples.WebApi.Applications.CQRS.Models;
+
 using MediatR;
 
 namespace Examples.WebApi.Applications.CQRS.Commands
@@ -13,5 +15,5 @@ namespace Examples.WebApi.Applications.CQRS.Commands
             return Task.FromResult(result);
         }
     }
-    
+
 }

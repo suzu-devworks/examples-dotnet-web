@@ -6,20 +6,20 @@ namespace Examples.WebApi.Infrastructure.Filters
 {
     public class MyAsyncResourceFilter : IAsyncResourceFilter
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public MyAsyncResourceFilter(ILogger<MyAsyncResourceFilter> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
         {
-            logger.LogTrace("executing.");
+            _logger.LogTrace("executing.");
 
             var executed = await next();
-            
-            logger.LogTrace("executed, Canceled={canceled}.", executed.Canceled);
+
+            _logger.LogTrace("executed, Canceled={canceled}.", executed.Canceled);
         }
     }
 }

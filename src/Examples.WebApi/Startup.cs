@@ -31,10 +31,7 @@ namespace Examples.WebApi
             services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examples.WebApi", Version = "v1" });
-            });
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examples.WebApi", Version = "v1" }));
 
             // ----- URLs Lower Case.
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -65,10 +62,13 @@ namespace Examples.WebApi
             // ----- Use Localization.
             app.UseCustomRequestLocalization();
 
+#pragma warning disable IDE0053 // Use expression body for lambda expressions.
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+#pragma warning restore IDE0053 // Use expression body for lambda expressions.
+
         }
     }
 }

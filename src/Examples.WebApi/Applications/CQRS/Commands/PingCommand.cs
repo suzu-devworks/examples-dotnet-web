@@ -1,4 +1,5 @@
 using Examples.WebApi.Applications.CQRS.Models;
+
 using MediatR;
 
 namespace Examples.WebApi.Applications.CQRS.Commands

@@ -50,5 +50,5 @@ namespace Examples.WebApi.Applications.CQRS.Events
         }
 
     }
-    
+
 }

@@ -16,7 +16,7 @@ namespace Examples.WebApi.Infrastructure.Filters
             this.Order = order;
         }
 
-        public int Order {get;}
+        public int Order { get; }
 
         public void OnResourceExecuting(ResourceExecutingContext context)
         {

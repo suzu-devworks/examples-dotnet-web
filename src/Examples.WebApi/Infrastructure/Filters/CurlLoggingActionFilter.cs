@@ -6,16 +6,16 @@ namespace Examples.WebApi.Infrastructure.Filters
 {
     public class CurlLoggingActionFilter : IActionFilter
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public CurlLoggingActionFilter(ILogger<CurlLoggingActionFilter> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            logger.LogInformation("{command}", context.HttpContext.Request.ToCurlCommand());
+            _logger.LogInformation("{command}", context.HttpContext.Request.ToCurlCommand());
         }
 
         public void OnActionExecuted(ActionExecutedContext context)

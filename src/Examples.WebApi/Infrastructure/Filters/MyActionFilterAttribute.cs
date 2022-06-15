@@ -5,17 +5,17 @@ namespace Examples.WebApi.Infrastructure.Filters
 {
     public class MyActionFilterAttribute : ActionFilterAttribute
     {
-        private readonly PositionOptions settings;
+        private readonly PositionOptions _settings;
 
         public MyActionFilterAttribute(IOptions<PositionOptions> options)
         {
-            settings = options.Value;
+            _settings = options.Value;
             this.Order = 1;
         }
 
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            context.HttpContext.Response.Headers.Add(settings.Title ?? "", new string[] { settings.Name ?? "" });
+            context.HttpContext.Response.Headers.Add(_settings.Title ?? "", new string[] { _settings.Name ?? "" });
             base.OnResultExecuting(context);
         }
     }

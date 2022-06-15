@@ -5,13 +5,13 @@ namespace Examples.WebApi.Infrastructure.Converters
 {
     public static class StringConverter
     {
-        private static readonly Regex indexExpression = new(@"^(\^?)(\d{1,9})$", RegexOptions.Compiled);
+        private static readonly Regex IndexExpression = new(@"^(\^?)(\d{1,9})$", RegexOptions.Compiled);
 
         public static Index ToIndex(string? value)
         {
             if (value is null) throw new ArgumentNullException(nameof(value));
 
-            var match = indexExpression.Match(value);
+            var match = IndexExpression.Match(value);
             if (!match.Success)
             {
                 throw new ArgumentException($"Illigal value is [{value}].");

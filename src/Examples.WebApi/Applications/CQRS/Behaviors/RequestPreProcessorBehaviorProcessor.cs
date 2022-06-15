@@ -18,6 +18,6 @@ namespace Examples.WebApi.Applications.CQRS.Behaviors
             _logger.LogInformation("Pre processed {request}.", typeof(TRequest).Name);
             return Task.CompletedTask;
         }
-        
+
     }
 }

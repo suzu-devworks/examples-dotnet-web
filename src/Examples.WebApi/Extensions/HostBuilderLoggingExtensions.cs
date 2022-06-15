@@ -5,10 +5,10 @@ using NLog.Extensions.Logging;
 
 namespace Examples.WebApi.Extensions
 {
-    static class HostBuilderLoggingExtensions
+    internal static class HostBuilderLoggingExtensions
     {
         public static IHostBuilder ConfigureCustomLogging(this IHostBuilder builder)
-            => builder.ConfigureCustomLogging(LoggingBuilderExtensions => { });
+            => builder.ConfigureCustomLogging(loggingBuilderExtensions => { });
 
         public static IHostBuilder ConfigureCustomLogging(this IHostBuilder builder, Action<ILoggingBuilder> configureLogging)
         {

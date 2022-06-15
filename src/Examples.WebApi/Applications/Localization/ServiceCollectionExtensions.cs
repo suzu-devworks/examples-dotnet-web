@@ -11,20 +11,18 @@ namespace Examples.WebApi.Applications.Localization
             // Add Resource file search path.
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
+            _ = services.AddMvc()
                 // use Razor localization.
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 // use Annotaion localization.
                 .AddDataAnnotationsLocalization(options =>
-                {
                     // use custom IStringLocalizer (aggregation).
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         StringLocalizerAggregator.Create(localizers =>
                         {
                             localizers.Add(factory.Create(typeof(SharedResource)));
                             localizers.Add(factory.Create(type));
-                        });
-                });
+                        }));
 
             return services;
         }

@@ -4,18 +4,18 @@ namespace Examples.WebApi.Infrastructure.Filters
 {
     public class AddHeaderResultFilterAttribute : ResultFilterAttribute
     {
-        private readonly string name;
-        private readonly string value;
+        private readonly string _name;
+        private readonly string _value;
 
         public AddHeaderResultFilterAttribute(string name, string value)
         {
-            this.name = name;
-            this.value = value;
+            _name = name;
+            _value = value;
         }
 
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            context.HttpContext.Response.Headers.Add(name, new string[] { value });
+            context.HttpContext.Response.Headers.Add(_name, new string[] { _value });
             base.OnResultExecuting(context);
         }
 

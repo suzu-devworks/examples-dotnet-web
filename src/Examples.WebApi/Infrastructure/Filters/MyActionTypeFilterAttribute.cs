@@ -12,21 +12,21 @@ namespace Examples.WebApi.Infrastructure.Filters
 
         private class ActionFilterImpl : IActionFilter
         {
-            private readonly ILogger logger;
+            private readonly ILogger _logger;
 
             public ActionFilterImpl(ILoggerFactory loggerFactory)
             {
-                logger = loggerFactory.CreateLogger<MyActionTypeFilterAttribute>();
+                _logger = loggerFactory.CreateLogger<MyActionTypeFilterAttribute>();
             }
 
             public void OnActionExecuting(ActionExecutingContext context)
             {
-                logger.LogInformation($"called.");
+                _logger.LogInformation($"called.");
             }
 
             public void OnActionExecuted(ActionExecutedContext context)
             {
-                logger.LogInformation($"called.");
+                _logger.LogInformation($"called.");
             }
         }
 

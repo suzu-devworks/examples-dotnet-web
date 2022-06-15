@@ -15,7 +15,7 @@ namespace Examples.WebApi.Controllers
     /// <see href="https://docs.microsoft.com/ja-jp/aspnet/core/fundamentals/localization" >Globalization and localization in ASP.NET Core</see>
     /// <example>
     /// <code>
-    ///     ?culture=fr 
+    ///     ?culture=fr
     /// </code>
     /// </example>
     /// </remarks>
@@ -23,20 +23,20 @@ namespace Examples.WebApi.Controllers
     [Route("api/v1/[controller]")]
     public class LocalizationController : ControllerBase
     {
-        private readonly ILogger logger;
-        private readonly IStringLocalizer<LocalizationController> localizer;
-        private readonly IStringLocalizer<SharedResource> sharedLocalizer;
-        private readonly IStringLocalizer factoryMadeLocalizer;
+        private readonly ILogger _logger;
+        private readonly IStringLocalizer<LocalizationController> _localizer;
+        private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
+        private readonly IStringLocalizer _factoryMadeLocalizer;
 
         public LocalizationController(ILogger<LocalizationController> logger,
             IStringLocalizer<LocalizationController> localizer,
             IStringLocalizer<SharedResource> sharedLocalizer,
             IStringLocalizerFactory factory)
         {
-            this.logger = logger;
-            this.localizer = localizer;
-            this.sharedLocalizer = sharedLocalizer;
-            this.factoryMadeLocalizer = factory.Create(typeof(SharedResource));
+            _logger = logger;
+            _localizer = localizer;
+            _sharedLocalizer = sharedLocalizer;
+            _factoryMadeLocalizer = factory.Create(typeof(SharedResource));
         }
 
         [HttpGet("about")]
@@ -44,14 +44,14 @@ namespace Examples.WebApi.Controllers
             [FromQuery(Name = "culture")] string? _,
             [FromQuery(Name = "ui-culture")] string? _1)
         {
-            var title = localizer["About Title"];
-            var culture = sharedLocalizer["Culture"];
+            var title = _localizer["About Title"];
+            var culture = _sharedLocalizer["Culture"];
             var timestamp = DateTime.Now.ToLongDateString();
 
             var message = $"{title} - {culture} - {timestamp}";
-            logger.LogInformation("CurrentCulture   = {culture}", CultureInfo.CurrentCulture);
-            logger.LogInformation("CurrentUICulture = {culture}", CultureInfo.CurrentUICulture);
-            logger.LogInformation("{message}", message);
+            _logger.LogInformation("CurrentCulture   = {culture}", CultureInfo.CurrentCulture);
+            _logger.LogInformation("CurrentUICulture = {culture}", CultureInfo.CurrentUICulture);
+            _logger.LogInformation("{message}", message);
 
             return message;
         }
@@ -62,9 +62,9 @@ namespace Examples.WebApi.Controllers
             [FromQuery(Name = "ui-culture")] string? _1,
             [FromBody] RegisterData param)
         {
-            logger.LogInformation("CurrentCulture   = {culture}", CultureInfo.CurrentCulture);
-            logger.LogInformation("CurrentUICulture = {culture}", CultureInfo.CurrentUICulture);
-            logger.LogInformation(nameof(PostForAnnotations));
+            _logger.LogInformation("CurrentCulture   = {culture}", CultureInfo.CurrentCulture);
+            _logger.LogInformation("CurrentUICulture = {culture}", CultureInfo.CurrentUICulture);
+            _logger.LogInformation(nameof(PostForAnnotations));
 
             return Ok();
         }

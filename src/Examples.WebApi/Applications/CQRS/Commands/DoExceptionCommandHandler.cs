@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using MediatR;
 
 namespace Examples.WebApi.Applications.CQRS.Commands
@@ -12,5 +13,5 @@ namespace Examples.WebApi.Applications.CQRS.Commands
             throw new ApplicationException("<<Throw!!>>");
         }
     }
-    
+
 }

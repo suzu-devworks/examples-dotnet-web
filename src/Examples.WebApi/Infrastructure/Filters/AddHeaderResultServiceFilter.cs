@@ -5,23 +5,23 @@ namespace Examples.WebApi.Infrastructure.Filters
 {
     public class AddHeaderResultServiceFilter : IResultFilter
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
         public AddHeaderResultServiceFilter(ILogger<AddHeaderResultServiceFilter> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public void OnResultExecuting(ResultExecutingContext context)
         {
             var headerName = "OnResultExecuting";
             context.HttpContext.Response.Headers.Add(headerName, new string[] { "ResultExecutingSuccessfully" });
-            logger.LogInformation("Header added: {HeaderName}", headerName);
+            _logger.LogInformation("Header added: {HeaderName}", headerName);
         }
 
         public void OnResultExecuted(ResultExecutedContext context)
         {
             // Can't add to headers here because response has started.
-            logger.LogInformation("AddHeaderResultServiceFilter.OnResultExecuted");
+            _logger.LogInformation("AddHeaderResultServiceFilter.OnResultExecuted");
         }
     }
 }

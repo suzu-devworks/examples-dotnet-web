@@ -24,6 +24,8 @@ namespace Examples.WebApi
             }
         }
 
+#pragma warning disable IDE0053 // Use expression body for lambda expressions.
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -32,4 +34,7 @@ namespace Examples.WebApi
                 })
                 .ConfigureCustomLogging();
     }
+
+#pragma warning restore IDE0053 // Use expression body for lambda expressions.
+
 }

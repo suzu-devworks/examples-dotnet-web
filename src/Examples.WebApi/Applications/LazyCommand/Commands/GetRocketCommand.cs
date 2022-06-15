@@ -14,11 +14,9 @@ namespace Examples.WebApi.Applications.LazyCommand.Commands
         public async Task<IActionResult> ExecuteAsync(int rocketId)
         {
             var rocket = await _rocketRepository.GetRocket(rocketId);
-            if (rocket == null)
-            {
-                return new NotFoundResult();
-            }
-            return new OkObjectResult(rocket);
+            return rocket is not null
+                ? new OkObjectResult(rocket)
+                : new NotFoundResult();
         }
 
     }
