@@ -362,4 +362,6 @@ MigrationBackup/
 .DS_Store
 
 # progject
-src/Examples.Web.Authentication/Examples.Web.Authentication.db
+Examples.*.db
+Examples.*.db-wal
+Examples.*.db-shm

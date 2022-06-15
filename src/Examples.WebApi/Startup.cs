@@ -1,9 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Examples.WebApi.Applications.CQRS.Extensions;
 using Examples.WebApi.Applications.LazyCommand;
 using Examples.WebApi.Applications.Localization;
 using Examples.WebApi.Extensions;
@@ -37,6 +42,7 @@ namespace Examples.WebApi
             // ----- Add Applications.
             services.AddLazyCommand();
             services.AddCustomeLocalization();
+            services.AddCQRS();
 
         }
 
