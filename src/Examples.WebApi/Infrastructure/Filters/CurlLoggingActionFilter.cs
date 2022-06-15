@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Examples.WebApi.Extensions;
+using Examples.WebApi.Infrastructure.Extensions;
 
 namespace Examples.WebApi.Infrastructure.Filters
 {

@@ -20,7 +20,7 @@ RUN set -x \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     # Add Additional packages
-    && apt-get install -y openssh-client procps nano \
+    && apt-get install -y openssh-client procps iproute2 nano \
     #
     # Clean up
     && apt-get autoremove -y \

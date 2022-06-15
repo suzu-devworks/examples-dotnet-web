@@ -1,6 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
-using Examples.WebApi.Infrastructure.JsonSupports;
+using Examples.WebApi.Infrastructure.Converters.Json;
 
 namespace Examples.WebApi.Applications.Serialization.Models
 {

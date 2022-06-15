@@ -1,5 +1,6 @@
 {
     "omnisharp.useGlobalMono": "never",
     "omnisharp.enableRoslynAnalyzers": true,
-    "omnisharp.enableEditorConfigSupport": true
+    "omnisharp.enableEditorConfigSupport": true,
+    "csharpFormatUsings.sortOrder": "System Microsoft"
 }

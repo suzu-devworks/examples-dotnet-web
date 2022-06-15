@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Examples.WebApi.Extensions;
+using Examples.WebApi.Infrastructure.Startup;
 
 namespace Examples.WebApi
 {
@@ -24,17 +18,13 @@ namespace Examples.WebApi
             }
         }
 
-#pragma warning disable IDE0053 // Use expression body for lambda expressions.
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureCustomLogging();
-    }
+                .ConfigureWebHostDefaults(webBuilder
+                    => webBuilder.UseStartup<Startup>())
+                .ConfigureLogging(logging
+                    => logging.UseCustomLogging());
 
-#pragma warning restore IDE0053 // Use expression body for lambda expressions.
+    }
 
 }

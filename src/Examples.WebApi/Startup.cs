@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Examples.WebApi.Applications.CQRS.Extensions;
-using Examples.WebApi.Applications.LazyCommand;
-using Examples.WebApi.Applications.Localization;
-using Examples.WebApi.Extensions;
+using Examples.WebApi.Infrastructure.Startup;
+using Examples.WebApi.Infrastructure.Extensions;
+
+#pragma warning disable CA1822 // Member 'xxx' does not access instance data and can be marked as static
+#pragma warning disable IDE0053 // Use expression body for lambda expressions.
 
 namespace Examples.WebApi
 {
@@ -27,20 +23,18 @@ namespace Examples.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
 
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examples.WebApi", Version = "v1" }));
+            // ----- Adds Infrastructure.Startup.
+            services.AddCustomSwaggerGen();
+            services.AddCustomFilters(Configuration);
+            services.AddCustomLocalization();
 
-            // ----- URLs Lower Case.
+            // ----- Sets URLs Lower Case.
             services.AddRouting(options => options.LowercaseUrls = true);
 
-            // ----- Add Applications.
-            services.AddLazyCommand();
-            services.AddCustomeLocalization();
-            services.AddCQRS();
-
+            return;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,21 +47,18 @@ namespace Examples.WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examples.WebApi v1"));
             }
 
-            app.UseHttpsRedirection();
+            // ----- Adds Infrastructure.Startup.
+            app.UseCustomRequestLocalization();
 
+            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthorization();
 
-            // ----- Use Localization.
-            app.UseCustomRequestLocalization();
-
-#pragma warning disable IDE0053 // Use expression body for lambda expressions.
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-#pragma warning restore IDE0053 // Use expression body for lambda expressions.
 
         }
     }
