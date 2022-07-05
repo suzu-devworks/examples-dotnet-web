@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Examples.WebApi.Infrastructure.Startup;
 using Examples.WebApi.Infrastructure.Extensions;
+using Examples.WebApi.Infrastructure.Startup;
 
 #pragma warning disable CA1822 // Member 'xxx' does not access instance data and can be marked as static
 #pragma warning disable IDE0053 // Use expression body for lambda expressions.
@@ -54,6 +54,17 @@ namespace Examples.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // ----- Adds security headers.
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.TryAdd("Content-Security-Policy", "default-src 'self';frame-ancestors 'none'");
+                context.Response.Headers.TryAdd("X-Frame-Options", "DENY");
+                context.Response.Headers.TryAdd("X-Xss-Protection", "1; mode=block");
+                context.Response.Headers.TryAdd("X-Content-Type-Options", "nosniff");
+
+                await next();
+            });
 
             app.UseEndpoints(endpoints =>
             {
