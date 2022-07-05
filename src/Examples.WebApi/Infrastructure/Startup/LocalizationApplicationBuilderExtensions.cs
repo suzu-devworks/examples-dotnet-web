@@ -6,7 +6,7 @@ namespace Examples.WebApi.Infrastructure.Startup;
 /// <summary>
 /// Extension methods for custom localization settings to a <see cref="RequestLocalizationMiddleware" />.
 /// </summary>
-public static class ApplicationBuilderExtensions
+public static class LocalizationApplicationBuilderExtensions
 {
     /// <summary>
     /// Sets the supported request time culture to a <see cref="RequestLocalizationMiddleware" />.

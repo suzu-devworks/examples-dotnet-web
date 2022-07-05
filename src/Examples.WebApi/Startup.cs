@@ -27,6 +27,8 @@ namespace Examples.WebApi
                 .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
 
             // ----- Adds Infrastructure.Startup.
+            services.AddCustomCorsPolicy("http://localhost:3000");
+            services.AddCustokmAntiforgery("X-XSRF-TOKEN");
             services.AddCustomSwaggerGen();
             services.AddCustomFilters(Configuration);
             services.AddCustomLocalization();
@@ -44,7 +46,9 @@ namespace Examples.WebApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examples.WebApi v1"));
+
+                app.UseCustomSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examples.WebApi v1"));
+
             }
 
             // ----- Adds Infrastructure.Startup.
@@ -55,20 +59,18 @@ namespace Examples.WebApi
 
             app.UseAuthorization();
 
-            // ----- Adds security headers.
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers.TryAdd("Content-Security-Policy", "default-src 'self';frame-ancestors 'none'");
-                context.Response.Headers.TryAdd("X-Frame-Options", "DENY");
-                context.Response.Headers.TryAdd("X-Xss-Protection", "1; mode=block");
-                context.Response.Headers.TryAdd("X-Content-Type-Options", "nosniff");
+            app.UseCors();
 
-                await next();
-            });
+            // ----- Adds security headers.
+            app.UseCustomHttpHeaderSecurity();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                // Use CSRF middleware.
+                //endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "api/{controller=Home}/{action=Index}/{id?}");
             });
 
         }

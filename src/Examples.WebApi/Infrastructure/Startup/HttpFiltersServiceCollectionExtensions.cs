@@ -7,7 +7,7 @@ namespace Examples.WebApi.Infrastructure.Startup;
 /// <summary>
 /// /// Extension methods for adding custom HTTP filter to an <see cref="IServiceCollection" />.
 /// </summary>
-public static class ServiceCollectionFilltersExtensions
+public static class HttpFiltersServiceCollectionExtensions
 {
     public static IServiceCollection AddCustomFilters(this IServiceCollection services, IConfiguration configuration)
     {

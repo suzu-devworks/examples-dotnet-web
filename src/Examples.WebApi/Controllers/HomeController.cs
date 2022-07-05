@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 
-#pragma warning disable CA1822 // Member 'xxx' does not access instance data and can be marked as static
-
 namespace Examples.WebApi.Controllers;
 
 /// <summary>

@@ -8,7 +8,7 @@ namespace Examples.WebApi.Infrastructure.Startup;
 /// <summary>
 /// Extension methods for adding custom localization services to an <see cref="IServiceCollection" />.
 /// </summary>
-public static class ServiceCollectionLocalizationExtensions
+public static class LocalizationServiceCollectionExtensions
 {
     public static IServiceCollection AddCustomLocalization(this IServiceCollection services)
     {

@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.WebApi.Infrastructure.Startup;
 
@@ -12,12 +13,14 @@ namespace Examples.WebApi.Infrastructure.Startup;
 /// <remarks>
 /// <see href="https://docs.microsoft.com/ja-jp/aspnet/core/tutorials/getting-started-with-swashbuckle" >Get started with Swashbuckle and ASP.NET Core - Microsoft Docs</see>
 /// </remarks>
-public static class ServiceCollectionSwaggerExtensions
+public static class SwaggerServiceCollectionExtensions
 {
-    public static IServiceCollection AddCustomSwaggerGen(this IServiceCollection services)
+    public static IServiceCollection AddCustomSwaggerGen(this IServiceCollection services, Action<SwaggerGenOptions>? setupAction = null)
     {
         services.AddSwaggerGen(options =>
         {
+            setupAction?.Invoke(options);
+
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "Examples.WebApi",
