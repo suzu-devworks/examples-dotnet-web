@@ -19,6 +19,7 @@
   
   <ItemGroup>
     <!-- <None Update="nlog.config" CopyToOutputDirectory="PreserveNewest" /> -->
+    <None Include="web.config" CopyToOutputDirectory="Never" />
   </ItemGroup>
 
 </Project>
