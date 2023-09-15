@@ -1,0 +1,53 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
+{
+  "name": "C# (.NET)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "containerEnv": {
+    "CONTAINER_WORKSPACE_FOLDER": "/workspaces/${localWorkspaceFolderBasename}"
+  },
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  //
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+  //
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [5000, 5001],
+  // "portsAttributes": {
+  //		"5001": {
+  //			"protocol": "https"
+  //		}
+  // }
+  //
+  // Uncomment the next line if you want start specific services in your Docker Compose config.
+  // "runServices": [],
+  //
+  // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+  // "shutdownAction": "none",
+  //
+  // Uncomment the next line to run commands after the container is created.
+  // "postCreateCommand": "cat /etc/os-release",
+  //
+  // Configure tool-specific properties.
+  // "customizations": {},
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "ms-ceintl.vscode-language-pack-ja",
+        "ms-dotnettools.csharp",
+        "kreativ-software.csharpextensions",
+        "editorconfig.editorconfig",
+        "gaoshan0621.csharp-format-usings",
+        "k--kato.docomment"
+      ]
+    }
+  },
+  //
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  "remoteUser": "vscode"
+}

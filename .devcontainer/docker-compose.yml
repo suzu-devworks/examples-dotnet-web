@@ -1,0 +1,19 @@
+version: "3"
+services:
+  dev:
+    build:
+      context: ./
+      target: "develop-stage"
+    tty: true
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # #  - ASPNETCORE_URLS=https://+:5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localhost.pfx
+    volumes:
+      # Forwards the local Docker socket to the container.
+      - /var/run/docker.sock:/var/run/docker-host.sock
+      # Update this to wherever you want VS Code to mount the folder of your project
+      - ../../:/workspaces:cached
+      # SSL server auth certficates.
+      - ~/.aspnet/https:/https:ro
