@@ -1,4 +1,5 @@
 using Examples.Web.Infrastructure;
+using Examples.WebAPI.Infrastructure;
 using NLog;
 using NLog.Web;
 
@@ -18,7 +19,10 @@ try
 
     // Add services to the container.
 
-    builder.Services.AddControllers();
+    //# sets JsonSerializerOptions.
+    builder.Services.AddControllers()
+        .AddJsonOptions(options => options.JsonSerializerOptions.AddCustomOptions());
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
