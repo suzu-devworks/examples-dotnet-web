@@ -4,14 +4,22 @@ namespace Examples.Web.Infrastructure.Serialization;
 
 public static partial class StringConverter
 {
+
+#if NET7_0_OR_GREATER
     [GeneratedRegex("^(\\^?)(\\d{1,9})$", RegexOptions.Compiled)]
-    private static partial Regex IndexExpression();
+    private static partial Regex IndexExpressionGenerator();
+    private static readonly Regex IndexExpression = IndexExpressionGenerator();
+
+#else
+    private static readonly Regex IndexExpression = new Regex(@"^(\\^?)(\\d{1,9})$", RegexOptions.Compiled);
+
+#endif
 
     public static Index ToIndex(string? value)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
-        var match = IndexExpression().Match(value);
+        var match = IndexExpression.Match(value);
         if (!match.Success)
         {
             throw new ArgumentException($"Illigal value is [{value}].");
