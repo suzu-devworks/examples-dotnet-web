@@ -12,4 +12,8 @@ public class WeatherForecast
 
     public string? Summary { get; set; }
 
+    public TimeSpan Timestamp { get; set; } = DateTime.Now.TimeOfDay;
+
+    public Range ValueRange { get; set; } = new Range(4, 12);
+
 }
