@@ -32,6 +32,8 @@ dotnet new webapi -o src/Examples.WebAPI
 dotnet sln add src/Examples.WebAPI/
 cd src/Examples.WebAPI
 dotnet add reference ../Examples.Web.Infrastructure/
+dotnet add package NLog.Web.AspNetCore
+dotnet add package NLog
 cd ../../
 
 dotnet build
