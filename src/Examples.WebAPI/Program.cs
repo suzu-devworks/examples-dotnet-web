@@ -1,5 +1,6 @@
 using Examples.Web.Infrastructure;
 using Examples.WebAPI.Infrastructure;
+using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 
@@ -19,13 +20,33 @@ try
 
     // Add services to the container.
 
-    //# sets JsonSerializerOptions.
+    //# Set URLs Lower Case.
+    builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+    //# Set JsonSerializerOptions.
     builder.Services.AddControllers()
         .AddJsonOptions(options => options.JsonSerializerOptions.AddCustomOptions());
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+
+    //# Configure Custom Swagger options.
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.AddDefaultOptions();
+        options.AddXmlComments();
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Examples.WebAPI",
+            Version = "v1",
+            Description = "&#127861; ASP.NET Core Web API examples.",
+            License = new OpenApiLicense
+            {
+                Name = "MIT License",
+                Url = new Uri("https://github.com/suzu-devworks/examples-dotnet-web/blob/main/LICENSE")
+            }
+        });
+    });
 
     var app = builder.Build();
 
@@ -33,14 +54,21 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        //# Add Swagger UI options.
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("v1/swagger.json", "Examples.WebAPI v1");
+            options.SwaggerEndpoint("v1/swagger.yaml", "Examples.WebAPI v1(yaml)");
+            // shrink all.
+            options.DefaultModelsExpandDepth(0);
+        });
     }
 
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
 
-    //# use Middleware.
+    //# Use Middleware.
     app.UseSecurityHttpResponseHeader();
 
     app.MapControllers();
