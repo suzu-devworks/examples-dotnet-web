@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using Examples.WebAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Examples.WebAPI.Controllers;
 
