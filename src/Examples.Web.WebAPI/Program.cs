@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Routing;
+using Examples.Web.WebAPI.Applications;
 using NLog;
 using NLog.Web;
 
@@ -35,6 +36,12 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
+    //# Configure Custom Options.
+    builder.Services.AddRequestLocalization(options => options.UseCustomCultures());
+
+    //# Configure Applications Services.
+    builder.Services.AddApplicationsServices();
+
     var app = builder.Build();
 
     //# Setting order is important!
@@ -52,6 +59,8 @@ try
     app.UseRouting();
     app.UseAuthorization();
 
+    //# Use Middleware.
+    app.UseRequestLocalization();
     //# Response Header: Security settings.
     app.UseSecurityHttpResponseHeader();
 
