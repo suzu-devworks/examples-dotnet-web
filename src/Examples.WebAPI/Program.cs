@@ -66,6 +66,11 @@ try
 
     app.UseHttpsRedirection();
 
+    //> Setting order is important!
+
+    //# href="https://andrewlock.net/understanding-pathbase-in-aspnetcore/"
+    app.UsePathBase(app.Configuration.GetValue<string>("PathBase"));
+    app.UseRouting();
     app.UseAuthorization();
 
     //# Use Middleware.
