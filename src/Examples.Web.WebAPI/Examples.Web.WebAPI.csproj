@@ -4,7 +4,7 @@
     <TargetFramework>$(OwnTargetFramework)</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
     <UserSecretsId>4aae93be-f0ad-4ff7-997b-82d683f044f2</UserSecretsId>
   </PropertyGroup>
 

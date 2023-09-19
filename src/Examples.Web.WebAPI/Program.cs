@@ -3,6 +3,7 @@ using Examples.Web.Infrastructure;
 using NLog;
 using NLog.Web;
 using Examples.Web.Infrastructure.Security;
+using Examples.Web.WebAPI.Applications;
 
 // Early init of NLog to allow startup and exception logging, before host is built
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -54,6 +55,13 @@ try
         options.MapType<TimeSpan>(() => new() { Type = "string" });
     });
 
+    //# Configure Custom Options.
+    builder.Services.Configure<RequestLocalizationOptions>(options =>
+        options.AddCustomCultures("ja", "ja-JP", "fr", "fr-CA", "en", "en-US"));
+
+    //# Configure Custom Services.
+    builder.Services.AddApplicationServices();
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -80,8 +88,11 @@ try
     app.UseRouting();
     app.UseCors();
 
+    //# Use Middleware.
+    app.UseRequestLocalization();
     //# Response Header: Security settings.
     app.UseSecurityHttpResponseHeader();
+
     app.MapControllers();
 
     //# Use Home controller with Minimal API. 

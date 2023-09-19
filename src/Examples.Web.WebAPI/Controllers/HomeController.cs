@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Examples.Web.WebAPI.Controllers;
 
+#pragma warning disable CA1822
+
 /// <summary>
 /// A controller for redirecting root.
 /// </summary>
