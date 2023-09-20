@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
+    <MyTargetFramework>net7.0</MyTargetFramework>
     <MyTargetFrameworks>net7.0;net6.0</MyTargetFrameworks>
-    <MyWebTargetFramework>net7.0</MyWebTargetFramework>
-    <MyExeTargetFramework>net7.0</MyExeTargetFramework>
+    <MyTestingFrameworks>net7.0</MyTestingFrameworks>
   </PropertyGroup>
 </Project>
