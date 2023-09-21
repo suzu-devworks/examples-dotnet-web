@@ -1,4 +1,5 @@
 using Examples.Web.Infrastructure;
+using Examples.WebAPI.Applications;
 using Examples.WebAPI.Infrastructure;
 using Microsoft.OpenApi.Models;
 using NLog;
@@ -48,6 +49,13 @@ try
         });
     });
 
+    //# Configure Custom Options.
+    builder.Services.Configure<RequestLocalizationOptions>(options =>
+        options.AddCustomCultures("ja", "ja-JP", "fr", "fr-CA", "en", "en-US"));
+
+    //# Configure Custom Services.
+    builder.Services.AddApplicationServices();
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -75,6 +83,7 @@ try
 
     //# Use Middleware.
     app.UseSecurityHttpResponseHeader();
+    app.UseRequestLocalization();
 
     app.MapControllers();
 
