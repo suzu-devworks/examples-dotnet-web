@@ -1,6 +1,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Swagger;
 using Examples.WebAPI.Applications.Localization;
 using Examples.WebAPI.Applications.Localization.Models;
@@ -36,8 +37,12 @@ public class LocalizationController(ILogger<LocalizationController> logger,
         [FromQuery(Name = "culture")] string? inputCulture,
         [FromQuery(Name = "ui-culture")] string? inputUiCulture)
     {
-        _logger.LogDebug("CurrentCulture   = {culture} / {system}", inputCulture, CultureInfo.CurrentCulture);
-        _logger.LogDebug("CurrentUICulture = {culture} / {system}", inputUiCulture, CultureInfo.CurrentUICulture);
+        _logger.LogDebug("CurrentCulture   = {culture} / {system}",
+             inputCulture?.Sanitize(),
+             CultureInfo.CurrentCulture);
+        _logger.LogDebug("CurrentUICulture = {culture} / {system}",
+            inputUiCulture?.Sanitize(),
+            CultureInfo.CurrentUICulture);
 
         var title = _localizer["About Title"];
         var culture = _sharedLocalizer["Culture"];
@@ -62,8 +67,12 @@ public class LocalizationController(ILogger<LocalizationController> logger,
         [FromQuery(Name = "culture")] string? inputCulture,
         [FromQuery(Name = "ui-culture")] string? inputUiCulture)
     {
-        _logger.LogDebug("CurrentCulture   = {culture} / {system}", inputCulture, CultureInfo.CurrentCulture);
-        _logger.LogDebug("CurrentUICulture = {culture} / {system}", inputUiCulture, CultureInfo.CurrentUICulture);
+        _logger.LogDebug("CurrentCulture   = {culture} / {system}",
+             inputCulture?.Sanitize(),
+             CultureInfo.CurrentCulture);
+        _logger.LogDebug("CurrentUICulture = {culture} / {system}",
+            inputUiCulture?.Sanitize(),
+            CultureInfo.CurrentUICulture);
 
         return Ok(new
         {
