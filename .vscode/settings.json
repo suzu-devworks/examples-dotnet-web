@@ -21,5 +21,7 @@
   "[razor]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "cSpell.words": []
+  "cSpell.words": [
+    "classlib"
+  ]
 }
