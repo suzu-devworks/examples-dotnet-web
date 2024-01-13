@@ -23,5 +23,10 @@
   },
   "cSpell.words": [
     "classlib"
+  ],
+  "cSpell.ignorePaths": [
+    ".git",
+    ".vscode",
+    ".devcontainer",
   ]
 }
