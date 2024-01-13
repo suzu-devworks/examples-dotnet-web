@@ -23,7 +23,8 @@
   },
   "cSpell.words": [
     "Antiforgery",
-    "classlib"
+    "classlib",
+    "nosniff"
   ],
   "cSpell.ignorePaths": [
     ".git",

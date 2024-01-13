@@ -1,3 +1,4 @@
+using Examples.Web.Infrastructure;
 using NLog;
 using NLog.Web;
 
@@ -12,6 +13,10 @@ try
     //# NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
+
+    //# Kestrel: Security settings.
+    builder.WebHost.ConfigureKestrel(serverOptions =>
+        builder.Configuration.GetSection("Kestrel").Bind(serverOptions));
 
     // Add services to the container.
     builder.Services.AddControllers();
@@ -32,8 +37,12 @@ try
     app.UseHttpsRedirection();
 
     //# Setting order is important!
+    //# PathBase: Configuration from appsettings.
     app.UsePathBase(app.Configuration.GetValue<string>("PathBase"));
     app.UseRouting();
+
+    //# Response Header: Security settings.
+    app.UseSecurityHttpResponseHeader();
     app.MapControllers();
 
     //# Use Home controller with Minimal API. 
