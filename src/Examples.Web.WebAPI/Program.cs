@@ -31,7 +31,9 @@ try
 
     app.UseHttpsRedirection();
 
-    //# Use Controllers
+    //# Setting order is important!
+    app.UsePathBase(app.Configuration.GetValue<string>("PathBase"));
+    app.UseRouting();
     app.MapControllers();
 
     //# Use Home controller with Minimal API. 
