@@ -22,6 +22,7 @@
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
   "cSpell.words": [
+    "Antiforgery",
     "classlib"
   ],
   "cSpell.ignorePaths": [

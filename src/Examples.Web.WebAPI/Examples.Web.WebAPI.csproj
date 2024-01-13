@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="nlog.config" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="nlog.config" CopyToOutputDirectory="Never" />
   </ItemGroup>
   
 </Project>
