@@ -11,6 +11,7 @@ It seems to remove the base path from the request and then perform the routing
     - Isn't it automatically configured with ConfigureKestrel?
 - [Secure Response Header ...](../../docs/security/security_http_header.md)
 - [Serialization ...](https://learn.microsoft.com/ja-jp/dotnet/standard/serialization/system-text-json/converters-how-to?pivots=dotnet-8-0)
+- [Customize Swagger ...](https://learn.microsoft.com/ja-jp/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio)
 
 ## Project Initialize
 
@@ -18,13 +19,15 @@ It seems to remove the base path from the request and then perform the routing
 ## Solution
 dotnet new sln -o .
 
-## Examples.Web.Infrastructure
+## Examples.Web.WebAPI
 dotnet new webapi -o src/Examples.Web.WebAPI
 dotnet sln add src/Examples.Web.WebAPI/
 cd src/Examples.Web.WebAPI
 dotnet add reference ../../src/Examples.Web.Infrastructure
 dotnet add package NLog.Web.AspNetCore
 dotnet add package NLog
+
+dotnet user-secrets init
 cd ../../
 
 # Update outdated package

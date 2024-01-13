@@ -11,6 +11,8 @@ dotnet new sln -o .
 dotnet new classlib -o src/Examples.Web.Infrastructure
 dotnet sln add src/Examples.Web.Infrastructure/
 cd src/Examples.Web.Infrastructure
+dotnet add package Swashbuckle.AspNetCore
+dotnet add package Swashbuckle.AspNetCore.Annotations
 cd ../../
 
 ## Examples.DependencyInjection.Tests

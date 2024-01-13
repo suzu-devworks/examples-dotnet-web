@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using Examples.Web.Infrastructure;
 using NLog;
 using NLog.Web;
@@ -18,6 +19,9 @@ try
     builder.WebHost.ConfigureKestrel(serverOptions =>
         builder.Configuration.GetSection("Kestrel").Bind(serverOptions));
 
+    //# Set lower case URLs.
+    builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
     // Add services to the container.
     builder.Services.AddControllers()
         .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
@@ -25,7 +29,25 @@ try
     builder.Services.AddEndpointsApiExplorer();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddSwaggerGen();
+    //# Configure Custom Swagger options.
+    //builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.UseAnnotationFilters();
+        options.UseXmlComments();
+        options.SwaggerDoc("v1", new()
+        {
+            Version = "v1",
+            Title = "Examples.Web.WebAPI",
+            Description = "&#127861; ASP.NET Core Web API examples.",
+            License = new OpenApiLicense
+            {
+                Name = "MIT License",
+                Url = new Uri("https://github.com/suzu-devworks/examples-dotnet-web/blob/main/LICENSE")
+            }
+        });
+        options.MapType<TimeSpan>(() => new() { Type = "string" });
+    });
 
     var app = builder.Build();
 
@@ -33,7 +55,16 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        //# Add Swagger UI options.
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("v1/swagger.json", "Examples.Web.WebAPI v1");
+            options.SwaggerEndpoint("v1/swagger.yaml", "Examples.Web.WebAPI v1(yaml)");
+            //# Swagger UI at the app's root.
+            //options.RoutePrefix = string.Empty;
+            //# Schemas shrink all.
+            options.DefaultModelsExpandDepth(0);
+        });
     }
 
     app.UseHttpsRedirection();
@@ -48,7 +79,7 @@ try
     app.MapControllers();
 
     //# Use Home controller with Minimal API. 
-    //app.MapGet("/", () => Results.Redirect("~/swagger"));
+    //# app.MapGet("/", () => Results.Redirect("~/swagger"));
 
     var summaries = new[]
     {

@@ -25,7 +25,8 @@
     "Antiforgery",
     "ASPNETCORE",
     "classlib",
-    "nosniff"
+    "nosniff",
+    "Swashbuckle"
   ],
   "cSpell.ignorePaths": [
     ".git",

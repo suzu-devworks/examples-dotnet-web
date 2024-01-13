@@ -30,6 +30,10 @@ public class SerializationController(ILogger<SerializationController> logger) : 
     /// </summary>
     /// <param name="models"></param>
     /// <returns></returns>
+    /// <response code="204">Returns item for confirmation</response>
+    /// <response code="400">If models is invalid</response>
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost]
     public IActionResult Post(IEnumerable<Model> models)
     {
