@@ -18,6 +18,10 @@ try
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
+    //# Kestrel: Security settings.
+    builder.WebHost.ConfigureKestrel(options =>
+        builder.Configuration.GetSection("Kestrel").Bind(options));
+
     builder.Services.AddControllers(options =>
     {
         //# Set kebab-case URLs.
@@ -45,6 +49,9 @@ try
 
     app.UseRouting();
     app.UseAuthorization();
+
+    //# Response Header: Security settings.
+    app.UseSecurityHttpResponseHeader();
 
     app.MapControllers();
 

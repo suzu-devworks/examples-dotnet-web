@@ -20,6 +20,7 @@
   <ItemGroup>
     <None Include="nlog.config" CopyToOutputDirectory="Never" />
     <None Include="nlog.Development.config" CopyToOutputDirectory="Never" />
+    <None Include="web.config" CopyToOutputDirectory="Never" />
   </ItemGroup>
 
 </Project>

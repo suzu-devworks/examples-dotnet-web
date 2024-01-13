@@ -5,7 +5,7 @@
 - [Logging use NLog](../../docs/logging/logging_use_nlog.md)
 - [URLs case in controller routing](../../docs/routing/routing_controller_urls_case.md)
 - [Urls Path base rewriting](../../docs/routing/routing_urls_rewruting.md)
-
+- [Secure HTTP Response Header](../../docs/security/security_http_response_header.md)
 
 ## Project Initialize
 
