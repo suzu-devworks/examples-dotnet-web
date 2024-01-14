@@ -4,6 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace Examples.Web.Infrastructure.Serialization;
 
+/// <summary>
+///  Converts <see cref="TimeSpan"/> values to and from strings.
+/// </summary>
+/// <seealso href="https://learn.microsoft.com/ja-jp/dotnet/core/compatibility/serialization/6.0/timespan-serialization-format"/>
 [Obsolete("Include .NET 6.0")]
 public class TimeSpanJsonConverter : JsonConverter<TimeSpan>
 {
