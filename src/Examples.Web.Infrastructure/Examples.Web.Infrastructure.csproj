@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>$(OwnTargetFramework)</TargetFramework>
+    <TargetFrameworks>$(OwnTargetFramework);$(PreviousTargetFramework)</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
 

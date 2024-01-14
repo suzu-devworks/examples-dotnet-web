@@ -5,7 +5,17 @@ namespace Examples.Web.Infrastructure.Serialization;
 
 public static partial class StringConverter
 {
-    private static readonly Regex IndexExpression = MyRegex();
+
+#if NET7_0_OR_GREATER
+    private static readonly Regex IndexExpression = IndexExpressionGenerator();
+
+    [GeneratedRegex("^(\\^?)(\\d{1,9})$", RegexOptions.Compiled)]
+    private static partial Regex IndexExpressionGenerator();
+
+#else
+    private static readonly Regex IndexExpression = new(@"^(\\^?)(\\d{1,9})$", RegexOptions.Compiled);
+
+#endif
 
     public static Index ToIndex(string? value)
     {
@@ -39,6 +49,4 @@ public static partial class StringConverter
         return new(start, end);
     }
 
-    [GeneratedRegex(@"^(\^?)(\d{1,9})$", RegexOptions.Compiled)]
-    private static partial Regex MyRegex();
 }

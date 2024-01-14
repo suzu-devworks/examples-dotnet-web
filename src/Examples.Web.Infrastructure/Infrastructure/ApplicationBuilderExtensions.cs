@@ -23,8 +23,11 @@ public static class ApplicationBuilderExtensions
     }
 
 
-    private class Middleware(RequestDelegate next)
+    private class Middleware
     {
+        private readonly RequestDelegate _next;
+
+        public Middleware(RequestDelegate next) => _next = next;
 
         public async Task InvokeAsync(HttpContext context)
         {
@@ -34,7 +37,7 @@ public static class ApplicationBuilderExtensions
             context.Response.Headers.TryAdd("X-Content-Type-Options", "nosniff");
 
             // Call the next delegate/middleware in the pipeline.
-            await next.Invoke(context);
+            await _next.Invoke(context);
 
             return;
         }
