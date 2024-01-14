@@ -5,6 +5,7 @@ using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Swagger;
 using Examples.WebAPI.Applications.Localization;
 using Examples.WebAPI.Applications.Localization.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers.Localization;
 
@@ -19,6 +20,7 @@ namespace Examples.Web.WebAPI.Controllers.Localization;
 /// </code>
 /// </example>
 /// </remarks>
+[SwaggerTag("Examples")]
 [ApiController]
 [Route("[controller]")]
 public class LocalizationController(ILogger<LocalizationController> logger,
