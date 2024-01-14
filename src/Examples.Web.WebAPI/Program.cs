@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using Examples.Web.Infrastructure;
 using NLog;
 using NLog.Web;
+using Examples.Web.Infrastructure.Security;
 
 // Early init of NLog to allow startup and exception logging, before host is built
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -21,6 +22,10 @@ try
 
     //# Set lower case URLs.
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+    //# CORS.
+    builder.Services.AddCors(options =>
+        options.AddDefaultSpaPolicyFrom(builder.Configuration.GetSection("CorsPolicyOptions")));
 
     // Add services to the container.
     builder.Services.AddControllers()
@@ -73,6 +78,7 @@ try
     //# PathBase: Configuration from appsettings.
     app.UsePathBase(app.Configuration.GetValue<string>("PathBase"));
     app.UseRouting();
+    app.UseCors();
 
     //# Response Header: Security settings.
     app.UseSecurityHttpResponseHeader();
