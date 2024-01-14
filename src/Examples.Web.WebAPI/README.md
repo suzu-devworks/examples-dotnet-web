@@ -10,7 +10,7 @@ It seems to remove the base path from the request and then perform the routing
 - [Kestrel web server ...](https://learn.microsoft.com/ja-jp/aspnet/core/fundamentals/servers/kestrel/options?view=aspnetcore-8.0)
     - Isn't it automatically configured with ConfigureKestrel?
 - [Secure Response Header ...](../../docs/security/security_http_header.md)
-
+- [Serialization ...](https://learn.microsoft.com/ja-jp/dotnet/standard/serialization/system-text-json/converters-how-to?pivots=dotnet-8-0)
 
 ## Project Initialize
 
