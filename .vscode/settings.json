@@ -22,6 +22,15 @@
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
   "cSpell.words": [
-    "classlib"
+    "Antiforgery",
+    "ASPNETCORE",
+    "classlib",
+    "nosniff",
+    "Swashbuckle"
+  ],
+  "cSpell.ignorePaths": [
+    ".git",
+    ".vscode",
+    ".devcontainer",
   ]
 }
