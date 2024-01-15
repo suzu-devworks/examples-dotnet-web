@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.WebAPI", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.Authentication.Basic", "src\Examples.Web.Authentication.Basic\Examples.Web.Authentication.Basic.csproj", "{5536A7D4-BD87-4414-98D7-772222B5565C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.Authentication.Identity", "src\Examples.Web.Authentication.Identity\Examples.Web.Authentication.Identity.csproj", "{86778E35-E028-465F-9F54-F9242BF4A303}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,11 +40,16 @@ Global
 		{5536A7D4-BD87-4414-98D7-772222B5565C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5536A7D4-BD87-4414-98D7-772222B5565C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5536A7D4-BD87-4414-98D7-772222B5565C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86778E35-E028-465F-9F54-F9242BF4A303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86778E35-E028-465F-9F54-F9242BF4A303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86778E35-E028-465F-9F54-F9242BF4A303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86778E35-E028-465F-9F54-F9242BF4A303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1E931142-E0D7-4208-9297-EC67C9D9A7F9} = {F18A1535-0926-408D-A3D1-8918C452CF4E}
 		{73A80725-E219-4403-92F5-CB1D651F1DF0} = {F18A1535-0926-408D-A3D1-8918C452CF4E}
 		{7B903749-0FB5-42C8-93BE-6019E5855CB2} = {F18A1535-0926-408D-A3D1-8918C452CF4E}
 		{5536A7D4-BD87-4414-98D7-772222B5565C} = {F18A1535-0926-408D-A3D1-8918C452CF4E}
+		{86778E35-E028-465F-9F54-F9242BF4A303} = {F18A1535-0926-408D-A3D1-8918C452CF4E}
 	EndGlobalSection
 EndGlobal
