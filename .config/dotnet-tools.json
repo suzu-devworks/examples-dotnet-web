@@ -1,5 +1,18 @@
 {
   "version": 1,
   "isRoot": true,
-  "tools": {}
+  "tools": {
+    "dotnet-aspnet-codegenerator": {
+      "version": "8.0.1",
+      "commands": [
+        "dotnet-aspnet-codegenerator"
+      ]
+    },
+    "dotnet-ef": {
+      "version": "8.0.2",
+      "commands": [
+        "dotnet-ef"
+      ]
+    }
+  }
 }
