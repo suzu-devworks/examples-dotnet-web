@@ -1,4 +1,6 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 @model PrivacyModel
 @{
     ViewData["Title"] = "Privacy Policy";
@@ -6,3 +8,5 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<p>Login Name is : <span>@(Model.User?.Identity?.Name)</span></p>
