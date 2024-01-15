@@ -7,4 +7,8 @@
     <UserSecretsId>933eeded-aa33-4644-9e00-569ea51a8c7f</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Authentication.Basic" Version="8.0.0" />
+  </ItemGroup>
+
 </Project>

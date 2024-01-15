@@ -7,6 +7,7 @@
 
 ## ASP.NET features
 
+- [Authentication and Authorization](./auth/README.md)
 - [Filters](./filters/README.md)
 - [Logging](./logging/README.md)
 - [Routing](./routing/README.md)
