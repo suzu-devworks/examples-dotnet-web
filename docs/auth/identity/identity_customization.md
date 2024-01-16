@@ -5,8 +5,9 @@
 - [Identity model customization](#identity-model-customization)
   - [References](#references)
   - [Customization](#customization)
-    - [Scaffold DefaultUI](#scaffold-defaultui)
-    - [Use Naming Login](#use-naming-login)
+    - [Scaffold UI files](#scaffold-ui-files)
+      - [error CS0121: The call is ambiguous between the following methods or properties](#error-cs0121-the-call-is-ambiguous-between-the-following-methods-or-properties)
+    - [Naming Login](#naming-login)
     - [Lockout](#lockout)
     - [Password policy](#password-policy)
     - [User](#user)
@@ -21,13 +22,32 @@
 
 ## Customization
 
-### Scaffold DefaultUI
+### Scaffold UI files
 
 ```shell
-dotnet aspnet-codegenerator identity -dc Examples.Web.Authentication.Identity.Areas.Identity.Data.IdentityDataContext  --files 'Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation;Account.ResetPassword' --useSqLite
+dotnet aspnet-codegenerator identity -dc Examples.Web.Authentication.Identity.Areas.Identity.Data.IdentityDataContext --files 'Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation;Account.ResetPassword' --databaseProvider 'sqlite'
 ```
 
-### Use Naming Login
+#### error CS0121: The call is ambiguous between the following methods or properties
+
+If you extract the `Identity` setting part of `Program.cs` using an extension method, the following error may occur.
+
+```console
+Building project ...
+Finding the generator 'identity'...
+Running the generator 'identity'...
+Failed to compile the project in memory
+/workspaces/examples-dotnet-web/src/Examples.Web.Authentication.Identity/Program.cs(8,18): error CS0121: The call is ambiguous between the following methods or properties: 'Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.AddIdentityAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.ConfigureOption>)' and 'Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.AddIdentityAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.ConfigureOption>)'
+   at Microsoft.VisualStudio.Web.CodeGeneration.ActionInvoker.<BuildCommandLine>b__6_0()
+   at Microsoft.Extensions.CommandLineUtils.CommandLineApplication.Execute(String[] args)
+   at Microsoft.VisualStudio.Web.CodeGeneration.ActionInvoker.Execute(String[] args)
+   at Microsoft.VisualStudio.Web.CodeGeneration.CodeGenCommand.Execute(String[] args)
+```
+
+In this case, temporarily comment out the extension method part and you will be able to generate the scaffold.
+
+
+### Naming Login
 
 **/Areas/Identity/Pages/Account/Login.cshtml.cs**
 
