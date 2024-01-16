@@ -8,10 +8,11 @@
     - [Scaffold UI files](#scaffold-ui-files)
       - [error CS0121: The call is ambiguous between the following methods or properties](#error-cs0121-the-call-is-ambiguous-between-the-following-methods-or-properties)
     - [Naming Login](#naming-login)
-    - [Lockout](#lockout)
+    - [Use Lockout](#use-lockout)
     - [Password policy](#password-policy)
+    - [Sign-in](#sign-in)
     - [User](#user)
-    - [Cookie](#cookie)
+    - [Cookie settings](#cookie-settings)
     - [Localization of validation messages](#localization-of-validation-messages)
 
 
@@ -203,9 +204,9 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 ```
 
 
-### Lockout
+### Use Lockout
 
-- [Lockout](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#lockout)
+- [Lockout](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-8.0#lockout)
 
 **LockoutOptions**
 
@@ -215,25 +216,24 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 | DefaultLockoutTimeSpan  | ロックアウトが発生した場合にユーザーがロックアウトされる時間。                                     | 5 minutes |
 | MaxFailedAccessAttempts | ロックアウトが有効になっている場合に、ユーザーがロックアウトされるまでに失敗したアクセス試行回数。 | 5         |
 
-**Areas/Identity/Pages/Account/Login.cshtml.cs**
 
 ```diff
-@@ -111,7 +111,8 @@ public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+--- a/src/Examples.Web.Authentication.Identity/Areas/Identity/Pages/Account/Login.cshtml.cs
++++ b/src/Examples.Web.Authentication.Identity/Areas/Identity/Pages/Account/Login.cshtml.cs
+@@ -104,7 +104,7 @@ public async Task<IActionResult> OnPostAsync(string returnUrl = null)
              {
                  // This doesn't count login failures towards account lockout
                  // To enable password failures to trigger account lockout, set lockoutOnFailure: true
--                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: 
-false);
-+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe,
-+                    lockoutOnFailure: true);
+-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
++                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                  if (result.Succeeded)
                  {
                      _logger.LogInformation("User logged in.");
 ```
 
-**ure/Authentication/Identity/ServiceCollectionExtensions.cs**
-
 ```diff
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
 @@ -27,6 +27,14 @@ public static class ServiceCollectionExtensions
          services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
              .AddEntityFrameworkStores<IdentityDataContext>();
@@ -252,7 +252,7 @@ false);
 
 ### Password policy
 
-- [Password](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#password)
+- [Password](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-8.0#password)
 
 **パスワードポリシー**
 
@@ -266,28 +266,40 @@ false);
 | RequiredUniqueChars    | 個別の文字の数を必要とします。<br>※0000 防止 | 1       |
 
 ```diff
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<IdentityDataContext>();
-
-+        services.Configure<IdentityOptions>(options =>
-+        {
-+            // Password settings.
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
+@@ -33,6 +33,23 @@ public static class ServiceCollectionExtensions
+             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+             options.Lockout.MaxFailedAccessAttempts = 5;
+             options.Lockout.AllowedForNewUsers = true;
++
++            // // Default Password settings.
++            // options.Password.RequireDigit = true;
++            // options.Password.RequireLowercase = true;
++            // options.Password.RequireNonAlphanumeric = true;
++            // options.Password.RequireUppercase = true;
++            // options.Password.RequiredLength = 6;
++            // options.Password.RequiredUniqueChars = 1;
++
++            // Weak password settings.
 +            options.Password.RequireDigit = false;
-+            options.Password.RequireUppercase = false;
 +            options.Password.RequireLowercase = false;
++            options.Password.RequireUppercase = false;
 +            options.Password.RequireNonAlphanumeric = false;
 +            options.Password.RequiredLength = 4;
 +            options.Password.RequiredUniqueChars = 2;
-+        });
 +
+         });
+ 
+         return services;
 ```
 
 > Don't forget the attribute of model.
 
-**/Areas/Identity/Pages/Account/Register.cshtml.cs**
-
 ```diff
-@@ -84,7 +84,7 @@ public class InputModel
+--- a/src/Examples.Web.Authentication.Identity/Areas/Identity/Pages/Account/Register.cshtml.cs
++++ b/src/Examples.Web.Authentication.Identity/Areas/Identity/Pages/Account/Register.cshtml.cs
+@@ -77,7 +77,7 @@ public class InputModel
              ///     directly from your code. This API may change or be removed in future releases.
              /// </summary>
              [Required]
@@ -296,51 +308,82 @@ false);
              [DataType(DataType.Password)]
              [Display(Name = "Password")]
              public string Password { get; set; }
-
 ```
 
-**/Areas/Identity/Pages/Account/ResetPassword.cshtml.cs**
-
 ```diff
-@@ -74,7 +74,7 @@ public class InputModel
+--- a/src/Examples.Web.Authentication.Identity/Areas/Identity/Pages/Account/ResetPassword.cshtml.cs
++++ b/src/Examples.Web.Authentication.Identity/Areas/Identity/Pages/Account/ResetPassword.cshtml.cs
+@@ -46,7 +46,7 @@ public class InputModel
              ///     directly from your code. This API may change or be removed in future releases.
              /// </summary>
              [Required]
 -            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
 +            [StringLength(100, ErrorMessage = "The {0} must be at max {1} characters long.")]
              [DataType(DataType.Password)]
-             [Display(Name = "Password")]
              public string Password { get; set; }
-
 ```
+
+### Sign-in
+
+-[Sign-in](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-8.0#sign-in)
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
+@@ -50,6 +50,10 @@ public static class ServiceCollectionExtensions
+             options.Password.RequiredLength = 4;
+             options.Password.RequiredUniqueChars = 2;
+ 
++            // Default SignIn settings.
++            options.SignIn.RequireConfirmedEmail = false;
++            options.SignIn.RequireConfirmedPhoneNumber = false;
++
+         });
+ 
+         return services;
+```
+
 
 ### User
 
-- [User](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#user)
+- [User](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-8.0#user)
 
 ```diff
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<IdentityDataContext>();
-
-+        services.Configure<IdentityOptions>(options =>
-+        {
-+            // User settings.
-+            // options.User.AllowedUserNameCharacters =
-+            //     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-+            // options.User.RequireUniqueEmail = false;
-+        });
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
+@@ -54,6 +54,11 @@ public static class ServiceCollectionExtensions
+             options.SignIn.RequireConfirmedEmail = false;
+             options.SignIn.RequireConfirmedPhoneNumber = false;
+ 
++            // Default User settings.
++            options.User.AllowedUserNameCharacters =
++                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
++            options.User.RequireUniqueEmail = false;
 +
+         });
+ 
+         return services;
 ```
 
-### Cookie
+### Cookie settings
 
 - [Cookie settings](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#cookie-settings)
 
 ```diff
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<IdentityDataContext>();
-
-+        // Cookie settings.
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
+@@ -1,6 +1,7 @@
+ using Microsoft.AspNetCore.Identity;
+ using Microsoft.EntityFrameworkCore;
+ using Examples.Web.Authentication.Identity.Areas.Identity.Data;
++using Microsoft.AspNetCore.Authentication.Cookies;
+ 
+ namespace Examples.Web.Infrastructure.Authentication.Identity;
+ 
+@@ -61,6 +62,19 @@ public static class ServiceCollectionExtensions
+ 
+         });
+ 
 +        services.ConfigureApplicationCookie(options =>
 +        {
 +            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
@@ -348,13 +391,14 @@ false);
 +            options.Cookie.HttpOnly = true;
 +            options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 +            options.LoginPath = "/Identity/Account/Login";
-+            // ReturnUrlParameter requires
-+            //
-using Microsoft.AspNetCore.Authentication.Cookies;
-
++            // ReturnUrlParameter requires Microsoft.AspNetCore.Authentication.Cookies;
++            //using Microsoft.AspNetCore.Authentication.Cookies;
 +            options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
 +            options.SlidingExpiration = true;
-         });
++        });
++
+         return services;
+     }
 ```
 
 
