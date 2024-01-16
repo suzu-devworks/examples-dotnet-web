@@ -58,7 +58,7 @@ dotnet ef database update
 dotnet ef migrations list
 ```
 
-### Modofy Code on MVC
+### Modify Code on MVC
 
 **/Views/Shared/\_Layout.cshtml**
 
@@ -111,15 +111,32 @@ namespace Examples.WebUI.Authentication.Controllers;
 
 <!-- ----- -->
 
-## Customize
+## Configuration
 
-### Scaffold DefaultUI
+### Scaffold UI files
 
 ```shell
-dotnet aspnet-codegenerator identity -dc Examples.Web.Authentication.Identity.Areas.Identity.Data.IdentityDataContext  --files 'Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation;Account.ResetPassword' --useSqLite
+dotnet aspnet-codegenerator identity -dc Examples.Web.Authentication.Identity.Areas.Identity.Data.IdentityDataContext --files 'Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation;Account.ResetPassword' --databaseProvider 'sqlite'
 ```
 
-### Use Naming Login
+`Program.cs` の `Identity` 設定部分を拡張メソッドで切り出した場合、次のエラーが出ることがあります。
+
+```console
+Building project ...
+Finding the generator 'identity'...
+Running the generator 'identity'...
+Failed to compile the project in memory
+/workspaces/examples-dotnet-web/src/Examples.Web.Authentication.Identity/Program.cs(8,18): error CS0121: The call is ambiguous between the following methods or properties: 'Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.AddIdentityAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.ConfigureOption>)' and 'Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.AddIdentityAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Examples.Web.Infrastructure.Authentication.Identity.ServiceCollectionExtensions.ConfigureOption>)'
+   at Microsoft.VisualStudio.Web.CodeGeneration.ActionInvoker.<BuildCommandLine>b__6_0()
+   at Microsoft.Extensions.CommandLineUtils.CommandLineApplication.Execute(String[] args)
+   at Microsoft.VisualStudio.Web.CodeGeneration.ActionInvoker.Execute(String[] args)
+   at Microsoft.VisualStudio.Web.CodeGeneration.CodeGenCommand.Execute(String[] args)
+```
+
+この場合には一時的に拡張メソッド部分をコメントアウトすると、Scaffold を生成できるようになります。
+
+
+### Naming Login
 
 **/Areas/Identity/Pages/Account/Login.cshtml.cs**
 
@@ -277,7 +294,7 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 
 ### Lockout
 
-- [ロックアウト](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#lockout)
+- [Lockout](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#lockout)
 
 **LockoutOptions**
 
