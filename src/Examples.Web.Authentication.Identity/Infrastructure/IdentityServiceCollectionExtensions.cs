@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Examples.Web.Infrastructure.Authentication.Identity;
 
 namespace Examples.Web.Infrastructure;
 
@@ -26,7 +27,8 @@ public static class ServiceCollectionExtensions
             .UseSqlite(configureOption.ConnectionString));
 
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<IdentityDataContext>();
+            .AddEntityFrameworkStores<IdentityDataContext>()
+            .AddErrorDescriber<JapaneseErrorDescriber>();
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -46,7 +48,7 @@ public static class ServiceCollectionExtensions
             // Weak password settings.
             options.Password.RequireDigit = false;
             options.Password.RequireLowercase = false;
-            options.Password.RequireUppercase = false;
+            options.Password.RequireUppercase = true;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequiredLength = 4;
             options.Password.RequiredUniqueChars = 2;

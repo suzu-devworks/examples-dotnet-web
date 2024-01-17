@@ -407,8 +407,16 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 - [IdentityErrorDescriber クラス - Microsoft Docs](https://docs.microsoft.com/ja-jp/dotnet/api/microsoft.aspnetcore.identity.identityerrordescriber?view=aspnetcore-6.0)
 
 ```diff
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
+@@ -26,7 +26,8 @@ public static class ServiceCollectionExtensions
+             .UseSqlite(configureOption.ConnectionString));
+ 
          services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-             .AddEntityFrameworkStores<IdentityDataContext>()
+-            .AddEntityFrameworkStores<IdentityDataContext>();
++            .AddEntityFrameworkStores<IdentityDataContext>()
 +            .AddErrorDescriber<JapaneseErrorDescriber>();
+ 
+         services.Configure<IdentityOptions>(options =>
+         {
 ```
-
