@@ -494,12 +494,19 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 
 ### Localization of validation messages
 
-- [ASP.NET Core で Identity のバリデーションメッセージを日本語化する - shuhelohelo’s blog](https://shuhelohelo.hatenablog.com/entry/2019/08/22/201322)
-- [IdentityErrorDescriber クラス - Microsoft Docs](https://docs.microsoft.com/ja-jp/dotnet/api/microsoft.aspnetcore.identity.identityerrordescriber?view=aspnetcore-6.0)
+- [IdentityErrorDescriber クラス - Microsoft Docs](https://learn.microsoft.com/ja-jp/dotnet/api/microsoft.aspnetcore.identity.identityerrordescriber?view=aspnetcore-8.0)
 
 ```diff
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
+@@ -26,7 +26,8 @@ public static class ServiceCollectionExtensions
+             .UseSqlite(configureOption.ConnectionString));
+ 
          services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-             .AddEntityFrameworkStores<IdentityDataContext>()
+-            .AddEntityFrameworkStores<IdentityDataContext>();
++            .AddEntityFrameworkStores<IdentityDataContext>()
 +            .AddErrorDescriber<JapaneseErrorDescriber>();
+ 
+         services.Configure<IdentityOptions>(options =>
+         {
 ```
-

@@ -26,7 +26,8 @@ public static class ServiceCollectionExtensions
             .UseSqlite(configureOption.ConnectionString));
 
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<IdentityDataContext>();
+            .AddEntityFrameworkStores<IdentityDataContext>()
+            .AddErrorDescriber<JapaneseErrorDescriber>();
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -46,7 +47,7 @@ public static class ServiceCollectionExtensions
             // Weak password settings.
             options.Password.RequireDigit = false;
             options.Password.RequireLowercase = false;
-            options.Password.RequireUppercase = false;
+            options.Password.RequireUppercase = true;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequiredLength = 4;
             options.Password.RequiredUniqueChars = 2;
