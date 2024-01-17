@@ -3,6 +3,8 @@
 ## References
 
 - [Scaffold Identity into an MVC project without existing authorization ...](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-8.0&tabs=netcore-cli#scaffold-identity-into-an-mvc-project-without-existing-authorization)
+- [qrcode.js](https://davidshimjs.github.io/qrcodejs/
+
 
 ## Project Initialize
 
@@ -30,7 +32,6 @@ dotnet aspnet-codegenerator identity --useDefaultUI --databaseProvider 'sqlite'
 ### Create a migration and update the database. 
 dotnet ef migrations add CreateIdentitySchema
 dotnet ef database update
-
 
 cd ../../
 
