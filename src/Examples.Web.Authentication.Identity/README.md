@@ -5,6 +5,7 @@
 - [Scaffold Identity in ASP.NET Core projects](../../docs/auth/identity/identity_scaffold.md)
 - [Identity model customization](../../docs/auth/identity/identity_customization.md)
 - [OAuth 2.0 provider authentication](../../docs/auth/identity/identity_oauth2.md)
+- [Two factor authentication ](./identity_2fa.md)
 
 
 ## Project Initialize
@@ -37,7 +38,6 @@ dotnet aspnet-codegenerator identity --useDefaultUI --databaseProvider 'sqlite'
 ### Create a migration and update the database. 
 dotnet ef migrations add CreateIdentitySchema
 dotnet ef database update
-
 
 cd ../../
 
