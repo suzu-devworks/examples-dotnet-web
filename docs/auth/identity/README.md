@@ -24,4 +24,5 @@ ASP.NET Core Identity:
 
 - [Scaffold Identity in ASP.NET Core projects](./identity_scaffold.md)
 - [Identity model customization](./identity_customization.md)
+- [OAuth 2.0 provider authentication](./identity_oauth2.md)
 
