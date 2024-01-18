@@ -73,6 +73,7 @@ public static class ServiceCollectionExtensions
             options.LoginPath = "/Identity/Account/Login";
             // ReturnUrlParameter requires Microsoft.AspNetCore.Authentication.Cookies;
             //using Microsoft.AspNetCore.Authentication.Cookies;
+
             options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             options.SlidingExpiration = true;
         });
