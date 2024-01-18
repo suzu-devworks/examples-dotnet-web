@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Examples.Web.Authentication.Identity.Models;
 
 namespace Examples.Web.Authentication.Identity.Controllers;

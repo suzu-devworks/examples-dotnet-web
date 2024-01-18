@@ -1,4 +1,4 @@
-# Two factor authentication 
+# ASP.NET Core Identity Two factor authentication 
 
 ## Reference
 

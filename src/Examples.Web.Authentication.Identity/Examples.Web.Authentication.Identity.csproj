@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>$(OwnTargetFramework)</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disale</ImplicitUsings>
     <UserSecretsId>e9fe9e36-f7c0-4730-9d2d-5d7552fd6236</UserSecretsId>
   </PropertyGroup>
 

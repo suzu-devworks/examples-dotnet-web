@@ -1,7 +1,9 @@
+using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Examples.Web.Infrastructure.Authentication.Identity;
 
@@ -72,6 +74,7 @@ public static class ServiceCollectionExtensions
             options.LoginPath = "/Identity/Account/Login";
             // ReturnUrlParameter requires Microsoft.AspNetCore.Authentication.Cookies;
             //using Microsoft.AspNetCore.Authentication.Cookies;
+
             options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             options.SlidingExpiration = true;
         });

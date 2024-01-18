@@ -1,12 +1,18 @@
-# ASP.NET Core Identity OAuth 2.0 provider authentication
+# ASP.NET Core Identity external provider authentication
 
 Enables users to sign in using OAuth 2.0 with credentials from external authentication providers.
+
+## Table of contents
+
+- [Google OAuth 2.0 login setup in ASP.NET Core](./oauth2/google_oauth2.md)
+- [Microsoft Account OAuth 2.0 login setup with ASP.NET Core](./oauth2/microsoft_oauth2.md)
+- [GitHub OAuth 2.0 login setup in ASP.NET Core](./oauth2/github_oauth2.md)
+
 
 ## References
 
 - [Facebook, Google, and external provider authentication in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio-code)
 
-<!-- ----- -->
 
 ## Configuration
 
