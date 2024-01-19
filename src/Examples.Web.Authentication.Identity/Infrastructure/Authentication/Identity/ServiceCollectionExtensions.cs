@@ -1,9 +1,11 @@
 using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
+using Examples.Web.Authentication.Identity.Services;
 
 namespace Examples.Web.Infrastructure.Authentication.Identity;
 
@@ -78,6 +80,17 @@ public static class ServiceCollectionExtensions
             options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             options.SlidingExpiration = true;
         });
+
+        services.AddTransient<IEmailSender, FakeEmailSender>();
+
+        services.ConfigureApplicationCookie(o =>
+        {
+            o.ExpireTimeSpan = TimeSpan.FromDays(5);
+            o.SlidingExpiration = true;
+        });
+
+        services.Configure<DataProtectionTokenProviderOptions>(o =>
+            o.TokenLifespan = TimeSpan.FromHours(3));
 
         return services;
     }
