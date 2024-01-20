@@ -158,3 +158,12 @@ An easy way to test authentication is to use the Swagger UI included in the proj
 
 <img src="./identity_spa_swagger.png" width="70%" height="auto" />
 
+
+> Will 401 not be returned if it coexists with the webapp?
+
+
+### Log out
+
+To provide a way for the user to log out, define a /logout endpoint like the following example:
+
+- [IdentityApiExtensions.cs see ...](/src/Examples.Web.Authentication.Identity/Areas/Identity/Api/IdentityApiExtensions.cs)

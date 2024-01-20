@@ -73,6 +73,8 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.MapIdentityApi<IdentityUser>();
+app.MapIdentityLogoutApi();
+
 app.MapWeatherForecastApi();
 
 app.Run();
