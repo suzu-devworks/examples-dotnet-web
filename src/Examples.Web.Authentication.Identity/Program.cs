@@ -72,8 +72,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.MapIdentityApi<IdentityUser>();
-app.MapIdentityLogoutApi();
+var identity = app.MapGroup("/api/identity");
+identity.MapIdentityApi<IdentityUser>();
+identity.MapIdentityLogoutApi();
 
 app.MapWeatherForecastApi();
 

@@ -167,3 +167,25 @@ An easy way to test authentication is to use the Swagger UI included in the proj
 To provide a way for the user to log out, define a /logout endpoint like the following example:
 
 - [IdentityApiExtensions.cs see ...](/src/Examples.Web.Authentication.Identity/Areas/Identity/Api/IdentityApiExtensions.cs)
+
+### Change Path base
+
+The default is direct, such as "/login", so I want a prefix.
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Program.cs
++++ b/src/Examples.Web.Authentication.Identity/Program.cs
+@@ -72,8 +72,9 @@
+     pattern: "{controller=Home}/{action=Index}/{id?}");
+ app.MapRazorPages();
+ 
+-app.MapIdentityApi<IdentityUser>();
+-app.MapIdentityLogoutApi();
++var identity = app.MapGroup("/api/identity");
++identity.MapIdentityApi<IdentityUser>();
++identity.MapIdentityLogoutApi();
+ 
+ app.MapWeatherForecastApi();
+```
+
+> I want to make it a little more beautiful
