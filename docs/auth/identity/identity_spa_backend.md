@@ -12,6 +12,7 @@
     - [Map Identity routes](#map-identity-routes)
     - [Secure selected endpoints](#secure-selected-endpoints)
     - [Swagger](#swagger)
+    - [Add Log-out](#add-log-out)
 
 
 ## References
@@ -175,3 +176,25 @@ An easy way to test authentication is to use the Swagger UI included in the proj
 - http://localhost:5140/swagger/
 
 <img src="./_files/identity_spa_backend.png" width="70%" height="auto" />
+
+> Will 401 not be returned if it coexists with the webapp?
+
+
+### Add Log-out
+
+To provide a way for the user to log out, define a /logout endpoint like the following example:
+
+- [IdentityApiExtensions.cs see ...](/src/Examples.Web.Authentication.Identity/Areas/Identity/Api/IdentityApiExtensions.cs)
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Program.cs
++++ b/src/Examples.Web.Authentication.Identity/Program.cs
+@@ -67,6 +67,7 @@
+ app.MapRazorPages();
+ 
+ app.MapIdentityApi<IdentityUser>();
++app.MapIdentityLogoutApi();
+ 
+ app.MapWeatherForecastApi()
+     .RequireAuthorization();
+```
