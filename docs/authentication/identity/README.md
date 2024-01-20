@@ -13,6 +13,7 @@ ASP.NET Core Identity:
 - [External provider](./identity_external_provider.md)
 - [Two factor authentication](./identity_2fa.md)
 - [Confirmation email and reset password](./identity_confirmation_email.md)
+- [Web API backend for SPAs](./identity_spa.md)
 
 ## References
 
