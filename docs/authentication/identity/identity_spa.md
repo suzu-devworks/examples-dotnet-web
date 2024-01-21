@@ -156,7 +156,7 @@ app.MapSwagger().RequireAuthorization();
 
 An easy way to test authentication is to use the Swagger UI included in the project template.
 
-<img src="./identity_spa_swagger.png" width="70%" height="auto" />
+<img src="./_files/identity_spa_swagger.png" width="70%" height="auto" />
 
 
 > [ Will 401 not be returned if it coexists with the webapp? ](#will-401-not-be-returned-if-it-coexists-with-the-webapp)
@@ -212,7 +212,27 @@ The default is direct, such as "/login", so I want a prefix.
 
 - [AuthenticationRequestOperationFilter see...](/src/Examples.Web.Infrastructure/Infrastructure/Swagger/AuthenticationRequestOperationFilter.cs)
 
+### Test
+
+The state before login is unlocked.
+
+<img src="./_files/identity_spa_auth_off.png" width="30%">
+
+When you log in after obtaining a separate token...
+
+<img src="./_files/identity_spa_auth.png" width="70%">
+
+The lock will close.
+
+<img src="./_files/identity_spa_auth_on.png" width="30%">
+
+
+
 ## Will 401 not be returned if it coexists with the webapp?
+
+There is a feature in ASP.NET that automatically converts a 401 HTTP status code into a 302 redirect to the login page.
+
+It seems to be quite famous.
 
 ```diff
 --- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
