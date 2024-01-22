@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Examples.Web.Authentication.Identity.Api;
+using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Authentication.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,7 +43,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => options.AddJWTBearerAuthorization());
 
 var app = builder.Build();
 
@@ -63,8 +64,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-//# Don't you use it? app.UseAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -76,6 +76,6 @@ var identity = app.MapGroup("/api/identity");
 identity.MapIdentityApi<IdentityUser>();
 identity.MapIdentityLogoutApi();
 
-app.MapWeatherForecastApi();
+app.MapGroup("/api").MapWeatherForecastApi();
 
 app.Run();

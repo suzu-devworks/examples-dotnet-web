@@ -100,7 +100,7 @@ When coexisting with webapp?:
          {
 ```
 
-I haven't set IdentityConstants.BearerAndApplicationScheme, I don't know if it's needed.
+> I haven't set IdentityConstants.BearerAndApplicationScheme, I don't know if it's needed.
 
 - [AddIdentityApiEndpoints<TUser>() see ...](https://github.com/dotnet/aspnetcore/blob/main/src/Identity/Core/src/IdentityServiceCollectionExtensions.cs#L134)
 
@@ -159,8 +159,7 @@ An easy way to test authentication is to use the Swagger UI included in the proj
 <img src="./identity_spa_swagger.png" width="70%" height="auto" />
 
 
-> Will 401 not be returned if it coexists with the webapp?
-
+> [ Will 401 not be returned if it coexists with the webapp? ](#will-401-not-be-returned-if-it-coexists-with-the-webapp)
 
 ### Log out
 
@@ -189,3 +188,67 @@ The default is direct, such as "/login", so I want a prefix.
 ```
 
 > I want to make it a little more beautiful
+
+## Swagger UI Configuration
+
+- [Add Security Definitions and Requirements for Bearer auth](https://github.com/domaindrivendev/Swashbuckle.AspNetCore?tab=readme-ov-file#add-security-definitions-and-requirements-for-bearer-auth)
+
+### AddSecurityDefinition
+
+```cs
+    services.AddSwaggerGen(options =>
+    {
+        options.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.ApiKey,
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\""
+        });
+
+        options.OperationFilter<AuthenticationRequestOperationFilter>("bearerAuth");
+    }
+```
+
+- [AuthenticationRequestOperationFilter see...](/src/Examples.Web.Infrastructure/Infrastructure/Swagger/AuthenticationRequestOperationFilter.cs)
+
+## Will 401 not be returned if it coexists with the webapp?
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs
+@@ -43,6 +46,33 @@ public static class ServiceCollectionExtensions
+         services.AddAuthentication()
+             .AddBearerToken(IdentityConstants.BearerScheme);
+ 
++        services.ConfigureApplicationCookie(options =>
++        {
++            var onRedirectToLogin = options.Events.OnRedirectToLogin;
++            options.Events.OnRedirectToLogin = context =>
++            {
++                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
++                {
++                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
++                    return Task.CompletedTask;
++                }
++
++                return onRedirectToLogin.Invoke(context);
++            };
++
++            var onRedirectToAccessDenied = options.Events.OnRedirectToAccessDenied;
++            options.Events.OnRedirectToAccessDenied = context =>
++            {
++                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
++                {
++                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
++                    return Task.CompletedTask;
++                }
++
++                return onRedirectToAccessDenied.Invoke(context);
++            };
++        });
++
+         services.Configure<IdentityOptions>(options =>
+         {
+             // Default Lockout settings.
+```
