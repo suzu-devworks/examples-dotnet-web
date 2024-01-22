@@ -15,7 +15,6 @@ dotnet new webapp -o src/Examples.Web.Authentication.Basic
 dotnet sln add src/Examples.Web.Authentication.Basic/
 cd src/Examples.Web.WebAPI
 dotnet add package AspNetCore.Authentication.Basic
-dotnet user-secrets init
 cd ../../
 
 # Update outdated package

@@ -20,9 +20,10 @@ public class AuthenticationRequestOperationFilter : IOperationFilter
 
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var attributes = context.ApiDescription.CustomAttributes();
-        var anonymous = attributes.Any(attr => attr is AllowAnonymousAttribute);
-        if (anonymous) { return; }
+        if (!RequireAuthorized(context))
+        {
+            return;
+        }
 
         operation.Security.Add(new OpenApiSecurityRequirement
         {
@@ -38,8 +39,30 @@ public class AuthenticationRequestOperationFilter : IOperationFilter
                 _scopes
             }
         });
+
         operation.Responses.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
+        operation.Responses.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
 
         return;
+    }
+
+    private static bool RequireAuthorized(OperationFilterContext context)
+    {
+        var authorizes = context.ApiDescription.ActionDescriptor.EndpointMetadata.OfType<IAuthorizeData>();
+        var anonymousAttrs = context.ApiDescription.ActionDescriptor.EndpointMetadata.OfType<IAllowAnonymous>();
+
+        if (anonymousAttrs.Any())
+        {
+            return false;
+        }
+
+        if (!authorizes.Any())
+        {
+            return false;
+        }
+
+        // var attributes = anonymousAttrs.OfType<AuthorizeAttribute>();
+
+        return true;
     }
 }

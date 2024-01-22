@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Basic Authentication ...](./basic_auth.md)
+- [ASP.NET Core Identity ...](./identity/README.md)
 
 
 ## References

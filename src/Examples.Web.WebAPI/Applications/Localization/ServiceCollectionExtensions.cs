@@ -13,14 +13,14 @@ public static class ServiceCollectionExtensions
         services.AddMvc()
             // use Razor localization.
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-            // use Annotaion localization.
+            // use Annotation localization.
             .AddDataAnnotationsLocalization(options =>
                 // use custom IStringLocalizer (aggregation).
                 options.DataAnnotationLocalizerProvider = (type, factory) =>
-                    StringLocalizerAggregator.Create(localizers =>
+                    StringLocalizerAggregator.Create(aggregate =>
                     {
-                        localizers.Add(factory.Create(typeof(SharedResource)));
-                        localizers.Add(factory.Create(type));
+                        aggregate.Add(factory.Create(typeof(SharedResource)));
+                        aggregate.Add(factory.Create(type));
                     }));
 
         return services;
