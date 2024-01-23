@@ -9,15 +9,22 @@ public static class EndpointConventionBuilderExtensions
 {
     public static RouteHandlerBuilder MapIdentityLogoutApi(this IEndpointRouteBuilder app)
     {
-        return app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager,
+        return app.MapPost("/logout", async (
+            SignInManager<IdentityUser> signInManager,
             [FromBody] object empty) =>
         {
-            if (empty != null)
+            // The request checks for an empty body to prevent CSRF attacks. By requiring something
+            // in the body, the request must be made from JavaScript, which is the only way to
+            // access the cookie. It can't be accessed by a form-based post.
+            if (empty == null)
             {
-                await signInManager.SignOutAsync();
-                return Results.Ok();
+                // 'User-controlled bypass of sensitive method.'
+                // return Results.Unauthorized();
+                return Results.BadRequest();
             }
-            return Results.Unauthorized();
+
+            await signInManager.SignOutAsync();
+            return Results.Ok();
         })
         .WithOpenApi()
         .RequireAuthorization();
