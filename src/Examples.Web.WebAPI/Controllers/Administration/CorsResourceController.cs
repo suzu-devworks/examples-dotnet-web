@@ -1,3 +1,4 @@
+using Examples.Web.Infrastructure;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -56,7 +57,7 @@ public class CorsResourceController(ILogger<CorsResourceController> logger) : Co
     [HttpPut("{id}")]
     public IActionResult Put(string id, IDictionary<string, string> inputs)
     {
-        _logger.LogTrace("Put called by {id}.", id);
+        _logger.LogTrace("Put called by {id}.", id.Sanitize());
         inputs.Add("DateTimeOffset.Now", DateTimeOffset.Now.ToString());
 
         return Ok(inputs);
@@ -66,7 +67,7 @@ public class CorsResourceController(ILogger<CorsResourceController> logger) : Co
     [HttpDelete("{id}")]
     public IActionResult Delete(string id)
     {
-        _logger.LogTrace("Delete called by {id}. ", id);
+        _logger.LogTrace("Delete called by {id}. ", id.Sanitize());
 
         return NoContent();
     }

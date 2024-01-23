@@ -17,7 +17,7 @@ public class FakeEmailSender(
         var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         File.WriteAllText(Path.Combine(dir!, "confirm.html"), ToHtml(email, subject, htmlMessage));
-        _logger.LogWarning("Generate test email to {email}: {path}", email, Path.Combine(dir!, "confirm.html"));
+        _logger.LogWarning("Generate test email: {path}", Path.Combine(dir!, "confirm.html"));
 
         return Task.Delay(500);
     }
