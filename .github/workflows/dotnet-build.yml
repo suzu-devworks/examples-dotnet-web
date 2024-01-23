@@ -5,14 +5,14 @@ on:
   #  branches: [ "main" ]
   pull_request:
     branches:
-      - 'main'
+      - "main"
     paths:
-      - 'src/**'
+      - "src/**"
   workflow_dispatch:
 
 env:
   # The .NET SDK version to use
-  DOTNET_VERSION: '8.0.x' 
+  DOTNET_VERSION: "8.0.x"
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: dotnet restore
-        
+
       - name: Build
         run: dotnet build --configuration Release --no-restore
 

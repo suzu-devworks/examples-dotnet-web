@@ -10,7 +10,7 @@ on:
 
 env:
   # The .NET SDK version to use
-  DOTNET_VERSION: '8.0.x' 
+  DOTNET_VERSION: "8.0.x"
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Tools
         run: dotnet tool restore
-      
+
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
