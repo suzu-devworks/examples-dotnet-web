@@ -2,12 +2,12 @@
 
 ## Reference
 
-- [Microsoft Account external login setup with ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-8.0)
+- [Microsoft Account external login setup with ASP.NET Core - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-8.0)
 
 
 ## Create client secret
 
-- [Azure portal - App registrations](https://go.microsoft.com/fwlink/?linkid=2083908)
+- [App registrations - Azure portal](https://go.microsoft.com/fwlink/?linkid=2083908)
 
 
 ## Store the Microsoft client ID and secret

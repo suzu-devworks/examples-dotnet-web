@@ -2,7 +2,7 @@
 
 ## References
 
-- [Configure ASP.NET Core Identity ...](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-8.0)
+- [Configure ASP.NET Core Identity - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-8.0)
 
 
 ## Scaffold UI files

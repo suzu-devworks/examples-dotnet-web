@@ -2,7 +2,7 @@
 
 ## References
 
-- [How to use Identity to secure a Web API backend for SPAs](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-8.0)
+- [How to use Identity to secure a Web API backend for SPAs - Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-8.0)
 
 ## How to use Identity to secure a Web API backend for SPAs
 
@@ -40,19 +40,20 @@ dotnet add package Swashbuckle.AspNetCore
 
 ### Add Api
 
-- [WeatherForecastApiExtensions.cs see ...](/src/Examples.Web.Authentication.Identity/Api/WeatherForecastApiExtensions.cs)
+- [WeatherForecastApiExtensions.cs ...](/src/Examples.Web.Authentication.Identity/Api/WeatherForecastApiExtensions.cs)
 
 ```diff
 --- a/src/Examples.Web.Authentication.Identity/Program.cs
 +++ b/src/Examples.Web.Authentication.Identity/Program.cs
 @@ -4,6 +4,7 @@
- using Microsoft.Extensions.Configuration;
- using Microsoft.Extensions.DependencyInjection;
- using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 +using Examples.Web.Authentication.Identity.Api;
- using Examples.Web.Infrastructure.Authentication.Identity;
- 
- var builder = WebApplication.CreateBuilder(args);
+using Examples.Web.Infrastructure.Authentication.Identity;
+
+var builder = WebApplication.CreateBuilder(args);
 @@ -69,4 +70,6 @@
      pattern: "{controller=Home}/{action=Index}/{id?}");
  app.MapRazorPages();
@@ -102,7 +103,7 @@ When coexisting with webapp?:
 
 > I haven't set IdentityConstants.BearerAndApplicationScheme, I don't know if it's needed.
 
-- [AddIdentityApiEndpoints<TUser>() see ...](https://github.com/dotnet/aspnetcore/blob/main/src/Identity/Core/src/IdentityServiceCollectionExtensions.cs#L134)
+- [AddIdentityApiEndpoints<TUser>( ) ...](https://github.com/dotnet/aspnetcore/blob/main/src/Identity/Core/src/IdentityServiceCollectionExtensions.cs#L134)
 
 ### Map Identity routes
 
@@ -110,13 +111,17 @@ When coexisting with webapp?:
 --- a/src/Examples.Web.Authentication.Identity/Program.cs
 +++ b/src/Examples.Web.Authentication.Identity/Program.cs
 @@ -1,5 +1,7 @@
- using System;
- using Microsoft.AspNetCore.Builder;
-+using Microsoft.AspNetCore.Identity;
+using System;
+using Microsoft.AspNetCore.Builder;
+
++
+using Microsoft.AspNetCore.Identity;
+
 +using Microsoft.AspNetCore.Routing;
- using Microsoft.EntityFrameworkCore;
- using Microsoft.Extensions.Configuration;
- using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 @@ -70,6 +72,7 @@
      pattern: "{controller=Home}/{action=Index}/{id?}");
  app.MapRazorPages();
@@ -165,7 +170,7 @@ An easy way to test authentication is to use the Swagger UI included in the proj
 
 To provide a way for the user to log out, define a /logout endpoint like the following example:
 
-- [IdentityApiExtensions.cs see ...](/src/Examples.Web.Authentication.Identity/Areas/Identity/Api/IdentityApiExtensions.cs)
+- [IdentityApiExtensions.cs ...](/src/Examples.Web.Authentication.Identity/Areas/Identity/Api/IdentityApiExtensions.cs)
 
 ### Change Path base
 
@@ -191,7 +196,7 @@ The default is direct, such as "/login", so I want a prefix.
 
 ## Swagger UI Configuration
 
-- [Add Security Definitions and Requirements for Bearer auth](https://github.com/domaindrivendev/Swashbuckle.AspNetCore?tab=readme-ov-file#add-security-definitions-and-requirements-for-bearer-auth)
+- [Add Security Definitions and Requirements for Bearer auth - GitHub](https://github.com/domaindrivendev/Swashbuckle.AspNetCore?tab=readme-ov-file#add-security-definitions-and-requirements-for-bearer-auth)
 
 ### AddSecurityDefinition
 

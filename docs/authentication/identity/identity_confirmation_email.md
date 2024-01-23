@@ -2,7 +2,7 @@
 
 ## References
 
-- [Account confirmation and password recovery in ASP.NET Core ...](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/accconfirm?view=aspnetcore-8.0&tabs=netcore-cli)
+- [Account confirmation and password recovery in ASP.NET Core - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/accconfirm?view=aspnetcore-8.0&tabs=netcore-cli)
 
 
 ### Implement IEmailSender
@@ -11,7 +11,8 @@ We recommend using [SendGrid](https://sendgrid.kke.co.jp/) or another email serv
 
 The sample outputs the contents of the email to a file and confirms it.
 
-[see FakeEmailSender.cs ...](/src/Examples.Web.Authentication.Identity/Services/FakeEmailSender.cs)
+ 
+ - [FakeEmailSender.cs ...](/src/Examples.Web.Authentication.Identity/Services/FakeEmailSender.cs)
 
 ### Configure app to support email
 

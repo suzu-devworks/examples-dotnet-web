@@ -17,7 +17,7 @@ ASP.NET Core Identity:
 
 ## References
 
-- [Introduction to Identity on ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=netcore-cli)
+- [Introduction to Identity on ASP.NET Core - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=netcore-cli)
 
 
 ## Scaffold Identity in ASP.NET Core projects
@@ -50,9 +50,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
 dotnet add package Microsoft.AspNetCore.Identity.UI
 dotnet add package Microsoft.EntityFrameworkCore.Tools
-
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-# or
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
 

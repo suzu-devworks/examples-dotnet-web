@@ -11,7 +11,7 @@ Enables users to sign in using OAuth 2.0 with credentials from external authenti
 
 ## References
 
-- [Facebook, Google, and external provider authentication in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio-code)
+- [Facebook, Google, and external provider authentication in ASP.NET Core - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio-code)
 
 
 ## Configuration
@@ -22,7 +22,7 @@ Social login providers assign Application Id and Application Secret tokens durin
 
 The Secret Manager tool hides implementation details, such as where and how the values are stored.
 
-- [Safe storage of app secrets in development in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/app-secrets?view=aspnetcore-8.0&tabs=linux#secret-manager)
+- [Safe storage of app secrets in development in ASP.NET Core - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/app-secrets?view=aspnetcore-8.0&tabs=linux#secret-manager)
 
 ```shell
 dotnet user-secrets init
@@ -39,8 +39,8 @@ dotnet user-secrets list
 - [Google ...](./oauth2/google_oauth2.md)
 - [Microsoft ...](./oauth2/microsoft_oauth2.md)
 - [Github ...](./oauth2/github_oauth2.md)
-- Other provider
-    - [External OAuth authentication providers](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/other-logins?view=aspnetcore-8.0)
+
+- [External OAuth authentication providers - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/other-logins?view=aspnetcore-8.0)
 
 
 ### Multiple authentication providers

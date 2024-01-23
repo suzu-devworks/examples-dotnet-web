@@ -6,5 +6,5 @@
 
 ## References
 
-- [AspNetCore.Authentication.Basic - github](https://github.com/mihirdilip/aspnetcore-authentication-basic)
-- [RFC 7617(ja)](https://tex2e.github.io/rfc-translater/html/rfc7617.html)
+- [AspNetCore.Authentication.Basic - GitHub](https://github.com/mihirdilip/aspnetcore-authentication-basic)
+- [RFC 7617 (ja)](https://tex2e.github.io/rfc-translater/html/rfc7617.html)

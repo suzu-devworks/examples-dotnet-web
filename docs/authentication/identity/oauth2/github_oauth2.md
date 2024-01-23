@@ -2,8 +2,8 @@
 
 ## Reference
 
-- [OAuth app authorization](https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
-- [AspNet.Security.OAuth.Providers](https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers)
+- [OAuth app authorization - GitHub](https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
+- [AspNet.Security.OAuth.Providers - GitHub](https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers)
 
 ## Create the OAuth 2.0 Client ID and secret
 

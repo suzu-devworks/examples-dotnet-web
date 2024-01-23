@@ -27,5 +27,5 @@ Configure the project to not generate Swagger documents.
 ## References
 
 * [Swagger.io](https://swagger.io/)
-* [Swashbuckle.AspNetCore - github](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
+* [Swashbuckle.AspNetCore - GitHub](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 

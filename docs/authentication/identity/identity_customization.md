@@ -2,7 +2,7 @@
 
 ## References
 
-- [Identity model customization in ASP.NET Core ...](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-8.0
+- [Identity model customization in ASP.NET Core - Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-8.0
 )
 
 ## Naming Login
@@ -163,7 +163,11 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 
 ## Localization of validation messages
 
-- [IdentityErrorDescriber クラス - Microsoft Docs](https://learn.microsoft.com/ja-jp/dotnet/api/microsoft.aspnetcore.identity.identityerrordescriber?view=aspnetcore-8.0)
+Create a class that implements `IdentityErrorDescriber` and set it with `AddErrorDescriber()`.
+
+- [IdentityErrorDescriber クラス - Microsoft Learn](https://learn.microsoft.com/ja-jp/dotnet/api/microsoft.aspnetcore.identity.identityerrordescriber?view=aspnetcore-8.0)
+- [JapaneseErrorDescriber.cs ...](/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/JapaneseErrorDescriber.cs)
+
 
 ```diff
 --- a/src/Examples.Web.Authentication.Identity/Infrastructure/Authentication/Identity/ServiceCollectionExtensions.cs

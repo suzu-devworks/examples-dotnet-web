@@ -2,13 +2,14 @@
 
 ## Reference
 
-- [Enable QR code generation for TOTP authenticator apps in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-enable-qrcodes?view=aspnetcore-8.0)
+- [Enable QR code generation for TOTP authenticator apps in ASP.NET Core - Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-enable-qrcodes?view=aspnetcore-8.0)
+
 
 ## Enable QR code generation
 
 ### Download qrcode.js library.
 
-- [qrcode.js](https://davidshimjs.github.io/qrcodejs/
+- [download qrcode.js - davidshimjs.github.io](https://davidshimjs.github.io/qrcodejs/)
 
 1. download .zip 
 2. copy `qrcode.min.js` to `wwwroot\lib` 
