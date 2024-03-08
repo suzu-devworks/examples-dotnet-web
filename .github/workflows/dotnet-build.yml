@@ -1,0 +1,41 @@
+name: build
+
+on:
+  #push:
+  #  branches: [ "main" ]
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "src/**"
+  workflow_dispatch:
+
+env:
+  # The .NET SDK version to use
+  DOTNET_VERSION: "8.0.x"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Auth Github
+        run: dotnet nuget update source github --username suzu-devworks --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+
+      - name: Install Tools
+        run: dotnet tool restore
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal

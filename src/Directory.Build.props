@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <LatestFramework>net8.0</LatestFramework>
+    <AvailableLTSFrameworks>net8.0;net6.0</AvailableLTSFrameworks>
+  </PropertyGroup>
+</Project>
