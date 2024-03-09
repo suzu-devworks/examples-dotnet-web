@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.Infrastructure.Tests", "src\Examples.Web.Infrastructure.Tests\Examples.Web.Infrastructure.Tests.csproj", "{66966715-C699-4DAB-80D4-1CC574332501}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.WebAPI", "src\Examples.Web.WebAPI\Examples.Web.WebAPI.csproj", "{C39E3F90-6F07-4C68-9685-24B26DC77003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,14 @@ Global
 		{66966715-C699-4DAB-80D4-1CC574332501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66966715-C699-4DAB-80D4-1CC574332501}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66966715-C699-4DAB-80D4-1CC574332501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39E3F90-6F07-4C68-9685-24B26DC77003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39E3F90-6F07-4C68-9685-24B26DC77003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39E3F90-6F07-4C68-9685-24B26DC77003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39E3F90-6F07-4C68-9685-24B26DC77003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{358D4509-4861-4BBB-8F96-11EBD391BF56} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
 		{66966715-C699-4DAB-80D4-1CC574332501} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
+		{C39E3F90-6F07-4C68-9685-24B26DC77003} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
 	EndGlobalSection
 EndGlobal
