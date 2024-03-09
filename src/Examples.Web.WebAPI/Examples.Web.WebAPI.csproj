@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="nlog.config" CopyToOutputDirectory="Never" />
     <None Include="nlog.Development.config" CopyToOutputDirectory="Never" />
   </ItemGroup>

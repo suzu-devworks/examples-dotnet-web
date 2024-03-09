@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Examples.Web.Infrastructure.Routing;
 using NLog;
 using NLog.Web;
 
@@ -15,7 +17,13 @@ try
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(options =>
+    {
+        //# Set kebab-case URLs.
+        options.Conventions.Add(new RouteTokenTransformerConvention(
+            new SlugifyParameterTransformer()));
+    });
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
