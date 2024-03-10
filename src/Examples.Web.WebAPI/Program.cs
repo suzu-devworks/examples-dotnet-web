@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Routing;
 using NLog;
 using NLog.Web;
@@ -30,6 +31,9 @@ try
 
     var app = builder.Build();
 
+    //# Setting order is important!
+    app.UsePathBase(app.Configuration.GetValue("PathBase", ""));
+
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
@@ -37,8 +41,9 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
+    app.UseHttpsRedirection(app.Configuration.GetValue("UseHttpsRedirection", true));
 
+    app.UseRouting();
     app.UseAuthorization();
 
     app.MapControllers();
