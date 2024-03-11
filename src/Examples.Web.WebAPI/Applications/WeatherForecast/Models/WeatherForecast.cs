@@ -1,6 +1,6 @@
-namespace Examples.Web.WebAPI;
+namespace Examples.Web.WebAPI.Applications.WeatherForecast.Models;
 
-public class WeatherForecast
+public record WeatherForecast
 {
     public DateOnly Date { get; set; }
 

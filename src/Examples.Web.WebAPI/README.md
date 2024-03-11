@@ -12,6 +12,8 @@ dotnet new webapi --use-controllers -o src/Examples.Web.WebAPI
 dotnet sln add src/Examples.Web.WebAPI/
 cd src/Examples.Web.WebAPI
 dotnet add package Swashbuckle.AspNetCore
+
+dotnet user-secrets init
 cd ../../
 
 # Update outdated package
