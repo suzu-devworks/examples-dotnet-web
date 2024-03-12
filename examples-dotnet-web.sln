@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.HostingStartup
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.Authentication.Basic", "src\Examples.Web.Authentication.Basic\Examples.Web.Authentication.Basic.csproj", "{3BFF6DF4-E3AC-4847-BBF8-70F8EED44157}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Web.Authentication.Identity", "src\Examples.Web.Authentication.Identity\Examples.Web.Authentication.Identity.csproj", "{6A4C2731-56CC-44D0-9372-30C7A29D5D22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{3BFF6DF4-E3AC-4847-BBF8-70F8EED44157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BFF6DF4-E3AC-4847-BBF8-70F8EED44157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BFF6DF4-E3AC-4847-BBF8-70F8EED44157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A4C2731-56CC-44D0-9372-30C7A29D5D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A4C2731-56CC-44D0-9372-30C7A29D5D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A4C2731-56CC-44D0-9372-30C7A29D5D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A4C2731-56CC-44D0-9372-30C7A29D5D22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{358D4509-4861-4BBB-8F96-11EBD391BF56} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
@@ -58,5 +64,6 @@ Global
 		{F889514C-C8C1-430A-A07F-A0D88A18711E} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
 		{84E63274-DE37-4BFF-AAE7-8A8121DD07B2} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
 		{3BFF6DF4-E3AC-4847-BBF8-70F8EED44157} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
+		{6A4C2731-56CC-44D0-9372-30C7A29D5D22} = {CC54445D-6236-48BC-AF4A-83760BD2436D}
 	EndGlobalSection
 EndGlobal
