@@ -1,5 +1,9 @@
 # Examples.Web.WebUI
 
+## Index
+
+- [Tiny colored console](../../docs/logging/logging_use_console.md)
+
 
 ## Project Initialize
 
