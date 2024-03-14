@@ -1,4 +1,4 @@
-# ASP.NET Core Filters
+# Filters in ASP.NET Core
 
 ## Index
 

@@ -1,4 +1,4 @@
-# ASP.NET Core Logging
+# Logging in ASP.NET Core
 
 ## Use Microsoft.Extensions.Logging
 
