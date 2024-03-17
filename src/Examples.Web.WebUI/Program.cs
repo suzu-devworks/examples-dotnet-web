@@ -2,6 +2,13 @@ using Examples.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddInMemoryCollection(
+    new Dictionary<string, string?>
+    {
+        ["ConfigurationKey1"] = "From WebApplicationBuilder: overwrite.",
+        ["ConfigurationKey2"] = "From WebApplicationBuilder: overwrite."
+    });
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 

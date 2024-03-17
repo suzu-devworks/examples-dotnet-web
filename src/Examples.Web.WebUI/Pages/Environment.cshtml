@@ -1,0 +1,31 @@
+@page
+@model Examples.Web.WebUI.Pages.Environment
+@{
+    ViewData["Title"] = "Environment";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>This page is used to check various ASP.NET environment settings.</p>
+
+<section>
+    <h2>Environments of Hosting startup </h2>
+    <div>
+        <p>Call ConfigureAppConfiguration:</p>
+        <ul>
+            <li><span>ServiceKeyDevelopmentLibrary:</span><span>@Model.ServiceKeyDevelopmentLibrary</span></li>
+            <li><span>ServiceKeyProductionLibrary:</span><span>@Model.ServiceKeyProductionLibrary</span></li>
+            <li><span>ServiceKeyDevelopment:</span><span>@Model.ServiceKeyDevelopment</span></li>
+            <li><span>ServiceKeyProduction:</span><span>@Model.ServiceKeyProduction</span></li>
+        </ul>
+        <p>Priority:</p>
+        <ul>
+            @foreach (var env in Model.Environments)
+            {
+                <li><span>@env.Key</span><span>@env.Value</span></li>
+            }
+        </ul>
+    </div>
+</section>
+<div>
+
+</div>
