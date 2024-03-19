@@ -6,6 +6,8 @@ using Examples.Web.Infrastructure.Filters.ProcessingOrder.Results;
 
 namespace Examples.Web.WebUI.Pages
 {
+    [ShortCircuitingResourceFilter(["ButtonX"])]
+    [ShortCircuitingRazorMethodPageFilter(["Button3"])]
     [ServiceFilter<LoggingAsyncResultFilter>]
     [TypeFilter<LoggingAsyncPageFilter>]
     [ResponseHeader("Author", "suzuki")]
@@ -29,5 +31,10 @@ namespace Examples.Web.WebUI.Pages
             throw new ApplicationException("Throw an exception with button2");
         }
 
+        public Task OnPostButton3Async()
+        {
+            _logger.LogInformation("Razor button3 called");
+            return Task.CompletedTask;
+        }
     }
 }
