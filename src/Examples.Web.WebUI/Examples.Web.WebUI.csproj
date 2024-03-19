@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\Examples.Web.HostingStartup\Examples.Web.HostingStartup.csproj" />
   </ItemGroup>
 
 </Project>
