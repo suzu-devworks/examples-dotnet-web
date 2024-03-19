@@ -7,8 +7,10 @@
         ".vscode"
     ],
     "words": [
+        "Antiforgery",
         "classlib",
         "HSTS",
+        "Linq",
         "Swashbuckle"
     ]
 }

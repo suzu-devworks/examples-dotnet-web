@@ -7,4 +7,8 @@
     <UserSecretsId>f5310229-8390-413e-9b22-3c7b94c068c0</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

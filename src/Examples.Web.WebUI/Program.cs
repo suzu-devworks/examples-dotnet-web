@@ -1,7 +1,12 @@
+using Examples.Web.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//# Configure Infrastructures.
+builder.Services.AddProcessingOrderFilters();
 
 var app = builder.Build();
 
