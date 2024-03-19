@@ -1,4 +1,4 @@
-# ASP.NET Core Security
+# Security in ASP.NET Core 
 
 ## Configurations
 

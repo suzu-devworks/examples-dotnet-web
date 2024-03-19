@@ -1,8 +1,14 @@
 # docs
 
-- [ASP.NET Core in DevContainers](./devcontainers/README.md)
-- [ASP.NET Core Logging](./logging/README.md)
-- [ASP.NET Core Routing](./routing/README.md)
-- [ASP.NET Core Security](./security/README.md)
-- [Debug](./debug.md)
+## Development environments
 
+- [ASP.NET Core in DevContainers](./devcontainers/README.md)
+
+
+## ASP.NET features
+
+- [Authentication and Authorization](./auth/README.md)
+- [Filters](./filters/README.md)
+- [Logging](./logging/README.md)
+- [Routing](./routing/README.md)
+- [Security](./security/README.md)

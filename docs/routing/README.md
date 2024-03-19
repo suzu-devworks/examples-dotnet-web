@@ -1,4 +1,4 @@
-# ASP.NET Core Routing
+# Routing in ASP.NET Core
 
 ## Controller routing
 
