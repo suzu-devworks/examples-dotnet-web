@@ -11,4 +11,5 @@
 - [Filters](./filters/README.md)
 - [Logging](./logging/README.md)
 - [Routing](./routing/README.md)
+- [Serialization](./serialization/README.md)
 - [Security](./security/README.md)

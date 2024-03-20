@@ -23,11 +23,13 @@ try
         builder.Configuration.GetSection("Kestrel").Bind(options));
 
     builder.Services.AddControllers(options =>
-    {
-        //# Set kebab-case URLs.
-        options.Conventions.Add(new RouteTokenTransformerConvention(
-            new SlugifyParameterTransformer()));
-    });
+        {
+            //# Set kebab-case URLs.
+            options.Conventions.Add(new RouteTokenTransformerConvention(
+                new SlugifyParameterTransformer()));
+        })
+        //# Set JSON custom serializer options.
+        .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
