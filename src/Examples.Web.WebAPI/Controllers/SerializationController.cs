@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Examples.Web.Infrastructure.Serialization;
 
 namespace Examples.Web.WebAPI.Controllers;
 
@@ -21,7 +22,9 @@ public class SerializationController(ILogger<SerializationController> logger) : 
         return new Model[] {
             new (1, "item-1"),
             new (2, "item-2", DateTime: now.DateTime, DateTimeOffset: now.ToUniversalTime(), TimeSpan: now.TimeOfDay, DayOfWeek: now.DayOfWeek),
-            new (3, "item-3", LongValue: long.MaxValue, Range: new Range(4, 12), Index: new Index(7))
+            new (3, "item-3", LongValue: long.MaxValue, Range: new Range(4, 12), Index: new Index(7)),
+            new (4, "item-4", LocalDateTime: DateTime.Now, UtcDateTime: DateTime.Now, UnspecifiedDateTime: DateTime.Now ),
+            new (5, "item-5", LocalDateTime: DateTime.UtcNow, UtcDateTime: DateTime.UtcNow, UnspecifiedDateTime: DateTime.UtcNow ),
         };
     }
 
@@ -48,8 +51,12 @@ public class SerializationController(ILogger<SerializationController> logger) : 
         DateTimeOffset? DateTimeOffset = null,
         TimeSpan? TimeSpan = null,
         DayOfWeek? DayOfWeek = null,
+        [property: ZoneHandlingDateTimeJsonConverter(kind: DateTimeKind.Local)] DateTime? LocalDateTime = null,
+        [property: ZoneHandlingDateTimeJsonConverter(kind: DateTimeKind.Utc)] DateTime? UtcDateTime = null,
+        [property: ZoneHandlingDateTimeJsonConverter(kind: DateTimeKind.Unspecified)] DateTime? UnspecifiedDateTime = null,
         long? LongValue = null,
         Range? Range = null,
         Index? Index = null
     );
+
 }
