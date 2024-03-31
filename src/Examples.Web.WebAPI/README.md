@@ -6,6 +6,7 @@
 - [URLs case in controller routing](../../docs/routing/routing_controller_urls_case.md)
 - [Urls Path base rewriting](../../docs/routing/routing_urls_rewruting.md)
 - [Secure HTTP Response Header](../../docs/security/security_http_response_header.md)
+- [Custom JSON serialization](../../docs/serialization/serialization_json.md)
 
 
 ## Project Initialize
