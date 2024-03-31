@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Routing;
+using Examples.Web.WebAPI.Applications;
 using NLog;
 using NLog.Web;
 
@@ -23,15 +24,23 @@ try
         builder.Configuration.GetSection("Kestrel").Bind(options));
 
     builder.Services.AddControllers(options =>
-    {
-        //# Set kebab-case URLs.
-        options.Conventions.Add(new RouteTokenTransformerConvention(
-            new SlugifyParameterTransformer()));
-    });
+        {
+            //# Set kebab-case URLs.
+            options.Conventions.Add(new RouteTokenTransformerConvention(
+                new SlugifyParameterTransformer()));
+        })
+        //# Set JSON custom serializer options.
+        .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    //# Configure Custom Options.
+    builder.Services.AddRequestLocalization(options => options.UseCustomCultures());
+
+    //# Configure Applications Services.
+    builder.Services.AddApplicationsServices();
 
     var app = builder.Build();
 
@@ -50,6 +59,8 @@ try
     app.UseRouting();
     app.UseAuthorization();
 
+    //# Use Middleware.
+    app.UseRequestLocalization();
     //# Response Header: Security settings.
     app.UseSecurityHttpResponseHeader();
 
