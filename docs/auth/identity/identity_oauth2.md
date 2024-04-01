@@ -14,7 +14,7 @@ Enables users to sign in using OAuth 2.0 with credentials from external authenti
 
 ## References
 
-- [Facebook, Google, and external provider authentication in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio-code)
+- [Facebook and Google authentication in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio-code)
 
 <!-- ----- -->
 

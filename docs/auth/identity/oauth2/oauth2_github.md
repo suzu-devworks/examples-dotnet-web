@@ -3,12 +3,12 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [GitHub OAuth 2.0 login setup in ASP.NET Core](#github-oauth-20-login-setup-in-aspnet-core)
-  - [Reference](#reference)
+  - [References](#references)
   - [Create the OAuth 2.0 Client ID and secret](#create-the-oauth-20-client-id-and-secret)
     - [Store the client ID and secret](#store-the-client-id-and-secret)
   - [Configure Google authentication](#configure-google-authentication)
 
-## Reference
+## References
 
 - [OAuth app authorization](https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
 - [AspNet.Security.OAuth.Providers](https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers)

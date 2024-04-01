@@ -3,13 +3,13 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [Google OAuth 2.0 login setup in ASP.NET Core](#google-oauth-20-login-setup-in-aspnet-core)
-  - [Reference](#reference)
+  - [References](#references)
   - [Create the Google OAuth 2.0 Client ID and secret](#create-the-google-oauth-20-client-id-and-secret)
   - [Store the Google client ID and secret](#store-the-google-client-id-and-secret)
   - [Configure Google authentication](#configure-google-authentication)
 
 
-## Reference
+## References
 
 - [Google external login setup in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0)
 

@@ -1,8 +1,20 @@
 # Two factor authentication 
 
-## Reference
+## Table of Contents <!-- omit in toc -->
+
+- [Two factor authentication](#two-factor-authentication)
+  - [References](#references)
+  - [Enable QR code generation](#enable-qr-code-generation)
+    - [Download qrcode.js library.](#download-qrcodejs-library)
+    - [Scaffold Identity to generate](#scaffold-identity-to-generate)
+    - [Modify codes](#modify-codes)
+  - [Change the site name in the QR code](#change-the-site-name-in-the-qr-code)
+
+
+## References
 
 - [Enable QR code generation for TOTP authenticator apps in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-enable-qrcodes?view=aspnetcore-8.0)
+
 
 ## Enable QR code generation
 

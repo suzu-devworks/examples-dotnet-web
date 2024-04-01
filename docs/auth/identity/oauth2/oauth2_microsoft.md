@@ -3,13 +3,13 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [Microsoft Account OAuth 2.0 login setup with ASP.NET Core](#microsoft-account-oauth-20-login-setup-with-aspnet-core)
-  - [Reference](#reference)
+  - [References](#references)
   - [Create client secret](#create-client-secret)
   - [Store the Microsoft client ID and secret](#store-the-microsoft-client-id-and-secret)
   - [Configure Google authentication](#configure-google-authentication)
 
 
-## Reference
+## References
 
 - [Microsoft Account external login setup with ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-8.0)
 
