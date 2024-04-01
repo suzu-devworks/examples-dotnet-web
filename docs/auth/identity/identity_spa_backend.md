@@ -13,6 +13,7 @@
     - [Secure selected endpoints](#secure-selected-endpoints)
     - [Swagger](#swagger)
     - [Add Log-out](#add-log-out)
+    - [Move path base](#move-path-base)
 
 
 ## References
@@ -198,3 +199,31 @@ To provide a way for the user to log out, define a /logout endpoint like the fol
  app.MapWeatherForecastApi()
      .RequireAuthorization();
 ```
+
+### Move path base
+
+The default is direct, such as "/login", so I want a prefix.
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Program.cs
++++ b/src/Examples.Web.Authentication.Identity/Program.cs
+@@ -66,10 +66,13 @@
+     pattern: "{controller=Home}/{action=Index}/{id?}");
+ app.MapRazorPages();
+ 
+-app.MapIdentityApi<IdentityUser>();
+-app.MapIdentityLogoutApi();
++var api = app.MapGroup("/api");
+ 
+-app.MapWeatherForecastApi()
++var auth = api.MapGroup("/auth");
++auth.MapIdentityApi<IdentityUser>();
++auth.MapIdentityLogoutApi();
++
++api.MapWeatherForecastApi()
+     .RequireAuthorization();
+ 
+ app.Run();
+```
+
+> I want to make it a little more beautiful
