@@ -14,6 +14,8 @@ ASP.NET Core Identity:
 - [Two factor authentication](./identity_2fa.md)
 - [Account confirmation and password recovery](./identity_confirmation_email.md)
 
+- [Web API backend for SPAs](./identity_spa_backend.md)
+
 
 ## References
 

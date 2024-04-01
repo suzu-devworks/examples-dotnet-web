@@ -6,6 +6,9 @@
 - [Identity model customization](../../docs/auth/identity/identity_customization.md)
 - [OAuth 2.0 provider authentication](../../docs/auth/identity/identity_oauth2.md)
 - [Two factor authentication ](./identity_2fa.md)
+- [Account confirmation and password recovery](./identity_confirmation_email.md)
+
+- [Web API backend for SPAs](./identity_spa_backend.md)
 
 
 ## Project Initialize
