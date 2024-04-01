@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
 using Examples.Web.Infrastructure.Authentication.Identity;
+using Examples.Web.Authentication.Identity.Services;
 
 namespace Examples.Web.Infrastructure;
 
@@ -73,9 +75,21 @@ public static class ServiceCollectionExtensions
             options.LoginPath = "/Identity/Account/Login";
             // ReturnUrlParameter requires Microsoft.AspNetCore.Authentication.Cookies;
             //using Microsoft.AspNetCore.Authentication.Cookies;
+
             options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             options.SlidingExpiration = true;
         });
+
+        services.AddTransient<IEmailSender, FakeEmailSender>();
+
+        services.ConfigureApplicationCookie(o =>
+        {
+            o.ExpireTimeSpan = TimeSpan.FromDays(5);
+            o.SlidingExpiration = true;
+        });
+
+        services.Configure<DataProtectionTokenProviderOptions>(o =>
+            o.TokenLifespan = TimeSpan.FromHours(3));
 
         return services;
     }

@@ -2,8 +2,10 @@
 
 ## Index
 
-- [Scaffold Identity in ASP.NET Core projects](../../docs/auth/identity/identity_customization.md)
+- [Scaffold Identity in ASP.NET Core projects](../../docs/auth/identity/identity_scaffold.md)
 - [Identity model customization](../../docs/auth/identity/identity_customization.md)
+- [OAuth 2.0 provider authentication](../../docs/auth/identity/identity_oauth2.md)
+- [Two factor authentication ](./identity_2fa.md)
 
 
 ## Project Initialize
@@ -26,13 +28,16 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
-### Run the Identity scaffolder with the options you want
+dotnet add package Microsoft.AspNetCore.Authentication.Google
+dotnet add package Microsoft.AspNetCore.Authentication.MicrosoftAccount
+dotnet add package AspNet.Security.OAuth.GitHub
+
+### Run the Identity scaffolds with the options you want
 dotnet aspnet-codegenerator identity --useDefaultUI --databaseProvider 'sqlite'
 
 ### Create a migration and update the database. 
 dotnet ef migrations add CreateIdentitySchema
 dotnet ef database update
-
 
 cd ../../
 
