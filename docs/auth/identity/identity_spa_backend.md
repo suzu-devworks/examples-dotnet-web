@@ -11,9 +11,10 @@
     - [Activate Identity APIs](#activate-identity-apis)
     - [Map Identity routes](#map-identity-routes)
     - [Secure selected endpoints](#secure-selected-endpoints)
-    - [Swagger](#swagger)
+    - [Swagger UI](#swagger-ui)
     - [Add Log-out](#add-log-out)
     - [Move path base](#move-path-base)
+  - [Will 401 not be returned if it coexists with the webapp?](#will-401-not-be-returned-if-it-coexists-with-the-webapp)
 
 
 ## References
@@ -170,15 +171,13 @@ Secure Swagger UI endpoints, as shown in the following example:
 app.MapSwagger().RequireAuthorization();
 ```
 
-### Swagger
+### Swagger UI
 
 An easy way to test authentication is to use the Swagger UI included in the project template.
 
 - http://localhost:5140/swagger/
 
 <img src="./_files/identity_spa_backend.png" width="70%" height="auto" />
-
-> Will 401 not be returned if it coexists with the webapp?
 
 
 ### Add Log-out
@@ -227,3 +226,59 @@ The default is direct, such as "/login", so I want a prefix.
 ```
 
 > I want to make it a little more beautiful
+
+
+## Will 401 not be returned if it coexists with the webapp?
+
+There is a feature in ASP.NET that automatically converts a 401 HTTP status code into a 302 redirect to the login page.
+
+It seems to be quite famous.
+
+For `application/json`, disable redirection:
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/IdentityServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/IdentityServiceCollectionExtensions.cs
+@@ -5,6 +5,7 @@
+ using Examples.Web.Authentication.Identity.Areas.Identity.Data;
+ using Examples.Web.Infrastructure.Authentication.Identity;
+ using Examples.Web.Authentication.Identity.Services;
++using Microsoft.Net.Http.Headers;
+ 
+ namespace Examples.Web.Infrastructure;
+ 
+@@ -36,6 +37,33 @@ public static class ServiceCollectionExtensions
+         services.AddAuthentication()
+             .AddBearerToken(IdentityConstants.BearerScheme);
+ 
++        services.ConfigureApplicationCookie(options =>
++        {
++            var onRedirectToLogin = options.Events.OnRedirectToLogin;
++            options.Events.OnRedirectToLogin = context =>
++            {
++                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
++                {
++                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
++                    return Task.CompletedTask;
++                }
++
++                return onRedirectToLogin.Invoke(context);
++            };
++
++            var onRedirectToAccessDenied = options.Events.OnRedirectToAccessDenied;
++            options.Events.OnRedirectToAccessDenied = context =>
++            {
++                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
++                {
++                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
++                    return Task.CompletedTask;
++                }
++
++                return onRedirectToAccessDenied.Invoke(context);
++            };
++        });
++
+         services.Configure<IdentityOptions>(options =>
+         {
+             // Default Lockout settings.
+```

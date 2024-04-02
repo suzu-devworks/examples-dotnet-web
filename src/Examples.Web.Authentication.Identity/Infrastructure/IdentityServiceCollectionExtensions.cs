@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
 using Examples.Web.Infrastructure.Authentication.Identity;
 using Examples.Web.Authentication.Identity.Services;
+using Microsoft.Net.Http.Headers;
 
 namespace Examples.Web.Infrastructure;
 
@@ -35,6 +36,33 @@ public static class ServiceCollectionExtensions
 
         services.AddAuthentication()
             .AddBearerToken(IdentityConstants.BearerScheme);
+
+        services.ConfigureApplicationCookie(options =>
+        {
+            var onRedirectToLogin = options.Events.OnRedirectToLogin;
+            options.Events.OnRedirectToLogin = context =>
+            {
+                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                }
+
+                return onRedirectToLogin.Invoke(context);
+            };
+
+            var onRedirectToAccessDenied = options.Events.OnRedirectToAccessDenied;
+            options.Events.OnRedirectToAccessDenied = context =>
+            {
+                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    return Task.CompletedTask;
+                }
+
+                return onRedirectToAccessDenied.Invoke(context);
+            };
+        });
 
         services.Configure<IdentityOptions>(options =>
         {
