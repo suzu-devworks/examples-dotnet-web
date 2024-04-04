@@ -1,19 +1,5 @@
 # ASP.NET Core Identity
 
-## Table of Contents <!-- omit in toc -->
-
-- [ASP.NET Core Identity](#aspnet-core-identity)
-  - [References](#references)
-  - [Introduction](#introduction)
-  - [Index](#index)
-
-## References
-
-- [ASP.NET Core の Identity の概要](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio)
-
-
-## Introduction
-
 ASP.NET Core Identity:
 
 - Is an API that supports user interface (UI) login functionality.
@@ -24,4 +10,13 @@ ASP.NET Core Identity:
 
 - [Scaffold Identity in ASP.NET Core projects](./identity_scaffold.md)
 - [Identity model customization](./identity_customization.md)
+- [OAuth 2.0 provider authentication](./identity_oauth2.md)
+- [Two factor authentication](./identity_2fa.md)
+- [Account confirmation and password recovery](./identity_confirmation_email.md)
 
+- [Web API backend for SPAs](./identity_spa_backend.md)
+
+
+## References
+
+- [Introduction to Identity on ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio)

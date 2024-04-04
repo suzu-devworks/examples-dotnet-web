@@ -47,6 +47,17 @@ Failed to compile the project in memory
 
 In this case, temporarily comment out the extension method part and you will be able to generate the scaffold.
 
+全てのUI fileが欲しい場合には `--useDefaultUI` も `--files` も指定しない
+
+```shell
+dotnet aspnet-codegenerator identity -dc Examples.Web.Authentication.Identity.Areas.Identity.Data.IdentityDataContext --databaseProvider 'sqlite'
+```
+
+`--files` も指定方法は次のコマンドで確認します。
+
+```shell
+dotnet aspnet-codegenerator identity --listFiles
+```
 
 ### Naming Login
 

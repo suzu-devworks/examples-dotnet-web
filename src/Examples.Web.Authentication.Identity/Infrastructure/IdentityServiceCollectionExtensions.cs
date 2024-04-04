@@ -1,7 +1,13 @@
+using System.Security.Claims;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
+using Examples.Web.Authentication.Identity.Services;
 using Examples.Web.Infrastructure.Authentication.Identity;
 
 namespace Examples.Web.Infrastructure;
@@ -28,7 +34,24 @@ public static class ServiceCollectionExtensions
 
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<IdentityDataContext>()
-            .AddErrorDescriber<JapaneseErrorDescriber>();
+            .AddErrorDescriber<JapaneseErrorDescriber>()
+            ;
+
+        const string CompositeIdentityScheme = "CompositeIdentityScheme";
+        services.AddAuthentication(CompositeIdentityScheme)
+            .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>(CompositeIdentityScheme, null, options =>
+            {
+                // options.ForwardDefault = IdentityConstants.BearerScheme;
+                options.ForwardDefault = IdentityConstants.ApplicationScheme;
+                options.ForwardAuthenticate = CompositeIdentityScheme;
+            })
+            .AddBearerToken(IdentityConstants.BearerScheme)
+            ;
+
+        services.ConfigureApplicationCookie(options => options
+            .UseUnauthorizedApiHandler()
+            .UseForbiddenApiHandler()
+            );
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -73,11 +96,42 @@ public static class ServiceCollectionExtensions
             options.LoginPath = "/Identity/Account/Login";
             // ReturnUrlParameter requires Microsoft.AspNetCore.Authentication.Cookies;
             //using Microsoft.AspNetCore.Authentication.Cookies;
+
             options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             options.SlidingExpiration = true;
         });
 
+        services.AddTransient<IEmailSender, FakeEmailSender>();
+
+        services.ConfigureApplicationCookie(o =>
+        {
+            o.ExpireTimeSpan = TimeSpan.FromDays(5);
+            o.SlidingExpiration = true;
+        });
+
+        services.Configure<DataProtectionTokenProviderOptions>(o =>
+            o.TokenLifespan = TimeSpan.FromHours(3));
+
         return services;
+    }
+
+
+    private sealed class CompositeAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder)
+           : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
+    {
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            var bearerResult = await Context.AuthenticateAsync(IdentityConstants.BearerScheme);
+
+            // Only try to authenticate with the application cookie if there is no bearer token.
+            if (!bearerResult.None)
+            {
+                return bearerResult;
+            }
+
+            // Cookie auth will return AuthenticateResult.NoResult() like bearer auth just did if there is no cookie.
+            return await Context.AuthenticateAsync(IdentityConstants.ApplicationScheme);
+        }
     }
 
 
