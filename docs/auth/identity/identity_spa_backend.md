@@ -11,9 +11,11 @@
     - [Activate Identity APIs](#activate-identity-apis)
     - [Map Identity routes](#map-identity-routes)
     - [Secure selected endpoints](#secure-selected-endpoints)
-    - [Swagger UI](#swagger-ui)
+    - [Use Swagger UI](#use-swagger-ui)
+  - [Customize](#customize)
     - [Add Log-out](#add-log-out)
     - [Move Path-base](#move-path-base)
+    - [Use Swagger authentication](#use-swagger-authentication)
   - [Will 401 not be returned if it coexists with the webapp?](#will-401-not-be-returned-if-it-coexists-with-the-webapp)
   - [Enable both IdentityConstants.BearerScheme and IdentityConstants.ApplicationScheme](#enable-both-identityconstantsbearerscheme-and-identityconstantsapplicationscheme)
 
@@ -172,13 +174,17 @@ Secure Swagger UI endpoints, as shown in the following example:
 app.MapSwagger().RequireAuthorization();
 ```
 
-### Swagger UI
+
+### Use Swagger UI
 
 An easy way to test authentication is to use the Swagger UI included in the project template.
 
 - http://localhost:5140/swagger/
 
-<img src="./_files/identity_spa_backend.png" width="70%" height="auto" />
+<img src="./_files/identity_spa_swagger.png" width="70%" height="auto" />
+
+
+## Customize
 
 ### Add Log-out
 
@@ -226,6 +232,121 @@ The default is direct, such as "/login", so I want a prefix.
 ```
 
 > I want to make it a little more beautiful
+
+### Use Swagger authentication
+
+Create an IOperationFilter for Swashbuckle and check the need to padlock individual actions.
+
+```cs
+public class AuthenticationRequestOperationFilter : IOperationFilter
+{
+    private readonly string _name;
+    private readonly string[] _scopes;
+
+    public AuthenticationRequestOperationFilter(string name, IEnumerable<string>? scopes = null)
+    {
+        _name = name;
+        _scopes = scopes?.ToArray() ?? Array.Empty<string>();
+    }
+
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        if (!RequireAuthorized(context))
+        {
+            return;
+        }
+
+        operation.Security.Add(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = _name
+                    }
+                },
+                _scopes
+            }
+        });
+
+        operation.Responses.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
+        operation.Responses.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
+
+        return;
+    }
+
+    private static bool RequireAuthorized(OperationFilterContext context)
+    {
+        var authorizes = context.ApiDescription.ActionDescriptor.EndpointMetadata.OfType<IAuthorizeData>();
+        var anonymousAttrs = context.ApiDescription.ActionDescriptor.EndpointMetadata.OfType<IAllowAnonymous>();
+
+        if (anonymousAttrs.Any())
+        {
+            return false;
+        }
+
+        if (!authorizes.Any())
+        {
+            return false;
+        }
+
+        // var attributes = anonymousAttrs.OfType<AuthorizeAttribute>();
+
+        return true;
+    }
+}
+```
+
+Enable the authentication function with `AddSecurityDefinition`.
+
+```cs
+ public static SwaggerGenOptions UseJWTBearerAuthorization(this SwaggerGenOptions options, string name = "BearerAuth")
+    {
+        options.AddSecurityDefinition(name, new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            Description = "JWT Authorization header using the Bearer scheme."
+        });
+
+        options.OperationFilter<AuthenticationRequestOperationFilter>(name);
+
+        return options;
+    }
+```
+
+Finally, set in AddSwaggerGen options.
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Program.cs
++++ b/src/Examples.Web.Authentication.Identity/Program.cs
+@@ -36,7 +36,7 @@
+ builder.Services.AddControllersWithViews();
+ 
+ builder.Services.AddEndpointsApiExplorer();
+-builder.Services.AddSwaggerGen();
++builder.Services.AddSwaggerGen(options => options.UseJWTBearerAuthorization());
+ 
+ var app = builder.Build();
+```
+
+There will be an authentication button on the top right:<br>
+<img src="./_files/identity_spa_swagger_auth.png" width="30%" height="auto" />
+
+When you press the button and log in using the dialog that appears:<br>
+<img src="./_files/identity_spa_swagger_dialog.png" width="70%" height="auto" />
+
+This is:<br>
+<img src="./_files/identity_spa_swagger_off.png" width="30%" height="auto" />
+
+It changes like this:<br>
+<img src="./_files/identity_spa_swagger_on.png" width="30%" height="auto" />
+
+You won't know if it can be authenticated until you send it. It's just that I started to send the Bearer.
+
 
 
 ## Will 401 not be returned if it coexists with the webapp?
