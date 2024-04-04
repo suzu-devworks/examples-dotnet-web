@@ -1,11 +1,14 @@
+using System.Security.Claims;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
-using Examples.Web.Infrastructure.Authentication.Identity;
 using Examples.Web.Authentication.Identity.Services;
-using Microsoft.Net.Http.Headers;
+using Examples.Web.Infrastructure.Authentication.Identity;
 
 namespace Examples.Web.Infrastructure;
 
@@ -32,37 +35,23 @@ public static class ServiceCollectionExtensions
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<IdentityDataContext>()
             .AddErrorDescriber<JapaneseErrorDescriber>()
-            .AddApiEndpoints();
+            ;
 
-        services.AddAuthentication()
-            .AddBearerToken(IdentityConstants.BearerScheme);
-
-        services.ConfigureApplicationCookie(options =>
-        {
-            var onRedirectToLogin = options.Events.OnRedirectToLogin;
-            options.Events.OnRedirectToLogin = context =>
+        const string CompositeIdentityScheme = "CompositeIdentityScheme";
+        services.AddAuthentication(CompositeIdentityScheme)
+            .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>(CompositeIdentityScheme, null, options =>
             {
-                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
-                {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    return Task.CompletedTask;
-                }
+                // options.ForwardDefault = IdentityConstants.BearerScheme;
+                options.ForwardDefault = IdentityConstants.ApplicationScheme;
+                options.ForwardAuthenticate = CompositeIdentityScheme;
+            })
+            .AddBearerToken(IdentityConstants.BearerScheme)
+            ;
 
-                return onRedirectToLogin.Invoke(context);
-            };
-
-            var onRedirectToAccessDenied = options.Events.OnRedirectToAccessDenied;
-            options.Events.OnRedirectToAccessDenied = context =>
-            {
-                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
-                {
-                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                    return Task.CompletedTask;
-                }
-
-                return onRedirectToAccessDenied.Invoke(context);
-            };
-        });
+        services.ConfigureApplicationCookie(options => options
+            .UseUnauthorizedApiHandler()
+            .UseForbiddenApiHandler()
+            );
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -124,6 +113,25 @@ public static class ServiceCollectionExtensions
             o.TokenLifespan = TimeSpan.FromHours(3));
 
         return services;
+    }
+
+
+    private sealed class CompositeAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder)
+           : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
+    {
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            var bearerResult = await Context.AuthenticateAsync(IdentityConstants.BearerScheme);
+
+            // Only try to authenticate with the application cookie if there is no bearer token.
+            if (!bearerResult.None)
+            {
+                return bearerResult;
+            }
+
+            // Cookie auth will return AuthenticateResult.NoResult() like bearer auth just did if there is no cookie.
+            return await Context.AuthenticateAsync(IdentityConstants.ApplicationScheme);
+        }
     }
 
 
