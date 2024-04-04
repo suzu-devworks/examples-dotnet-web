@@ -13,8 +13,9 @@
     - [Secure selected endpoints](#secure-selected-endpoints)
     - [Swagger UI](#swagger-ui)
     - [Add Log-out](#add-log-out)
-    - [Move path base](#move-path-base)
+    - [Move Path-base](#move-path-base)
   - [Will 401 not be returned if it coexists with the webapp?](#will-401-not-be-returned-if-it-coexists-with-the-webapp)
+  - [Enable both IdentityConstants.BearerScheme and IdentityConstants.ApplicationScheme](#enable-both-identityconstantsbearerscheme-and-identityconstantsapplicationscheme)
 
 
 ## References
@@ -118,7 +119,7 @@ When coexisting with webapp?:
          {
 ```
 
-I haven't set IdentityConstants.BearerAndApplicationScheme, I don't know if it's needed.
+> I haven't set IdentityConstants.BearerAndApplicationScheme, I don't know if it's needed.
 
 - [IdentityServiceCollectionExtensions.cs at main · dotnet/aspnetcore · GitHub](https://github.com/dotnet/aspnetcore/blob/main/src/Identity/Core/src/IdentityServiceCollectionExtensions.cs#L134)
 
@@ -179,7 +180,6 @@ An easy way to test authentication is to use the Swagger UI included in the proj
 
 <img src="./_files/identity_spa_backend.png" width="70%" height="auto" />
 
-
 ### Add Log-out
 
 To provide a way for the user to log out, define a /logout endpoint like the following example:
@@ -199,7 +199,7 @@ To provide a way for the user to log out, define a /logout endpoint like the fol
      .RequireAuthorization();
 ```
 
-### Move path base
+### Move Path-base
 
 The default is direct, such as "/login", so I want a prefix.
 
@@ -236,49 +236,126 @@ It seems to be quite famous.
 
 For `application/json`, disable redirection:
 
+```cs
+public static class CookieAuthenticationOptionsExtensions
+{
+    public static CookieAuthenticationOptions UseUnauthorizedApiHandler(this CookieAuthenticationOptions options)
+    {
+        var onRedirectToLogin = options.Events.OnRedirectToLogin;
+
+        options.Events.OnRedirectToLogin = context =>
+        {
+            if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == MediaTypeNames.Application.Json))
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            }
+
+            return onRedirectToLogin.Invoke(context);
+        };
+
+        return options;
+    }
+
+    public static CookieAuthenticationOptions UseForbiddenApiHandler(this CookieAuthenticationOptions options)
+    {
+        var onRedirectToAccessDenied = options.Events.OnRedirectToAccessDenied;
+
+        options.Events.OnRedirectToAccessDenied = context =>
+        {
+            if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == MediaTypeNames.Application.Json))
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                return Task.CompletedTask;
+            }
+
+            return onRedirectToAccessDenied.Invoke(context);
+        };
+
+        return options;
+    }
+
+}
+```
+
 ```diff
 --- a/src/Examples.Web.Authentication.Identity/Infrastructure/IdentityServiceCollectionExtensions.cs
 +++ b/src/Examples.Web.Authentication.Identity/Infrastructure/IdentityServiceCollectionExtensions.cs
-@@ -5,6 +5,7 @@
- using Examples.Web.Authentication.Identity.Areas.Identity.Data;
- using Examples.Web.Infrastructure.Authentication.Identity;
- using Examples.Web.Authentication.Identity.Services;
-+using Microsoft.Net.Http.Headers;
+@@ -37,6 +37,11 @@ public static class ServiceCollectionExtensions
+             .AddErrorDescriber<JapaneseErrorDescriber>()
+             ;
  
- namespace Examples.Web.Infrastructure;
- 
-@@ -36,6 +37,33 @@ public static class ServiceCollectionExtensions
-         services.AddAuthentication()
-             .AddBearerToken(IdentityConstants.BearerScheme);
- 
-+        services.ConfigureApplicationCookie(options =>
-+        {
-+            var onRedirectToLogin = options.Events.OnRedirectToLogin;
-+            options.Events.OnRedirectToLogin = context =>
-+            {
-+                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
-+                {
-+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-+                    return Task.CompletedTask;
-+                }
-+
-+                return onRedirectToLogin.Invoke(context);
-+            };
-+
-+            var onRedirectToAccessDenied = options.Events.OnRedirectToAccessDenied;
-+            options.Events.OnRedirectToAccessDenied = context =>
-+            {
-+                if (context.Request.Headers.Any(x => x.Key == HeaderNames.Accept && x.Value == "application/json"))
-+                {
-+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
-+                    return Task.CompletedTask;
-+                }
-+
-+                return onRedirectToAccessDenied.Invoke(context);
-+            };
-+        });
++        services.ConfigureApplicationCookie(options => options
++            .UseUnauthorizedApiHandler()
++            .UseForbiddenApiHandler()
++            );
 +
          services.Configure<IdentityOptions>(options =>
          {
              // Default Lockout settings.
 ```
+
+
+## Enable both IdentityConstants.BearerScheme and IdentityConstants.ApplicationScheme
+
+WebApp Identity has `IdentityConstants.ApplicationScheme`(Cookie) enabled.
+
+However, when adding the WebAPI here, I tried to enable `IdentityConstants.BearerScheme` with `AddBearerToken(IdentityConstants.BearerScheme)`, but a 401 was returned, so I looked into how to deal with it.
+
+Well, I don't think you need to use it that way.
+
+First, create an authentication handler for branching.
+
+Code for reference:
+- https://github.com/dotnet/aspnetcore/blob/dc1acba9cd1374a8a8560bee655682e1a72de3eb/src/Identity/Core/src/IdentityServiceCollectionExtensions.cs#L134
+
+```cs
+    private sealed class CompositeAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder)
+           : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
+    {
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            var bearerResult = await Context.AuthenticateAsync(IdentityConstants.BearerScheme);
+
+            // Only try to authenticate with the application cookie if there is no bearer token.
+            if (!bearerResult.None)
+            {
+                return bearerResult;
+            }
+
+            // Cookie auth will return AuthenticateResult.NoResult() like bearer auth just did if there is no cookie.
+            return await Context.AuthenticateAsync(IdentityConstants.ApplicationScheme);
+        }
+    }
+```
+
+Use `AddAuthentication()` to set the default key to the scheme for branching.<br>
+Next, add an authentication handler for branching with `AddScheme`.<br>
+
+The point is to set the `ForwardAuthenticate` option to `IdentityConstants.ApplicationScheme` instead of `IdentityConstants.BearerScheme`.
+
+```diff
+--- a/src/Examples.Web.Authentication.Identity/Infrastructure/IdentityServiceCollectionExtensions.cs
++++ b/src/Examples.Web.Authentication.Identity/Infrastructure/IdentityServiceCollectionExtensions.cs
+@@ -37,6 +37,17 @@ public static class ServiceCollectionExtensions
+             .AddErrorDescriber<JapaneseErrorDescriber>()
+             ;
+ 
++        const string CompositeIdentityScheme = "CompositeIdentityScheme";
++        services.AddAuthentication(CompositeIdentityScheme)
++            .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>(CompositeIdentityScheme, null, options =>
++            {
++                // options.ForwardDefault = IdentityConstants.BearerScheme;
++                options.ForwardDefault = IdentityConstants.ApplicationScheme;
++                options.ForwardAuthenticate = CompositeIdentityScheme;
++            })
++            .AddBearerToken(IdentityConstants.BearerScheme)
++            ;
++
+         services.ConfigureApplicationCookie(options => options
+             .UseUnauthorizedApiHandler()
+             .UseForbiddenApiHandler())
+```
+
+By the way, it seems that `IdentityConstants.BearerScheme` is not a JWT. 
+[Officially](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-8.0#use-token-based-authentication), this is said to be intentional.
