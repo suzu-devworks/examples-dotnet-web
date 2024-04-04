@@ -1,0 +1,7 @@
+# Additional
+Migrations/
+
+## SQLite3 
+*.db
+*.db-shm
+*.db-wal

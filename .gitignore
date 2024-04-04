@@ -355,9 +355,10 @@ MigrationBackup/
 .vscode/*
 !.vscode/settings.json
 !.vscode/cspell.json
-##!.vscode/tasks.json
+!.vscode/tasks.json
 ##!.vscode/launch.json
 ##!.vscode/extensions.json
 
 ## User Define
 [Tt]emp/
+.mono/
