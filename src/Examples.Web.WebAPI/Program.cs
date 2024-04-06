@@ -32,6 +32,13 @@ try
         //# Set JSON custom serializer options.
         .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
 
+    //# CORS.
+    builder.Services.AddCors(options =>
+        options.AddDefaultPolicy(policy =>
+            policy.Configure(cors =>
+                builder.Configuration.GetSection("CorsPolicy").Bind(cors))
+            ));
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -57,6 +64,7 @@ try
     app.UseHttpsRedirection(app.Configuration.GetValue("UseHttpsRedirection", true));
 
     app.UseRouting();
+    app.UseCors();
     app.UseAuthorization();
 
     //# Use Middleware.
