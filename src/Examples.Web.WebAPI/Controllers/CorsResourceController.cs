@@ -1,3 +1,4 @@
+using Examples.Web.Infrastructure.Swagger;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,12 +16,15 @@ public class CorsResourceController(ILogger<CorsResourceController> logger) : Co
     /// </summary>
     /// <response code="204">No content only</response>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    // [RequestHeaderParameter("origin", defaultValue: "https://foo.bar.org")]
+    // [RequestHeaderParameter("access-control-request-method", defaultValue: "DELETE")]
+    // [RequestHeaderParameter("access-control-request-headers", defaultValue: "Origin,X-Requested-With")]
     [HttpOptions]
-    public async Task<IActionResult> PreflightRequestAsync(CancellationToken cancellationToken)
+    public IActionResult PreflightRequestAsync()
     {
         _logger.LogTrace("called.");
 
-        await Task.Delay(0, cancellationToken);
+        //await Task.Delay(0, cancellationToken);
         return NoContent();
     }
 

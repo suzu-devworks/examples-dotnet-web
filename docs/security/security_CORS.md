@@ -13,6 +13,7 @@ Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allo
     - [CORS with named policy and middleware](#cors-with-named-policy-and-middleware)
     - [Enable Cors with endpoint routing](#enable-cors-with-endpoint-routing)
     - [Enable CORS with attributes](#enable-cors-with-attributes)
+    - [Enable Preflight request ?](#enable-preflight-request-)
   - [AddPolicy() code corresponding to the HTTP header used in CORS](#addpolicy-code-corresponding-to-the-http-header-used-in-cors)
     - [Access-Control-Allow-Origin:](#access-control-allow-origin)
     - [Access-Control-Allow-Credentials:](#access-control-allow-credentials)
@@ -232,6 +233,72 @@ public class WidgetController : ControllerBase
     }
 }
 ```
+
+### Enable Preflight request ?
+
+Is it possible to check CORS by sending origin from Swagger UI?
+
+```cs
+public class RequestHeaderParameterOperationFilter : IOperationFilter
+{
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        var appendices = context.MethodInfo
+            .GetCustomAttributes(inherit: true)
+            .OfType<RequestHeaderParameterAttribute>()
+            .Where(x => !operation.Parameters.Any(y => y.Name == x.Name))
+            ;
+
+        foreach (var attr in appendices)
+        {
+            operation.Parameters.Add(
+                new()
+                {
+                    Name = attr.Name,
+                    In = ParameterLocation.Header,
+                    Description = attr.Description,
+                    Required = false,
+                    Schema = new OpenApiSchema
+                    {
+                        Type = "String",
+                        Default = new OpenApiString(attr.Default)
+                    }
+                });
+        }
+
+        return;
+    }
+}
+```
+
+Add Swagger parameter in Attributes:
+
+```cs
+    [RequestHeaderParameter("origin", defaultValue: "https://foo.bar.org")]
+    [RequestHeaderParameter("access-control-request-method", defaultValue: "DELETE")]
+    [RequestHeaderParameter("access-control-request-headers", defaultValue: "Origin,X-Requested-With")]
+    [HttpOptions]
+    public IActionResult PreflightRequestAsync()
+    {
+        _logger.LogTrace("called.");
+
+        //await Task.Delay(0, cancellationToken);
+        return NoContent();
+    }
+```
+
+Try sending from this screen:
+
+<img src="./_files/security_cors_preflight_parameters.png" width="70%" height="auto" />
+
+<img src="./_files/security_cors_preflight_response.png" width="70%" height="auto" />
+
+Oh?
+
+<img src="./_files/secutiry_cors_preflight_debug.png" width="70%" height="auto" />
+
+Is it impossible to rewrite security headers?
+
 
 <!-- --------------------------- -->
 

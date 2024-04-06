@@ -9,7 +9,7 @@ namespace Examples.Web.Infrastructure;
 /// </summary>
 public static class JsonSerializerOptionsExtensions
 {
-    public static JsonSerializerOptions UseCustomOptions(this JsonSerializerOptions options)
+    public static JsonSerializerOptions UseCustomJsonSerializer(this JsonSerializerOptions options)
     {
         //options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;  // (default)
 

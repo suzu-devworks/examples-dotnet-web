@@ -30,7 +30,7 @@ try
                 new SlugifyParameterTransformer()));
         })
         //# Set JSON custom serializer options.
-        .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
+        .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomJsonSerializer());
 
     //# CORS.
     builder.Services.AddCors(options =>
@@ -41,7 +41,7 @@ try
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(options => options.UseCustomSwagger());
 
     //# Configure Custom Options.
     builder.Services.AddRequestLocalization(options => options.UseCustomCultures());
