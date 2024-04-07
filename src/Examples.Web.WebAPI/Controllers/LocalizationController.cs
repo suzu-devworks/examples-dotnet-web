@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Examples.Web.Infrastructure;
 using Examples.WebAPI.Applications.Localization;
 using Examples.WebAPI.Applications.Localization.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;
 
@@ -19,6 +20,7 @@ namespace Examples.Web.WebAPI.Controllers;
 /// </example>
 /// </remarks>
 [ApiController]
+[SwaggerTag("Examples")]
 [Route("[controller]")]
 public class LocalizationController(ILogger<LocalizationController> logger,
     IStringLocalizer<LocalizationController> localizer,

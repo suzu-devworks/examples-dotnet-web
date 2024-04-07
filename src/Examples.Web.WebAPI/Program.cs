@@ -41,7 +41,10 @@ try
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen(options => options.UseCustomSwagger());
+    builder.Services.AddSwaggerGen(options => options
+        .UseCustomSwagger()
+        .UseXmlComments()
+        .UseJWTBearerAuthorization());
 
     //# Configure Custom Options.
     builder.Services.AddRequestLocalization(options => options.UseCustomCultures());
@@ -58,7 +61,19 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+        {
+            //# swagger document generated to json and yaml.
+            options.SwaggerEndpoint("v1/swagger.json", "Examples.Web.WebAPI v1");
+            options.SwaggerEndpoint("v1/swagger.yaml", "Examples.Web.WebAPI v1(yaml)");
+
+            //# Swagger UI at the app's root.
+            //options.RoutePrefix = string.Empty;
+
+            //# Schemas shrink all.
+            options.DefaultModelsExpandDepth(0);
+            //options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+        });
     }
 
     app.UseHttpsRedirection(app.Configuration.GetValue("UseHttpsRedirection", true));

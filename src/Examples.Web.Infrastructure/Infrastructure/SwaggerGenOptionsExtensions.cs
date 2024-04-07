@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Examples.Web.Infrastructure.Swagger;
@@ -7,6 +10,23 @@ namespace Examples.Web.Infrastructure;
 
 public static class SwaggerGenOptionsExtensions
 {
+    /// <summary>
+    /// Adding triple-slash comments to an action enhances the Swagger UI
+    /// by adding the description to the section header.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="xmlFilePath"></param>
+    /// <returns></returns>
+    public static SwaggerGenOptions UseXmlComments(this SwaggerGenOptions options, string? xmlFilePath = default)
+    {
+        xmlFilePath ??= $"{Assembly.GetEntryAssembly()!.GetName().Name}.xml";
+        var path = Path.Combine(AppContext.BaseDirectory, xmlFilePath);
+        options.IncludeXmlComments(path);
+
+        return options;
+    }
+
+
     /// <summary>
     ///
     /// </summary>

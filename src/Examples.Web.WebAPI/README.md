@@ -8,6 +8,8 @@
 - [Secure HTTP Response Header](../../docs/security/security_http_response_header.md)
 - [Custom JSON serialization](../../docs/serialization/serialization_json.md)
 - [CORS (Cross-Origin Resource Sharing)](../../docs/security/security_CORS.md)
+- [Customize Swagger](../../docs/openapi/swagger_customization.md)
+
 
 ## Project Initialize
 

@@ -1,11 +1,12 @@
-using Examples.Web.Infrastructure.Swagger;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;
 
 [EnableCors]
 [ApiController]
+[SwaggerTag("Security")]
 [Route("[controller]")]
 public class CorsResourceController(ILogger<CorsResourceController> logger) : ControllerBase
 {
