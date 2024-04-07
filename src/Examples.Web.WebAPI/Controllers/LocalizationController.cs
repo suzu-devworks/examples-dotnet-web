@@ -2,6 +2,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Examples.Web.Infrastructure;
+using Examples.Web.Infrastructure.Swagger;
 using Examples.WebAPI.Applications.Localization;
 using Examples.WebAPI.Applications.Localization.Models;
 using Swashbuckle.AspNetCore.Annotations;
@@ -32,6 +33,7 @@ public class LocalizationController(ILogger<LocalizationController> logger,
     private readonly IStringLocalizer<SharedResource> _sharedLocalizer = sharedLocalizer;
     private readonly IStringLocalizer _factoryMadeLocalizer = factory.Create(typeof(SharedResource));
 
+    [RequestHeaderParameter("Accept-Language", defaultValue: "ja")]
     [HttpGet("about")]
     public IActionResult GetAbout(
         [FromQuery(Name = "culture")] string? inputCulture,
@@ -60,6 +62,7 @@ public class LocalizationController(ILogger<LocalizationController> logger,
         });
     }
 
+    [RequestHeaderParameter("Accept-Language", defaultValue: "ja")]
     [HttpPost("annotations")]
     public IActionResult PostForAnnotations(
         [FromBody] RegisterData param,
