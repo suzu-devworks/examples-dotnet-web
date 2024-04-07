@@ -30,11 +30,18 @@ try
                 new SlugifyParameterTransformer()));
         })
         //# Set JSON custom serializer options.
-        .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomOptions());
+        .AddJsonOptions(options => options.JsonSerializerOptions.UseCustomJsonSerializer());
+
+    //# CORS.
+    builder.Services.AddCors(options =>
+        options.AddDefaultPolicy(policy =>
+            policy.Configure(cors =>
+                builder.Configuration.GetSection("CorsPolicy").Bind(cors))
+            ));
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(options => options.UseCustomSwagger());
 
     //# Configure Custom Options.
     builder.Services.AddRequestLocalization(options => options.UseCustomCultures());
@@ -57,6 +64,7 @@ try
     app.UseHttpsRedirection(app.Configuration.GetValue("UseHttpsRedirection", true));
 
     app.UseRouting();
+    app.UseCors();
     app.UseAuthorization();
 
     //# Use Middleware.
