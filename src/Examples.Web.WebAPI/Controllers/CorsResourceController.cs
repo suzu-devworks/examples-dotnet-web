@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Examples.Web.Infrastructure;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;
@@ -62,7 +63,7 @@ public class CorsResourceController(ILogger<CorsResourceController> logger) : Co
     [HttpPut("{id}")]
     public async Task<IActionResult> PutAsync(string id, IDictionary<string, string> inputs, CancellationToken cancellationToken)
     {
-        _logger.LogTrace("Put called by {id}.", id);
+        _logger.LogTrace("Put called by {id}.", id.Sanitize());
         inputs.Add("DateTimeOffset.Now", DateTimeOffset.Now.ToString());
 
         await Task.Delay(0, cancellationToken);
@@ -73,7 +74,7 @@ public class CorsResourceController(ILogger<CorsResourceController> logger) : Co
     [HttpPatch("{id}")]
     public async Task<ActionResult> PatchAsync(string id, IDictionary<string, string> inputs, CancellationToken cancellationToken)
     {
-        _logger.LogTrace("Put called by {id}.", id);
+        _logger.LogTrace("Put called by {id}.", id.Sanitize());
         inputs.Add("DateTimeOffset.Now", DateTimeOffset.Now.ToString());
 
         await Task.Delay(0, cancellationToken);
@@ -85,7 +86,7 @@ public class CorsResourceController(ILogger<CorsResourceController> logger) : Co
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(string id, CancellationToken cancellationToken)
     {
-        _logger.LogTrace("Delete called by {id}. ", id);
+        _logger.LogTrace("Delete called by {id}. ", id.Sanitize());
 
         await Task.Delay(0, cancellationToken);
         return NoContent();
