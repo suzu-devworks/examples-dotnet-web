@@ -13,3 +13,9 @@
 - [Routing](./routing/README.md)
 - [Serialization](./serialization/README.md)
 - [Security](./security/README.md)
+- [Swagger](./swagger/README.md)
+
+
+## Tips
+
+- [CodeQL tips](./code-ql-tips.md)

@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Examples.Web.Infrastructure.DataAnnotations;
 using Examples.Web.Infrastructure.Pagination;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;
 
 [ApiController]
+[SwaggerTag("Examples")]
 [Route("[controller]")]
 public class PaginationController(ILogger<PaginationController> logger) : ControllerBase
 {

@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;
 
 [ApiController]
+[SwaggerTag("Configurations")]
 [Route("[controller]")]
 public class LoggingController : ControllerBase
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Examples.Web.Infrastructure.Serialization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;
 
@@ -7,6 +8,7 @@ namespace Examples.Web.WebAPI.Controllers;
 /// A controller for testing custom serializers.
 /// </summary>
 [ApiController]
+[SwaggerTag("Examples")]
 [Route("[controller]")]
 public class SerializationController(ILogger<SerializationController> logger) : ControllerBase
 {
