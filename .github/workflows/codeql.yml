@@ -24,6 +24,10 @@ on:
   #   - cron: '38 3 * * 3'
   workflow_dispatch:
 
+env:
+  # The .NET SDK version to use
+  DOTNET_VERSION: "9.0.x"
+
 jobs:
   analyze:
     name: Analyze
@@ -64,6 +68,12 @@ jobs:
 
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
+
+      # === Setup .NET ===
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       # === Auth Github repository ===
       - name: Auth Github

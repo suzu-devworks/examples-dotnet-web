@@ -10,7 +10,7 @@ on:
 
 env:
   # The .NET SDK version to use
-  DOTNET_VERSION: "8.0.x"
+  DOTNET_VERSION: "9.0.x"
 
 jobs:
   build:
