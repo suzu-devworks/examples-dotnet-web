@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "EditorConfig.EditorConfig",
+        "streetsidesoftware.code-spell-checker",
+        "DavidAnson.vscode-markdownlint",
+        "ms-dotnettools.csdevkit",
+        "gaoshan0621.csharp-format-usings",
+        "k--kato.docomment"
+    ]
+}

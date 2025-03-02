@@ -1,2 +1,1 @@
-ARG VARIANT=8.0-bookworm-slim
-FROM mcr.microsoft.com/devcontainers/dotnet:${VARIANT} as develop-stage
+FROM mcr.microsoft.com/devcontainers/dotnet:8.0-bookworm

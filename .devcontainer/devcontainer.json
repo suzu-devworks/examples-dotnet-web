@@ -2,27 +2,11 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
   "name": "C# (.NET)",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": [
+    "compose.yaml",
+    "compose.develop.yaml"
+  ],
   "service": "dev",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "containerEnv": {
-    "CONTAINER_WORKSPACE_FOLDER": "/workspaces/${localWorkspaceFolderBasename}"
-  },
-  "remoteEnv": {
-    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
-  },
-  "customizations": {
-    "vscode": {
-      "settings": {},
-      "extensions": [
-        "ms-ceintl.vscode-language-pack-ja",
-        "streetsidesoftware.code-spell-checker",
-        "editorconfig.editorconfig",
-        "ms-dotnettools.csdevkit",
-        "gaoshan0621.csharp-format-usings",
-        "k--kato.docomment"
-      ]
-    }
-  },
   "remoteUser": "vscode"
 }
