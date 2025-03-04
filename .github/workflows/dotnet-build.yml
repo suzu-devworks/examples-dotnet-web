@@ -11,8 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  # The .NET SDK version to use
-  DOTNET_VERSION: "8.0.x"
+  DOTNET_VERSION: "9.0.x"
 
 jobs:
   build:
@@ -20,7 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup .NET Core
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}

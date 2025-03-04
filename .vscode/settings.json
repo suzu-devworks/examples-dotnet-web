@@ -1,21 +1,24 @@
 {
-  "omnisharp.enableEditorConfigSupport": true,
-  "omnisharp.enableAsyncCompletion": true,
-  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
-  "csharpFormatUsings.sortOrder": "System Microsoft",
-  "csharpFormatUsings.splitGroups": false,
-  "csharpFormatUsings.removeUnnecessaryUsings": true,
+  "csharpOrganizeUsings.removeUnnecessaryUsings": true,
+  "csharpOrganizeUsings.sortOrder": "System Microsoft",
+  "csharpOrganizeUsings.splitGroups": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
   "files.associations": {
     ".dockerignore": "ignore",
     "appsettings*.json": "jsonc",
-    "web.config": "xml",
+    "web.config": "xml"
   },
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "[csharp]": {
+  "omnisharp.enableAsyncCompletion": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
+  "[aspnetcorerazor]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "[aspnetcorerazor]": {
+  "[csharp]": {
+    "editor.codeActionsOnSave": [
+      "source.organizeImports"
+    ],
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
   "[razor]": {
