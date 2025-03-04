@@ -5,6 +5,7 @@
         "DavidAnson.vscode-markdownlint",
         "ms-dotnettools.csdevkit",
         "gaoshan0621.csharp-format-usings",
-        "k--kato.docomment"
+        "k--kato.docomment",
+        "aliasadidev.nugetpackagemanagergui"
     ]
 }

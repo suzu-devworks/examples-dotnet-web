@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <LatestFramework>net8.0</LatestFramework>
-    <AvailableLTSFrameworks>net8.0;net6.0</AvailableLTSFrameworks>
+    <LatestFramework>net9.0</LatestFramework>
+    <LTSFrameworks>net8.0</LTSFrameworks>
   </PropertyGroup>
 </Project>
