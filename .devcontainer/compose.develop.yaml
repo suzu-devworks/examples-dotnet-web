@@ -1,8 +1,6 @@
 services:
   dev:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: mcr.microsoft.com/devcontainers/dotnet:9.0-bookworm
     networks:
       - interconnect
     tty: true
@@ -13,10 +11,10 @@ services:
     volumes:
       # Forwards the local Docker socket to the container.
       - /var/run/docker.sock:/var/run/docker-host.sock
-      # Update this to wherever you want VS Code to mount the folder of your project
-      - ../../:/workspaces:cached
       # Use SSL server certificate
       - ~/.vscode/ssl:/etc/ssl/local:ro
+      # Update this to wherever you want VS Code to mount the folder of your project
+      - ../../:/workspaces:cached
 
 networks:
   interconnect:
