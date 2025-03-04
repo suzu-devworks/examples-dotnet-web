@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.DataAnnotations;
 using Examples.Web.Infrastructure.Pagination;
 using Swashbuckle.AspNetCore.Annotations;
@@ -20,7 +21,7 @@ public class PaginationController(ILogger<PaginationController> logger) : Contro
     public async Task<ActionResult<IEnumerable<PaginationModel>>> GetByOffsetLimitAsync(
         LimitPaginationParameter param, CancellationToken cancellationToken)
     {
-        logger.LogDebug("{param}", param);
+        logger.LogDebug("{param}", param.ToString().Sanitize());
 
         var total = await _repository.GetTotalCountAsync(cancellationToken);
 
@@ -41,7 +42,7 @@ public class PaginationController(ILogger<PaginationController> logger) : Contro
         return Ok(records);
     }
 
-    public class LimitPaginationParameter
+    public record LimitPaginationParameter
     {
         [FromQuery(Name = "offset")]
         [LongRange(0L, long.MaxValue)]
@@ -57,7 +58,7 @@ public class PaginationController(ILogger<PaginationController> logger) : Contro
     public async Task<ActionResult<IEnumerable<PaginationModel>>> GetByPagesAsync(
         PagePaginationParameter param, CancellationToken cancellationToken)
     {
-        logger.LogDebug("{param}", param);
+        logger.LogDebug("{param}", param.ToString().Sanitize());
 
         var offset = PaginationUtility.ToOffset(param.Page, param.Size);
         var limit = param.Size;
@@ -84,7 +85,7 @@ public class PaginationController(ILogger<PaginationController> logger) : Contro
         return Ok(records);
     }
 
-    public class PagePaginationParameter
+    public record PagePaginationParameter
     {
         [FromQuery(Name = "page")]
         [MinValue<int>(1)]
@@ -100,7 +101,7 @@ public class PaginationController(ILogger<PaginationController> logger) : Contro
     public async Task<IActionResult> GetByCursorsAsync(
         CursorPaginationParameter param, CancellationToken cancellationToken)
     {
-        logger.LogDebug("{param}", param);
+        logger.LogDebug("{param}", param.ToString().Sanitize());
 
         var cursor = CursorConvert.FromBase64String<PaginationModel>(param.Cursor);
         var limit = param.Size;
@@ -135,7 +136,7 @@ public class PaginationController(ILogger<PaginationController> logger) : Contro
         });
     }
 
-    public class CursorPaginationParameter
+    public record CursorPaginationParameter
     {
         [FromQuery(Name = "cursor")]
         public string? Cursor { get; init; }

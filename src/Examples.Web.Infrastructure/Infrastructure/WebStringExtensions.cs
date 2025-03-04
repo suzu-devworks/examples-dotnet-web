@@ -11,10 +11,10 @@ public static class WebStringExtensions
 
     public static string Sanitize(this string source, SanitizeOptions? _ = default)
     {
-        return source.ControlCharEncode();
+        return source.ControlCharEscape();
     }
 
-    public static string ControlCharEncode(this string source)
+    public static string ControlCharEscape(this string source)
         => ControlCharExpression.Replace(source, m => m.Value.HexDump(prefix: "%"));
 
     /// <summary>

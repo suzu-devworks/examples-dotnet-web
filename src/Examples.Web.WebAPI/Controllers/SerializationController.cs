@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Serialization;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -40,7 +41,7 @@ public class SerializationController(ILogger<SerializationController> logger) : 
     {
         foreach (var model in models)
         {
-            logger.LogDebug("received: {model}", model);
+            logger.LogDebug("received: {model}", model.ToString().Sanitize());
         }
 
         return NoContent();
