@@ -110,16 +110,6 @@ jobs:
         echo '  make release'
         exit 1
 
-    # =======================
-    - if: matrix.language == 'csharp'
-      name: Auth Github Nuget
-      run: dotnet nuget update source github --username suzu-devworks --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
-
-    - if: matrix.language == 'csharp'
-      name: Install .NET Tools
-      run: dotnet tool restore
-    # =======================
-
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
