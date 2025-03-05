@@ -5,7 +5,7 @@
     "DavidAnson.vscode-markdownlint",
     "ms-dotnettools.csdevkit",
     "jeremycaron.csharp-organize-usings",
-    "k--kato.docomment",
-    "aliasadidev.nugetpackagemanagergui"
+    "aliasadidev.nugetpackagemanagergui",
+    "esbenp.prettier-vscode"
   ]
 }
