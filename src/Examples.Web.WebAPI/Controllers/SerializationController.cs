@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;

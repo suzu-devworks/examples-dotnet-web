@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using Examples.Web.WebAPI.Applications.WeatherForecast.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Examples.Web.WebAPI.Controllers;
 

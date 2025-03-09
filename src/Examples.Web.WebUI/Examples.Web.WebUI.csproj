@@ -7,6 +7,10 @@
     <UserSecretsId>f5310229-8390-413e-9b22-3c7b94c068c0</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);IDE0052</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\Examples.Web.HostingStartup\Examples.Web.HostingStartup.csproj" />

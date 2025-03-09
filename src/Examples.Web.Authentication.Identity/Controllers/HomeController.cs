@@ -1,7 +1,7 @@
 using System.Diagnostics;
+using Examples.Web.Authentication.Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Examples.Web.Authentication.Identity.Models;
 
 namespace Examples.Web.Authentication.Identity.Controllers;
 

@@ -19,4 +19,3 @@ public class ErrorModel(ILogger<ErrorModel> logger) : PageModel
         RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
     }
 }
-

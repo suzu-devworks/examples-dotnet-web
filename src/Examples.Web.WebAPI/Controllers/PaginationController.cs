@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.DataAnnotations;
 using Examples.Web.Infrastructure.Pagination;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Examples.Web.WebAPI.Controllers;

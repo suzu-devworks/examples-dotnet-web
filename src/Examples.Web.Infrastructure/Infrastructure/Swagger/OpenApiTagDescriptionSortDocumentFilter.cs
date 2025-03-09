@@ -16,4 +16,3 @@ public class OpenApiTagDescriptionSortDocumentFilter : IDocumentFilter
         return;
     }
 }
-

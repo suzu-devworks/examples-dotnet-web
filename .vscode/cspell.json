@@ -1,17 +1,21 @@
 {
-    "ignorePaths": [
-        ".git",
-        ".devcontainer",
-        ".config",
-        ".github",
-        ".vscode"
-    ],
-    "words": [
-        "Antiforgery",
-        "classlib",
-        "HSTS",
-        "Linq",
-        "Swashbuckle",
-        "nlog"
-    ]
+  "ignorePaths": [
+    ".git",
+    ".devcontainer",
+    ".config",
+    ".github",
+    ".vscode",
+    ".editorconfig",
+    ".gitignore",
+    "*.csproj",
+    "*.sln"
+  ],
+  "words": [
+    "Antiforgery",
+    "classlib",
+    "HSTS",
+    "Linq",
+    "Swashbuckle",
+    "nlog"
+  ]
 }
