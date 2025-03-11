@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Routing;
 using Examples.Web.WebAPI.Applications;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using NLog;
 using NLog.Web;
 

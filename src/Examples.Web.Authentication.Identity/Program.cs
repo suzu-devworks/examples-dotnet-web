@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
+using Examples.Web.Authentication.Identity.Api;
 using Examples.Web.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using Examples.Web.Authentication.Identity.Api;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

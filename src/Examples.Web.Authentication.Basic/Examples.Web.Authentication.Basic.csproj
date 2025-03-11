@@ -7,6 +7,10 @@
     <UserSecretsId>933eeded-aa33-4644-9e00-569ea51a8c7f</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);IDE0052</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AspNetCore.Authentication.Basic" Version="9.0.0" />
   </ItemGroup>

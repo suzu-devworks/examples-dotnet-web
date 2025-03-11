@@ -13,4 +13,3 @@ public class LongAsStringConverter : JsonConverter<long>
         => writer.WriteStringValue(value.ToString());
 
 }
-

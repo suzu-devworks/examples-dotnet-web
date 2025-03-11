@@ -52,7 +52,7 @@ namespace Examples.Web.Authentication.Identity.Areas.Identity.Pages.Account.Mana
 
             await _userManager.SetTwoFactorEnabledAsync(user, false);
             await _userManager.ResetAuthenticatorKeyAsync(user);
-            var userId = await _userManager.GetUserIdAsync(user);
+            _ = await _userManager.GetUserIdAsync(user);
             _logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
 
             await _signInManager.RefreshSignInAsync(user);

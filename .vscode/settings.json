@@ -1,6 +1,6 @@
 {
   "csharpOrganizeUsings.removeUnnecessaryUsings": true,
-  "csharpOrganizeUsings.sortOrder": "System Microsoft",
+  "csharpOrganizeUsings.sortOrder": "System",
   "csharpOrganizeUsings.splitGroups": false,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,

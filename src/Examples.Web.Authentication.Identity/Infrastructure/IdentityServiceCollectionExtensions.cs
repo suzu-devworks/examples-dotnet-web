@@ -1,14 +1,13 @@
-using System.Security.Claims;
 using System.Text.Encodings.Web;
+using Examples.Web.Authentication.Identity.Areas.Identity.Data;
+using Examples.Web.Authentication.Identity.Services;
+using Examples.Web.Infrastructure.Authentication.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Examples.Web.Authentication.Identity.Areas.Identity.Data;
-using Examples.Web.Authentication.Identity.Services;
-using Examples.Web.Infrastructure.Authentication.Identity;
 
 namespace Examples.Web.Infrastructure;
 
@@ -37,13 +36,13 @@ public static class ServiceCollectionExtensions
             .AddErrorDescriber<JapaneseErrorDescriber>()
             ;
 
-        const string CompositeIdentityScheme = "CompositeIdentityScheme";
-        services.AddAuthentication(CompositeIdentityScheme)
-            .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>(CompositeIdentityScheme, null, options =>
+        const string compositeIdentityScheme = "CompositeIdentityScheme";
+        services.AddAuthentication(compositeIdentityScheme)
+            .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>(compositeIdentityScheme, null, options =>
             {
                 // options.ForwardDefault = IdentityConstants.BearerScheme;
                 options.ForwardDefault = IdentityConstants.ApplicationScheme;
-                options.ForwardAuthenticate = CompositeIdentityScheme;
+                options.ForwardAuthenticate = compositeIdentityScheme;
             })
             .AddBearerToken(IdentityConstants.BearerScheme)
             ;
@@ -140,5 +139,3 @@ public static class ServiceCollectionExtensions
         public string ConnectionString { get; set; } = default!;
     }
 }
-
-

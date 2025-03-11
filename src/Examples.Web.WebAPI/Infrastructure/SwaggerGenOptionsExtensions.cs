@@ -1,5 +1,5 @@
-using Microsoft.OpenApi.Models;
 using Examples.Web.Infrastructure.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.Web.Infrastructure;
