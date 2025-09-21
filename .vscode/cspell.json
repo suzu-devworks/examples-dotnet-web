@@ -1,4 +1,5 @@
 {
+  "version": "0.2",
   "ignorePaths": [
     ".git",
     ".devcontainer",
@@ -17,5 +18,9 @@
     "Linq",
     "Swashbuckle",
     "nlog"
-  ]
+  ],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "ignoreWords": [],
+  "import": []
 }
