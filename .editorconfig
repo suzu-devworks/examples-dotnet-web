@@ -1,46 +1,41 @@
-# EditorConfig is awesome: https://EditorConfig.org
-
-# top-most EditorConfig file
 root = true
 
-# All files
+## All files
 [*]
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 
-# Markdown files
+## Markdown files
 [*.md]
 indent_size = 2
 indent_style = space
 trim_trailing_whitespace = false
 
-# Web development files
+## Web development files
 [*.{js,jsx,ts,tsx,css,html,yml,yaml,json}]
 indent_size = 2
 indent_style = space
 
-# Project files
+## Project files
 [*.{sln,csproj,proj}]
 charset = utf-8-bom
 indent_size = 2
 indent_style = space
 end_of_line = crlf
 
-# XML config files
+## XML config files
 [*.{config,resx,nuspec,props,targets}]
 indent_size = 2
 indent_style = space
 
-# Xml files
+## Xml files
 [*.xml]
 indent_size = 2
 indent_style = space
 
 # C# files
 [*.cs]
-indent_size = 4
-indent_style = space
 
 
 #### Core EditorConfig Options ####
@@ -50,14 +45,14 @@ indent_size = 4
 tab_width = 4
 
 # New line preferences
-insert_final_newline = false
+## insert_final_newline = false
+insert_final_newline = true
 
 #### .NET Coding Conventions ####
 [*.{cs,vb}]
 
 # Organize usings
-# customized:
-# dotnet_separate_import_directive_groups = true
+## dotnet_separate_import_directive_groups = true
 dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = true
 file_header_template = unset
@@ -270,7 +265,8 @@ dotnet_naming_rule.private_fields_should_be__camelcase.style = _camelcase
 
 dotnet_naming_rule.private_static_fields_should_be_s_camelcase.severity = suggestion
 dotnet_naming_rule.private_static_fields_should_be_s_camelcase.symbols = private_static_fields
-dotnet_naming_rule.private_static_fields_should_be_s_camelcase.style = s_camelcase
+## dotnet_naming_rule.private_static_fields_should_be_s_camelcase.style = s_camelcase
+dotnet_naming_rule.private_static_fields_should_be_s_camelcase.style = camelcase
 
 dotnet_naming_rule.public_constant_fields_should_be_pascalcase.severity = suggestion
 dotnet_naming_rule.public_constant_fields_should_be_pascalcase.symbols = public_constant_fields
@@ -378,6 +374,7 @@ dotnet_naming_symbols.local_functions.applicable_kinds = local_function
 dotnet_naming_symbols.local_functions.applicable_accessibilities = *
 dotnet_naming_symbols.local_functions.required_modifiers = 
 
+
 # Naming styles
 
 dotnet_naming_style.pascalcase.required_prefix = 
@@ -405,48 +402,41 @@ dotnet_naming_style.camelcase.required_suffix =
 dotnet_naming_style.camelcase.word_separator = 
 dotnet_naming_style.camelcase.capitalization = camel_case
 
-# customized:
-# dotnet_naming_style.s_camelcase.required_prefix = s_
-# dotnet_naming_style.s_camelcase.required_suffix = 
-# dotnet_naming_style.s_camelcase.word_separator = 
-# dotnet_naming_style.s_camelcase.capitalization = camel_case
+## unused
+## dotnet_naming_style.s_camelcase.required_prefix = s_
+## dotnet_naming_style.s_camelcase.required_suffix = 
+## dotnet_naming_style.s_camelcase.word_separator = 
+## dotnet_naming_style.s_camelcase.capitalization = camel_case
+
 dotnet_naming_style.constant_case.required_prefix = 
 dotnet_naming_style.constant_case.required_suffix = 
 dotnet_naming_style.constant_case.word_separator = _
 dotnet_naming_style.constant_case.capitalization = all_upper
 
-#> #### .NET Coding Severity ####
-
-# Default severity for analyzer diagnostics with category 'Style'
-dotnet_analyzer_diagnostic.category-Style.severity = silent
-
+## #### .NET Coding Severity ####
 [src/**/*.{cs,vb}]
 
-#> IDE0055: Fix Formatting
+## IDE0055: Fix Formatting
 dotnet_diagnostic.IDE0055.severity = warning
 
-#> IDE0040: Accessibility modifiers required
+## IDE0040: Accessibility modifiers required
 dotnet_diagnostic.IDE0040.severity = warning
 
-#> IDE0051: Remove unused private member
+## IDE0051: Remove unused private member
 dotnet_diagnostic.IDE0051.severity = warning
 
-#> IDE0052: Remove unread private member
+## IDE0052: Remove unread private member
 dotnet_diagnostic.IDE0052.severity = warning
 
-#> IDE0059: Remove unnecessary value assignment
+## IDE0059: Remove unnecessary value assignment
 dotnet_diagnostic.IDE0059.severity = warning
 
-#> IDE0060: Remove unused parameter
+## IDE0060: Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = warning
 
-#> IDE0100: Remove unnecessary equality operator
+## IDE0100: Remove unnecessary equality operator
 dotnet_diagnostic.IDE0100.severity = warning
 
-#> IDE1006: Naming rule violation
-dotnet_diagnostic.IDE1006.severity = warning
-
-
-#> #### .NET Coding Excludes files  ####
+## #### .NET Coding Excludes files  ####
 [src/**/{Migrations}/*.{cs,vb}]
 generated_code = true

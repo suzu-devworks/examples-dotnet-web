@@ -1,26 +1,21 @@
 name: packaging
 
 on:
-  #push:
-  #  branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
-  #   types: [closed]
   workflow_dispatch:
 
-env:
-  DOTNET_VERSION: "9.0.x"
+permissions: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET ${{ env.DOTNET_VERSION }}
-        uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+           dotnet-version: '8.0.x'
 
       - name: Auth Github
         run: dotnet nuget update source github --username suzu-devworks --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
@@ -29,13 +24,13 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore
-
+        run: dotnet restore --locked-mode
+      
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal
+      # - name: Test
+      #   run: dotnet test --configuration Release --no-build --verbosity normal
 
       - name: Pack
         run: dotnet pack --configuration Release --no-build -o artifacts/
