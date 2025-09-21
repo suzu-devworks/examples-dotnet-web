@@ -6,6 +6,7 @@
     "ms-dotnettools.csdevkit",
     "jeremycaron.csharp-organize-usings",
     "aliasadidev.nugetpackagemanagergui",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "DotJoshJohnson.xml"
   ]
 }

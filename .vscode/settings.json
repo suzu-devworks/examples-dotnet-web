@@ -1,51 +1,57 @@
 {
-  "csharpOrganizeUsings.removeUnnecessaryUsings": true,
-  "csharpOrganizeUsings.sortOrder": "System",
-  "csharpOrganizeUsings.splitGroups": false,
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "files.associations": {
-    ".dockerignore": "ignore",
-    "appsettings*.json": "jsonc",
-    "web.config": "xml"
-  },
-  "omnisharp.enableAsyncCompletion": true,
-  "omnisharp.enableEditorConfigSupport": true,
-  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
   "[aspnetcorerazor]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
   "[csharp]": {
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit",
+      "source.organizeImports": "explicit"
     },
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "[razor]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  },
-  "[javascript]": {
+  "[css][scss][sass]": {
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit",
+      "source.fixAll.stylelint": "explicit"
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit",
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[jsonc]": {
+  "[javascript][typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json][jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+  "[markdown]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.markdownlint": "explicit"
+    },
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
+  "[razor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "DotJoshJohnson.xml"
+  },
+  "csharpOrganizeUsings.removeUnnecessaryUsings": true,
+  "csharpOrganizeUsings.sortOrder": "System",
+  "csharpOrganizeUsings.splitGroups": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "eslint.format.enable": false,
+  "files.associations": {
+    ".dockerignore": "ignore",
+    "appsettings*.json": "jsonc",
+    "web.config": "xml"
+  },
+  "markdownlint.config": {},
+  "omnisharp.enableAsyncCompletion": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": true
 }
