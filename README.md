@@ -3,11 +3,10 @@
 [![build](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/dotnet-build.yml)
 [![CodeQL](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/codeql.yml/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/codeql.yml)
 
-Workspace for studying ASP.NET programming.
+## What is the purpose of this repository?
 
-## What is this?
+This repository is just my personal playground for learning ASP.NET web programming.
 
-This repository is a personal playground for the author to learn .NET programming and try out its features.
-This might be helpful to other developers having the same problem.
+The content here might actually be helpful to other developers facing similar issues.
 
-However, please note that the code described here is based on my personal opinion and may contain many inaccuracies.
+However, please keep in mind that this code is based solely on my own perspective and probably has lots of inaccurate or questionable parts!
