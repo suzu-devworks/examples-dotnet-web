@@ -2,20 +2,14 @@
 
 ## Table of Contents <!-- omit in toc -->
 
-- [Examples.Web.HostingStartup](#exampleswebhostingstartup)
-  - [References](#references)
-  - [Creating Hosting startup assemblies](#creating-hosting-startup-assemblies)
-    - [`IHostingStartup` implementation](#ihostingstartup-implementation)
-    - [Configuration provided by the hosting startup](#configuration-provided-by-the-hosting-startup)
-    - [`HostingStartup` attribute](#hostingstartup-attribute)
-    - [Disable automatic loading of hosting startup assemblies](#disable-automatic-loading-of-hosting-startup-assemblies)
-    - [Specify the hosting startup assembly](#specify-the-hosting-startup-assembly)
-  - [Activation](#activation)
-
-## References
-
-- [Use hosting startup assemblies in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/fundamentals/host/platform-specific-configuration?view=aspnetcore-8.0)
-
+- [Creating Hosting startup assemblies](#creating-hosting-startup-assemblies)
+  - [`IHostingStartup` implementation](#ihostingstartup-implementation)
+  - [Configuration provided by the hosting startup](#configuration-provided-by-the-hosting-startup)
+  - [`HostingStartup` attribute](#hostingstartup-attribute)
+  - [Disable automatic loading of hosting startup assemblies](#disable-automatic-loading-of-hosting-startup-assemblies)
+  - [Specify the hosting startup assembly](#specify-the-hosting-startup-assembly)
+- [Activation](#activation)
+- [References](#references)
 
 ## Creating Hosting startup assemblies
 
@@ -42,7 +36,6 @@ public class StartupEnhancementHostingStartup : IHostingStartup
 
 However, it seems that it will eventually be overwritten in WebApplicationBuilder.Configuration.
 
-
 ### `HostingStartup` attribute
 
 A `HostingStartup` attribute indicates the presence of a hosting startup assembly to activate at runtime.
@@ -56,21 +49,24 @@ A `HostingStartup` attribute indicates the presence of a hosting startup assembl
 To prevent all hosting startup assemblies from loading, set one of the following to true or 1:
 
 - Prevent Hosting Startup host configuration setting:
+
     ```cs
         webHostBuilder.UseSetting(WebHostDefaults.PreventHostingStartupKey, "True");`
     ```
+
 - `ASPNETCORE_PREVENTHOSTINGSTARTUP` environment variable.
 
 To prevent specific hosting startup assemblies from loading, set one of the following to a semicolon-delimited string of hosting startup assemblies to exclude at startup:
 
 - Hosting Startup Exclude Assemblies host configuration setting:
+
     ```cs
         webHostBuilder.UseSetting(
                 WebHostDefaults.HostingStartupExcludeAssembliesKey, 
                 "{ASSEMBLY1;ASSEMBLY2; ...}");
     ```
-- `ASPNETCORE_HOSTINGSTARTUPEXCLUDEASSEMBLIES` environment variable.
 
+- `ASPNETCORE_HOSTINGSTARTUPEXCLUDEASSEMBLIES` environment variable.
 
 ### Specify the hosting startup assembly
 
@@ -90,7 +86,11 @@ Options for hosting startup activation are:
 
 - Runtime store
 - Compile-time reference required for activation
-    - NuGet package
-    - Project bin folder
+  - NuGet package
+  - Project bin folder
 
 IHostingStartup, which is in the WebApp's own assembly, is automatically loaded.
+
+## References
+
+- [Use hosting startup assemblies in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/fundamentals/host/platform-specific-configuration?view=aspnetcore-8.0)

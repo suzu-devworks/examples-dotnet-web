@@ -8,5 +8,19 @@
   ],
   "service": "dev",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "streetsidesoftware.code-spell-checker",
+        "DavidAnson.vscode-markdownlint",
+        "ms-dotnettools.csdevkit",
+        "jeremycaron.csharp-organize-usings",
+        "aliasadidev.nugetpackagemanagergui",
+        "esbenp.prettier-vscode",
+        "DotJoshJohnson.xml"
+      ]
+    }
+  }
 }

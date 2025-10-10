@@ -1,7 +1,15 @@
 # Examples.Web.Infrastructure.Tests
 
+## Table of Contents <!-- omit in toc -->
 
-## Project Initialize
+- [Development](#development)
+  - [How the project was initialized](#how-the-project-was-initialized)
+
+## Development
+
+### How the project was initialized
+
+This project was initialized with the following command:
 
 ```shell
 ## Solution

@@ -1,8 +1,11 @@
 # Examples.Web.Authentication.Basic
 
-## References
+## Table of Contents <!-- omit in toc -->
 
-- [RFC 7617(ja)](https://tex2e.github.io/rfc-translater/html/rfc7617.html)
+- [Use AspNetCore.Authentication.Basic](#use-aspnetcoreauthenticationbasic)
+- [Development](#development)
+  - [How the project was initialized](#how-the-project-was-initialized)
+- [References](#references)
 
 ## Use AspNetCore.Authentication.Basic
 
@@ -30,8 +33,11 @@ Set the value for `BasicAuthenticationOption` in `appsettings.json`:
 
 In this sample, the account is set as a constant of InMemoryUserRepository.
 
+## Development
 
-## Project Initialize
+### How the project was initialized
+
+This project was initialized with the following command:
 
 ```shell
 ## Solution
@@ -50,3 +56,6 @@ cd ../../
 dotnet list package --outdated
 ```
 
+## References
+
+- [RFC 7617(ja)](https://tex2e.github.io/rfc-translater/html/rfc7617.html)

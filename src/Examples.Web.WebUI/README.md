@@ -1,13 +1,16 @@
 # Examples.Web.WebUI
 
-## Index
+## Table of Contents <!-- omit in toc -->
 
 - [Tiny colored console](../../docs/logging/logging_use_console.md)
 - [Filter methods for Razor Pages in ASP.NET Core](../../docs/filters/filters_in_razor_pages.md)
 - [Hosting startup assemblies](../Examples.Web.HostingStartup/README.md)
 
+## Development
 
-## Project Initialize
+### How the project was initialized
+
+This project was initialized with the following command:
 
 ```shell
 ## Solution
