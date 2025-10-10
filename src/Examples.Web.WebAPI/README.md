@@ -1,6 +1,6 @@
 # Examples.Web.WebAPI
 
-## Index
+## Table of Contents <!-- omit in toc -->
 
 - [Logging use NLog](../../docs/logging/logging_use_nlog.md)
 - [URLs case in controller routing](../../docs/routing/routing_controller_urls_case.md)
@@ -10,8 +10,11 @@
 - [CORS (Cross-Origin Resource Sharing)](../../docs/security/security_CORS.md)
 - [Customize Swagger](../../docs/openapi/swagger_customization.md)
 
+## Development
 
-## Project Initialize
+### How the project was initialized
+
+This project was initialized with the following command:
 
 ```shell
 ## Solution
