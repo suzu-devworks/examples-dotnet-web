@@ -3,11 +3,11 @@
   "ignorePaths": [
     ".git",
     ".devcontainer",
-    ".config",
     ".github",
     ".vscode",
     ".editorconfig",
     ".gitignore",
+    "dotnet-tools.json",
     "*.csproj",
     "*.sln"
   ],
