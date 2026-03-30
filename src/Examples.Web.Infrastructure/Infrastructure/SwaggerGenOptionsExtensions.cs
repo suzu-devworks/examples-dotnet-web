@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using Examples.Web.Infrastructure.Swagger;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.Web.Infrastructure;

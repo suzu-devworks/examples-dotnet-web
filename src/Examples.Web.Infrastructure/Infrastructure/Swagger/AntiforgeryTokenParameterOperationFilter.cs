@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.Web.Infrastructure.Swagger;
@@ -25,19 +24,19 @@ public class AntiforgeryTokenParameterOperationFilter : IOperationFilter
             return;
         }
 
-        operation.Parameters ??= new List<OpenApiParameter>();
+        operation.Parameters ??= [];
         if (operation.Parameters.Any(x => x.Name == _name))
         {
             return;
         }
 
         operation.Parameters.Add(
-            new()
+            new OpenApiParameter()
             {
                 Name = _name,
                 In = _location,
                 Required = false,
-                Schema = new OpenApiSchema { Type = "String" },
+                Schema = new OpenApiSchema { Type = JsonSchemaType.String },
             });
 
         return;

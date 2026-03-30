@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.Web.Infrastructure.Swagger;
@@ -24,11 +24,11 @@ public class HideParameterOperationFilter : IOperationFilter
         foreach (var param in parametersToHide)
         {
             var target = operation.Parameters
-                .FirstOrDefault(p => p.Name == param.Name);
+                ?.FirstOrDefault(p => p.Name == param.Name);
 
             if (target is not null)
             {
-                operation.Parameters.Remove(target);
+                operation.Parameters?.Remove(target);
             }
         }
 

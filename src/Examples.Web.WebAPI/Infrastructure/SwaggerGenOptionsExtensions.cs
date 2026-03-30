@@ -1,5 +1,5 @@
 using Examples.Web.Infrastructure.Swagger;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.Web.Infrastructure;
@@ -15,7 +15,7 @@ public static class SwaggerGenOptionsExtensions
         options.OperationFilter<RequestHeaderParameterOperationFilter>();
         options.OperationFilter<RequestHeaderParameterOperationFilter>();
 
-        options.MapType<TimeSpan>(() => new() { Type = "string" });
+        options.MapType<TimeSpan>(() => new OpenApiSchema() { Type = JsonSchemaType.String });
 
         options.SwaggerDoc("v1", new()
         {

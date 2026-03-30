@@ -24,7 +24,12 @@ public static class EndpointConventionBuilderExtensions
             await signInManager.SignOutAsync();
             return Results.Ok();
         })
-        .WithOpenApi()
+        .AddOpenApiOperationTransformer((operation, context, token) =>
+        {
+            operation.Summary = "Logout";
+            operation.Description = "Logout the current user.";
+            return Task.FromResult(operation);
+        })
         .RequireAuthorization();
 
     }

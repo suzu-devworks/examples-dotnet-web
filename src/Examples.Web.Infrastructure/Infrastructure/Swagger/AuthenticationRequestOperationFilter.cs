@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.Web.Infrastructure.Swagger;
@@ -25,23 +25,18 @@ public class AuthenticationRequestOperationFilter : IOperationFilter
             return;
         }
 
-        operation.Security.Add(new OpenApiSecurityRequirement
+        operation.Security?.Add(new OpenApiSecurityRequirement()
         {
             {
-                new OpenApiSecurityScheme
+                new OpenApiSecuritySchemeReference(_name)
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = _name
-                    }
-                },
-                _scopes
+                }
+                , _scopes.ToList()
             }
         });
 
-        operation.Responses.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
-        operation.Responses.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
+        operation.Responses?.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
+        operation.Responses?.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
 
         return;
     }

@@ -1,5 +1,3 @@
-using System.Reflection;
-
 [assembly: HostingStartup(typeof(Examples.Web.WebUI.Infrastructure.HostingStartup))]
 
 namespace Examples.Web.WebUI.Infrastructure;

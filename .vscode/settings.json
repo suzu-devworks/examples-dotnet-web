@@ -39,19 +39,20 @@
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
   },
-  "csharpOrganizeUsings.removeUnnecessaryUsings": true,
   "csharpOrganizeUsings.sortOrder": "System",
   "csharpOrganizeUsings.splitGroups": false,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "eslint.format.enable": false,
   "files.associations": {
     ".dockerignore": "ignore",
     "appsettings*.json": "jsonc",
     "web.config": "xml"
   },
-  "markdownlint.config": {},
+  "markdownlint.config": {
+    "MD024": false
+  },
   "omnisharp.enableAsyncCompletion": true,
   "omnisharp.enableEditorConfigSupport": true,
-  "omnisharp.enableMsBuildLoadProjectsOnDemand": true
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
+  "remote.autoForwardPortsFallback": 0
 }
