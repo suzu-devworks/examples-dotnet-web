@@ -1,6 +1,5 @@
 using Examples.Web.Infrastructure.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.WebAPI.Applications.Localization;
 

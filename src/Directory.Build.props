@@ -1,6 +1,12 @@
 <Project>
   <PropertyGroup>
-    <LatestFramework>net9.0</LatestFramework>
-    <LTSFrameworks>net8.0</LTSFrameworks>
+    <LatestFramework>net10.0</LatestFramework>
+    <LTSFrameworks>net8.0;net10.0</LTSFrameworks>
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
   </PropertyGroup>
 </Project>

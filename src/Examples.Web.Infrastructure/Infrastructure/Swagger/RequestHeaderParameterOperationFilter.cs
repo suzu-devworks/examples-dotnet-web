@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Examples.Web.Infrastructure.Swagger;
@@ -28,13 +27,13 @@ public class RequestHeaderParameterOperationFilter : IOperationFilter
         var appendices = context.MethodInfo
             .GetCustomAttributes(inherit: true)
             .OfType<RequestHeaderParameterAttribute>()
-            .Where(x => !operation.Parameters.Any(y => y.Name == x.Name))
+            .Where(x => !operation.Parameters?.Any(y => y.Name == x.Name) ?? false)
             ;
 
         foreach (var attr in appendices)
         {
-            operation.Parameters.Add(
-                new()
+            operation.Parameters?.Add(
+                new OpenApiParameter()
                 {
                     Name = attr.Name,
                     In = ParameterLocation.Header,
@@ -42,8 +41,8 @@ public class RequestHeaderParameterOperationFilter : IOperationFilter
                     Required = false,
                     Schema = new OpenApiSchema
                     {
-                        Type = "String",
-                        Default = new OpenApiString(attr.Default)
+                        Type = JsonSchemaType.String,
+                        Default = attr.Default ?? string.Empty
                     }
                 });
         }
