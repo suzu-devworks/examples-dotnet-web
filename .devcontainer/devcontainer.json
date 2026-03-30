@@ -8,6 +8,7 @@
   ],
   "service": "dev",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
   "remoteUser": "vscode",
   "customizations": {
     "vscode": {

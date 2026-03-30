@@ -9,6 +9,7 @@ public static class WeatherForecastApiExtensions
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        // spell-checker: words weatherforecast
         return endpoints.MapGet("/weatherforecast", () =>
          {
              var forecast = Enumerable.Range(1, 5).Select(index =>
@@ -22,7 +23,12 @@ public static class WeatherForecastApiExtensions
              return forecast;
          })
          .WithName("GetWeatherForecast")
-         .WithOpenApi();
+         .AddOpenApiOperationTransformer((operation, context, token) =>
+         {
+             operation.Summary = "Get weather forecast";
+             operation.Description = "Get a list of weather forecasts for the next 5 days.";
+             return Task.FromResult(operation);
+         });
     }
 
 }
