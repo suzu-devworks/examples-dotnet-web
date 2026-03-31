@@ -9,9 +9,9 @@ services:
     restart: no
     volumes:
       - ./web/nginx.conf.d:/etc/nginx/conf.d:ro
-      - ./web/html:/var/www/html:ro
+      - ./web/public:/var/www/html:ro
       # Use SSL server certificate
-      - ~/.vscode/ssl:/etc/ssl/local:ro
+      - ./web/ssl:/etc/ssl/local:ro
 
 networks:
   interconnect:

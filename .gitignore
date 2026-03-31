@@ -362,3 +362,7 @@ MigrationBackup/
 [Tt]emp/
 .mono/
 .DS_Store
+.env*
+*.crt
+*.key
+*.pfx

@@ -6,10 +6,12 @@
     ".github",
     ".vscode",
     ".editorconfig",
+    ".gitattributes",
     ".gitignore",
+    ".prettier*",
     "dotnet-tools.json",
     "*.csproj",
-    "*.sln"
+    "*.slnx"
   ],
   "words": [
     "Antiforgery",
