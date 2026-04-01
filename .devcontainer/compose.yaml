@@ -5,12 +5,11 @@ services:
       - interconnect
     ports:
       - "8080-8089:80"
-      - "8443-8452:8443"
+      - "8443-8452:443"
     restart: no
     volumes:
       - ./web/nginx.conf.d:/etc/nginx/conf.d:ro
       - ./web/public:/var/www/html:ro
-      # Use SSL server certificate
       - ./web/ssl:/etc/ssl/local:ro
 
 networks:

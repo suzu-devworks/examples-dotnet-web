@@ -1,5 +1,4 @@
 using Examples.Web.Authentication.Basic;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

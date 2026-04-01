@@ -15,11 +15,13 @@
   ],
   "words": [
     "Antiforgery",
+    "appsettings",
+    "ASPNETCORE",
     "classlib",
     "HSTS",
     "Linq",
-    "Swashbuckle",
-    "nlog"
+    "nlog",
+    "Swashbuckle"
   ],
   "dictionaryDefinitions": [],
   "dictionaries": [],
