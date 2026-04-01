@@ -366,4 +366,4 @@ MigrationBackup/
 *.crt
 *.key
 *.pfx
-.devcontainer/dp-keys
+.devcontainer/.keys
