@@ -5,13 +5,12 @@ services:
       - interconnect
     ports:
       - "8080-8089:80"
-      - "8443-8452:8443"
+      - "8443-8452:443"
     restart: no
     volumes:
       - ./web/nginx.conf.d:/etc/nginx/conf.d:ro
-      - ./web/html:/var/www/html:ro
-      # Use SSL server certificate
-      - ~/.vscode/ssl:/etc/ssl/local:ro
+      - ./web/public:/var/www/html:ro
+      - ./web/ssl:/etc/ssl/local:ro
 
 networks:
   interconnect:

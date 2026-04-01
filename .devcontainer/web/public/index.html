@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Welcome to examples-dotnet-web!</title>
+    <style>
+        :root {
+            --bg-top: #0f1115;
+            --bg-mid: #1a1f27;
+            --bg-bottom: #303743;
+            --accent: #f4d35e;
+            --glow-a: rgb(244 211 94 / 12%);
+            --glow-b: rgb(120 169 255 / 8%);
+            --text: #f8fbff;
+            --muted: #cbd5e1;
+            --card-bg: rgb(24 29 37 / 74%);
+            --card-border: rgb(255 255 255 / 14%);
+            color-scheme: dark;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-top: #f5f7f8;
+                --bg-mid: #dde7ea;
+                --bg-bottom: #fff8ea;
+                --accent: #0ea5a4;
+                --glow-a: rgb(14 165 164 / 13%);
+                --glow-b: rgb(245 158 11 / 9%);
+                --text: #102a43;
+                --muted: #334e68;
+                --card-bg: rgb(255 255 255 / 82%);
+                --card-border: rgb(16 42 67 / 15%);
+                color-scheme: light;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: "Trebuchet MS", "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(860px 540px at 12% 18%, var(--glow-a), transparent 58%),
+                radial-gradient(720px 500px at 88% 82%, var(--glow-b), transparent 54%),
+                linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 46%, var(--bg-bottom) 100%);
+            display: grid;
+            place-items: center;
+            padding: 28px;
+            transition: background 260ms ease, color 220ms ease;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .shell {
+            width: min(720px, 100%);
+            padding: 42px 40px;
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 24px 70px rgb(1 6 20 / 50%);
+            animation: rise 560ms ease-out both;
+            transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+        }
+
+        .shell::after {
+            content: "";
+            display: block;
+            margin-top: 24px;
+            height: 4px;
+            width: min(300px, 70%);
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent), rgb(244 211 94 / 0%));
+            animation: reveal 700ms 180ms ease-out both;
+        }
+
+        @supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
+            .shell {
+                background: rgb(27 32 40 / 92%);
+            }
+
+            @media (prefers-color-scheme: light) {
+                .shell {
+                    background: rgb(255 255 255 / 94%);
+                }
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .shell {
+                box-shadow: 0 22px 52px rgb(16 42 67 / 18%);
+            }
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            display: inline-block;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #102a43;
+            background: var(--accent);
+            border-radius: 999px;
+            padding: 7px 13px;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(0.95rem, 3.4vw, 2.25rem);
+            line-height: 1.15;
+            letter-spacing: 0.01em;
+            overflow-wrap: anywhere;
+        }
+
+        p {
+            margin: 16px 0 0;
+            max-width: 64ch;
+            color: var(--muted);
+            font-size: clamp(1rem, 1.7vw, 1.15rem);
+            line-height: 1.75;
+            overflow-wrap: anywhere;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                width: 0;
+            }
+
+            to {
+                opacity: 1;
+                width: min(300px, 70%);
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding:
+                    max(16px, env(safe-area-inset-top))
+                    max(16px, env(safe-area-inset-right))
+                    max(16px, env(safe-area-inset-bottom))
+                    max(16px, env(safe-area-inset-left));
+            }
+
+            .shell {
+                padding: 28px 22px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: clamp(1.45rem, 8.2vw, 2.1rem);
+                text-wrap: balance;
+                line-height: 1.2;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="shell">
+        <div class="topbar">
+            <span class="chip">Nginx Reverse Proxy</span>
+        </div>
+        <h1>Welcome to examples-dotnet-web!</h1>
+        <p>This page is used to test the examples-dotnet-web application via an nginx reverse proxy.</p>
+    </main>
+</body>
+
+</html>

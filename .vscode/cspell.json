@@ -6,18 +6,22 @@
     ".github",
     ".vscode",
     ".editorconfig",
+    ".gitattributes",
     ".gitignore",
+    ".prettier*",
     "dotnet-tools.json",
     "*.csproj",
-    "*.sln"
+    "*.slnx"
   ],
   "words": [
     "Antiforgery",
+    "appsettings",
+    "ASPNETCORE",
     "classlib",
     "HSTS",
     "Linq",
-    "Swashbuckle",
-    "nlog"
+    "nlog",
+    "Swashbuckle"
   ],
   "dictionaryDefinitions": [],
   "dictionaries": [],
