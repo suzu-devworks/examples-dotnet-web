@@ -11,6 +11,12 @@ services:
       - ./web/nginx.conf.d:/etc/nginx/conf.d:ro
       - ./web/public:/var/www/html:ro
       - ./web/ssl:/etc/ssl/local:ro
+    healthcheck:
+      test: [ "CMD", "curl", "-k", "-f", "https://localhost/healthz" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 networks:
   interconnect:
