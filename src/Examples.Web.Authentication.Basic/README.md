@@ -118,6 +118,7 @@ dotnet new sln -o .
 dotnet new webapp -o src/Examples.Web.Authentication.Basic
 dotnet sln add src/Examples.Web.Authentication.Basic/
 cd src/Examples.Web.Authentication.Basic
+dotnet add reference ../Examples.Web.Infrastructure/
 dotnet add package AspNetCore.Authentication.Basic
 
 dotnet user-secrets init
