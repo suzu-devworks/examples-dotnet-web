@@ -26,11 +26,11 @@ Add the following to `Program.cs`:
 
 ```cs
 //# Add Basic Authentication.
-builder.Services.AddAuthentication(defaultScheme: BasicDefaults.AuthenticationScheme)
-    .AddBasicWithAspNetCore(option => builder.Configuration.GetSection("Authentication").Bind(option));
+builder.Services.AddAuthentication(defaultScheme: BasicAuthentication.DefaultScheme)
+  .AddCustomBasic(option => builder.Configuration.GetSection("Authentication").Bind(option));
 ```
 
-`AddBasicWithAspNetCore` is a custom extension method defined in this project (`AuthenticationBuilderExtensions`).
+`AddCustomBasic` is a custom extension method defined in this project (`AuthenticationBuilderExtensions`).
 It registers the following services internally:
 
 - `IUserRepository` → `InMemoryUserRepository` (Singleton) — repository for user data
@@ -118,6 +118,7 @@ dotnet new sln -o .
 dotnet new webapp -o src/Examples.Web.Authentication.Basic
 dotnet sln add src/Examples.Web.Authentication.Basic/
 cd src/Examples.Web.Authentication.Basic
+dotnet add reference ../Examples.Web.Infrastructure/
 dotnet add package AspNetCore.Authentication.Basic
 
 dotnet user-secrets init

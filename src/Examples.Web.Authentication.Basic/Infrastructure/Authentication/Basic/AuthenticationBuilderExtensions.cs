@@ -1,7 +1,9 @@
 using AspNetCore.Authentication.Basic;
+using Examples.Web.Domain.Identity;
+using Examples.Web.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication;
 
-namespace Examples.Web.Authentication.Basic;
+namespace Examples.Web.Infrastructure.Authentication.Basic;
 
 /// <summary>
 /// Extension methods for <see cref="AuthenticationBuilder" />.
@@ -14,28 +16,24 @@ public static class AuthenticationBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="configure"></param>
     /// <returns></returns>
-    public static AuthenticationBuilder AddBasicWithAspNetCore(this AuthenticationBuilder builder,
+    public static AuthenticationBuilder AddCustomBasic(this AuthenticationBuilder builder,
         Action<BasicAuthenticationOption>? configure = null)
     {
         var option = new BasicAuthenticationOption();
         configure?.Invoke(option);
 
-        var services = builder.Services;
-        // use fake for _LoginPartial.cshtml.
-        // services.AddSingleton<SignInManager<IdentityUser>, FakeSignInManager<IdentityUser>>();
-        // services.AddSingleton<UserManager<IdentityUser>, FakeUserManager<IdentityUser>>();
-        services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+        builder.AddBasic<BasicUserValidationService>(BasicDefaults.AuthenticationScheme,
+            basic =>
+            {
+                basic.Realm = option.Realm ?? "Access to sites that require authentication";
+                basic.Events = new BasicEvents
+                {
+                    OnAuthenticationSucceeded = context => Task.CompletedTask
+                };
+            });
 
-        builder.AddBasic<BasicUserValidationService>(basic =>
-           {
-               basic.Realm = option.Realm ?? "Access to sites that require authentication";
-               basic.Events = new BasicEvents
-               {
-                   OnAuthenticationSucceeded = context => Task.CompletedTask
-               };
-           });
+        builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
 
         return builder;
     }
-
 }

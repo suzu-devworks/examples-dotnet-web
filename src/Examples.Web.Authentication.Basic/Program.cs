@@ -1,4 +1,4 @@
-using Examples.Web.Authentication.Basic;
+using Examples.Web.Infrastructure.Authentication.Basic;
 using Examples.Web.Infrastructure.Containers;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ builder.Services.AddRazorPages();
 
 //# Add Basic Authentication.
 builder.Services.AddAuthentication(defaultScheme: BasicDefaults.AuthenticationScheme)
-     .AddBasicWithAspNetCore(option => builder.Configuration.GetSection("Authentication").Bind(option));
+     .AddCustomBasic(option => builder.Configuration.GetSection("Authentication").Bind(option));
 
 builder.Services.AddControllers();
 
