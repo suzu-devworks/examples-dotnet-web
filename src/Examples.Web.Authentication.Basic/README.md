@@ -26,11 +26,11 @@ Add the following to `Program.cs`:
 
 ```cs
 //# Add Basic Authentication.
-builder.Services.AddAuthentication(defaultScheme: BasicDefaults.AuthenticationScheme)
-    .AddBasicWithAspNetCore(option => builder.Configuration.GetSection("Authentication").Bind(option));
+builder.Services.AddAuthentication(defaultScheme: BasicAuthentication.DefaultScheme)
+  .AddCustomBasic(option => builder.Configuration.GetSection("Authentication").Bind(option));
 ```
 
-`AddBasicWithAspNetCore` is a custom extension method defined in this project (`AuthenticationBuilderExtensions`).
+`AddCustomBasic` is a custom extension method defined in this project (`AuthenticationBuilderExtensions`).
 It registers the following services internally:
 
 - `IUserRepository` → `InMemoryUserRepository` (Singleton) — repository for user data
