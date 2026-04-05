@@ -1,4 +1,4 @@
-namespace Examples.Web.Authentication.Basic;
+namespace Examples.Web.Infrastructure.Authentication.Basic;
 
 public class BasicAuthenticationOption
 {
