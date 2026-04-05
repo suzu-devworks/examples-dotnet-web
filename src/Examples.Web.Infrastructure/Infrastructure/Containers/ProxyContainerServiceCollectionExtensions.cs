@@ -1,3 +1,5 @@
+#if NET10_0_OR_GREATER
+
 using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -26,9 +28,8 @@ public static class ProxyContainerServiceCollectionExtensions
         // Add Forwarded Headers Middleware to process the X-Forwarded-For, X-Forwarded-Proto, and X-Forwarded-Prefix headers.
         services.Configure<ForwardedHeadersOptions>(options =>
         {
-            options.KnownIPNetworks.Clear();
             options.KnownProxies.Clear();
-
+            options.KnownIPNetworks.Clear();
             options.KnownIPNetworks.Add(trustedProxyNetwork.Value);
 
             options.ForwardedHeaders =
@@ -36,3 +37,5 @@ public static class ProxyContainerServiceCollectionExtensions
         });
     }
 }
+
+#endif
