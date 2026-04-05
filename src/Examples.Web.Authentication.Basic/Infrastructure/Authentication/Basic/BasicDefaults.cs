@@ -1,7 +1,7 @@
 namespace Examples.Web.Infrastructure.Authentication.Basic;
 
-public sealed class BasicAuthentication
+public static class BasicDefaults
 {
-    public static readonly string DefaultScheme
+    public static readonly string AuthenticationScheme
         = global::AspNetCore.Authentication.Basic.BasicDefaults.AuthenticationScheme;
 }

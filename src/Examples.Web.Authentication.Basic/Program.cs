@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 //# Add Basic Authentication.
-builder.Services.AddAuthentication(defaultScheme: BasicAuthentication.DefaultScheme)
+builder.Services.AddAuthentication(defaultScheme: BasicDefaults.AuthenticationScheme)
      .AddCustomBasic(option => builder.Configuration.GetSection("Authentication").Bind(option));
 
 builder.Services.AddControllers();

@@ -22,7 +22,7 @@ public static class AuthenticationBuilderExtensions
         var option = new BasicAuthenticationOption();
         configure?.Invoke(option);
 
-        builder.AddBasic<BasicUserValidationService>(BasicAuthentication.DefaultScheme,
+        builder.AddBasic<BasicUserValidationService>(BasicDefaults.AuthenticationScheme,
             basic =>
             {
                 basic.Realm = option.Realm ?? "Access to sites that require authentication";
