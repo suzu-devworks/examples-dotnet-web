@@ -19,10 +19,10 @@ public static class AuthenticationBuilderExtensions
                 options.AccessDeniedPath = "/Forbidden/";
                 options.LoginPath = "/Account/Login/";
 
+                configure?.Invoke(options);
+
                 // Set the custom events type to our implementation.
                 options.EventsType = typeof(CustomCookieAuthenticationEvents);
-
-                configure?.Invoke(options);
             });
 
         // Add HttpContextAccessor to access HttpContext in views and other services.
