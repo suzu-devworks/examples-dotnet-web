@@ -1,7 +1,6 @@
 using AspNetCore.Authentication.Basic;
-using Examples.Web.Domain.Identity;
 
-namespace Examples.Web.Infrastructure.Authentication.Basic;
+namespace Examples.Web.Authentication.Basic;
 
 public class BasicUserValidationService : IBasicUserValidationService
 {
