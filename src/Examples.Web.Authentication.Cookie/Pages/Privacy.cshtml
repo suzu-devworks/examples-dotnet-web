@@ -6,6 +6,11 @@
 }
 <h1>@ViewData["Title"]</h1>
 
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-success" role="alert">@Model.StatusMessage</div>
+}
+
 <p>Use this page to detail your site's privacy policy.</p>
 
 <ul class="d-flex flex-column gap-1 mt-1">
@@ -31,3 +36,8 @@
         class="font-monospace small bg-light border rounded px-1">@(Model.HttpContext.Request.Path)</span>
     </li>
 </ul>
+<div>
+    <form method="post" asp-page-handler="UpdateAccount">
+        <button type="submit" class="btn btn-warning">Update this Account</button>
+    </form>
+</div>

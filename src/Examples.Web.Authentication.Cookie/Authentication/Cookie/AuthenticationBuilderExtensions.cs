@@ -8,7 +8,6 @@ namespace Examples.Web.Authentication.Cookie;
 /// </summary>
 public static class AuthenticationBuilderExtensions
 {
-
     public static AuthenticationBuilder AddCustomCookie(this AuthenticationBuilder builder
         , Action<CookieAuthenticationOptions>? configure = null)
     {
@@ -20,11 +19,18 @@ public static class AuthenticationBuilderExtensions
                 options.AccessDeniedPath = "/Forbidden/";
                 options.LoginPath = "/Account/Login/";
 
+                // Set the custom events type to our implementation.
+                options.EventsType = typeof(CustomCookieAuthenticationEvents);
+
                 configure?.Invoke(options);
             });
 
-        //# Add HttpContextAccessor to access HttpContext in views and other services.
+        // Add HttpContextAccessor to access HttpContext in views and other services.
         builder.Services.AddHttpContextAccessor();
+
+        // Add the custom cookie authentication events to the DI container.
+        builder.Services.AddScoped<CustomCookieAuthenticationEvents>();
+        builder.Services.AddSingleton<IUserRepository, Repositories.InMemoryUserRepository>();
 
         return builder;
     }

@@ -12,10 +12,12 @@ namespace Examples.Web.Authentication.Cookie.Pages.Account
 {
     public class LoginModel : PageModel
     {
+        private readonly IUserRepository _repository;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(ILogger<LoginModel> logger)
+        public LoginModel(IUserRepository repository, ILogger<LoginModel> logger)
         {
+            _repository = repository;
             _logger = logger;
         }
 
@@ -108,10 +110,13 @@ namespace Examples.Web.Authentication.Cookie.Pages.Account
                     new Claim(ClaimTypes.Name, user.Email),
                     new Claim("FullName", user.FullName),
                     new Claim(ClaimTypes.Role, "Administrator"),
+                    //# Add a claim to track changes in the database.
+                    new Claim("LastChanged", user.LastChanged)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme);
 
                 var authProperties = new AuthenticationProperties
                 {
@@ -152,28 +157,11 @@ namespace Examples.Web.Authentication.Cookie.Pages.Account
             return Page();
         }
 
-        private static async Task<ApplicationUser> AuthenticateUser(string email, string password)
+        private async Task<ApplicationUser> AuthenticateUser(string email, string password)
         {
-            // For demonstration purposes, authenticate a user
-            // with a static email address. Ignore the password.
-            // Assume that checking the database takes 500ms
-
-            _ = password; // To avoid CS0168 warning about unused parameter
-
-            await Task.Delay(500);
-
-            if (email == "user1@examples.local")
-            {
-                return new ApplicationUser()
-                {
-                    Email = email,
-                    FullName = "User One"
-                };
-            }
-            else
-            {
-                return null;
-            }
+            var user = await _repository.GetUserByEmailAsync(email);
+            var isValid = user?.ValidatePassword(password) ?? false;
+            return isValid ? user : null;
         }
     }
 }
