@@ -2,22 +2,19 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(LTSFrameworks)</TargetFrameworks>
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
     <RootNamespace>Examples.Web</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <NoWarn>$(NoWarn);IDE0290;IDE0301;IDE0305;SYSLIB1045</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.1.7" />
   </ItemGroup>
 
 </Project>

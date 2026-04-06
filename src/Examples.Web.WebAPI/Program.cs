@@ -1,10 +1,10 @@
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Routing;
+using Examples.Web.Infrastructure.Swagger;
 using Examples.Web.WebAPI.Applications;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using NLog;
 using NLog.Web;
-
 // Early init of NLog to allow startup and exception logging, before host is built
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
