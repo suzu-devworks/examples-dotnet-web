@@ -1,0 +1,15 @@
+{
+  "version": "0.2",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "HOSTINGSTARTUPASSEMBLIES",
+    "HOSTINGSTARTUPEXCLUDEASSEMBLIES",
+    "PREVENTHOSTINGSTARTUP"
+  ],
+  "ignoreWords": [],
+  "import": [
+    "../../.vscode/cspell.json"
+  ]
+}

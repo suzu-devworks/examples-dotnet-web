@@ -1,4 +1,4 @@
-# Examples.Web.HostingStartup
+# Examples.Web.Infrastructure.Startup
 
 ## Table of Contents <!-- omit in toc -->
 

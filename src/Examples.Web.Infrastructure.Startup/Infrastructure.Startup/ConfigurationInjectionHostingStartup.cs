@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-[assembly: HostingStartup(typeof(Examples.Web.Infrastructure.ConfigurationInjectionHostingStartup))]
+[assembly: HostingStartup(typeof(Examples.Web.Infrastructure.Startup.ConfigurationInjectionHostingStartup))]
 
-namespace Examples.Web.Infrastructure;
+namespace Examples.Web.Infrastructure.Startup;
 
 public class ConfigurationInjectionHostingStartup : IHostingStartup
 {

@@ -2,14 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(LTSFrameworks)</TargetFrameworks>
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
     <RootNamespace>Examples.Web</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
   </PropertyGroup>
 
   <ItemGroup>

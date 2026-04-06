@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-[assembly: HostingStartup(typeof(Examples.Web.Infrastructure.EnhancementHostingStartup))]
+[assembly: HostingStartup(typeof(Examples.Web.Infrastructure.Startup.EnhancementHostingStartup))]
 
-namespace Examples.Web.Infrastructure;
+namespace Examples.Web.Infrastructure.Startup;
 
 public class EnhancementHostingStartup : IHostingStartup
 {

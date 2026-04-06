@@ -1,9 +1,9 @@
-<Solution>
+﻿<Solution>
   <Folder Name="/src/">
     <Project Path="src/Examples.Web.Authentication.Basic/Examples.Web.Authentication.Basic.csproj" />
     <Project Path="src/Examples.Web.Authentication.Cookie/Examples.Web.Authentication.Cookie.csproj" />
     <Project Path="src/Examples.Web.Authentication.Identity/Examples.Web.Authentication.Identity.csproj" />
-    <Project Path="src/Examples.Web.HostingStartup/Examples.Web.HostingStartup.csproj" />
+    <Project Path="src/Examples.Web.Infrastructure.Startup/Examples.Web.Infrastructure.Startup.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Tests/Examples.Web.Infrastructure.Tests.csproj" />
     <Project Path="src/Examples.Web.Infrastructure/Examples.Web.Infrastructure.csproj" />
     <Project Path="src/Examples.Web.WebAPI/Examples.Web.WebAPI.csproj" />
