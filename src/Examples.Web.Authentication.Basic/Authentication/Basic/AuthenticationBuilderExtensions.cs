@@ -1,9 +1,7 @@
 using AspNetCore.Authentication.Basic;
-using Examples.Web.Domain.Identity;
-using Examples.Web.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication;
 
-namespace Examples.Web.Infrastructure.Authentication.Basic;
+namespace Examples.Web.Authentication.Basic;
 
 /// <summary>
 /// Extension methods for <see cref="AuthenticationBuilder" />.
@@ -32,7 +30,7 @@ public static class AuthenticationBuilderExtensions
                 };
             });
 
-        builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+        builder.Services.AddSingleton<IUserRepository, Repositories.InMemoryUserRepository>();
 
         return builder;
     }

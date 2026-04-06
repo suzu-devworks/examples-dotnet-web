@@ -1,6 +1,4 @@
-using Examples.Web.Domain.Identity;
-
-namespace Examples.Web.Infrastructure.Identity;
+namespace Examples.Web.Authentication.Repositories;
 
 /// <summary>
 /// NOTE: DO NOT USE THIS IMPLEMENTATION. THIS IS FOR DEMO PURPOSE ONLY
