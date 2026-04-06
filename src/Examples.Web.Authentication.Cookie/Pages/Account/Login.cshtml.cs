@@ -128,7 +128,7 @@ namespace Examples.Web.Authentication.Cookie.Pages.Account
                     // value set here overrides the ExpireTimeSpan option of
                     // CookieAuthenticationOptions set with AddCookie.
 
-                    //IsPersistent = true,
+                    IsPersistent = Input.RememberMe,
                     // Whether the authentication session is persisted across
                     // multiple requests. When used with cookies, controls
                     // whether the cookie's lifetime is absolute (matching the
