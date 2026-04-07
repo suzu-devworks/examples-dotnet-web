@@ -8,6 +8,6 @@
     <Project Path="src/Examples.Web.Infrastructure.Tests/Examples.Web.Infrastructure.Tests.csproj" />
     <Project Path="src/Examples.Web.Infrastructure/Examples.Web.Infrastructure.csproj" />
     <Project Path="src/Examples.Web.WebAPI/Examples.Web.WebAPI.csproj" />
-    <Project Path="src/Examples.Web.WebUI/Examples.Web.WebUI.csproj" />
+    <Project Path="src/Examples.Web.WebApp/Examples.Web.WebApp.csproj" />
   </Folder>
 </Solution>
