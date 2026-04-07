@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Examples.Web.WebUI.Pages
 {
-    public class Environment(ILogger<Environment> logger, IConfiguration config) : PageModel
+    public class EnvironmentModel(ILogger<EnvironmentModel> logger, IConfiguration config) : PageModel
     {
-        private readonly ILogger<Environment> _logger = logger;
+        private readonly ILogger<EnvironmentModel> _logger = logger;
 
         public IEnumerable<KeyValuePair<string, string?>> Environments = [
             KeyValuePair.Create("ConfigurationKey1", config["ConfigurationKey1"]),

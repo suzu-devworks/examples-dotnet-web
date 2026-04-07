@@ -18,7 +18,7 @@ This application is intended for testing and exploring the functionality of ASP.
 - Laboratories
   - [Filter methods for Razor Pages in ASP.NET Core](../../docs/filters/filters_in_razor_pages.md)
 - Environments
-  - [Use hosting startup assemblies in ASP.NET Core](../../docs/environments/hosting_startup.md)
+  - [Use hosting startup assemblies in ASP.NET Core](../../docs/hosting/hosting_startup.md)
 
 ## Development
 
@@ -36,10 +36,10 @@ dotnet sln add src/Examples.Web.Infrastructure/
 cd src/Examples.Web.Infrastructure
 cd ../../
 
-## Examples.Web.Examples.Web.Infrastructure.Startup
-dotnet new classlib -o src/Examples.Web.Infrastructure.Startup
-dotnet sln add src/Examples.Web.Infrastructure.Startup/
-cd src/Examples.Web.Infrastructure.Startup
+## Examples.Web.HostingStartup
+dotnet new classlib -o src/Examples.Web.HostingStartup
+dotnet sln add src/Examples.Web.HostingStartup/
+cd src/Examples.Web.HostingStartup
 cd ../../
 
 ## Examples.Web.WebApp
@@ -47,7 +47,7 @@ dotnet new webapp -o src/Examples.Web.WebApp
 dotnet sln add src/Examples.Web.WebApp/
 cd src/Examples.Web.WebApp
 dotnet add reference ../Examples.Web.Infrastructure
-dotnet add reference ../Examples.Web.Infrastructure.Startup
+dotnet add reference ../Examples.Web.HostingStartup
 
 dotnet user-secrets init
 cd ../../

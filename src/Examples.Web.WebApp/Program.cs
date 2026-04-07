@@ -4,8 +4,8 @@ using Examples.Web.WebApp.Applications.Laboratories.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//# Add default configuration.
-builder.Configuration.AddDefaultConfiguration();
+//# Add application configuration.
+builder.Configuration.AddApplicationConfiguration();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

@@ -10,6 +10,6 @@
   ],
   "ignoreWords": [],
   "import": [
-    "../../.vscode/cspell.json"
+    "../.vscode/cspell.json"
   ]
 }

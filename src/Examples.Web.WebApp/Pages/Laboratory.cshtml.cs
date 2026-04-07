@@ -11,9 +11,9 @@ namespace Examples.Web.WebUI.Pages
     [ServiceFilter<LoggingAsyncResultFilter>]
     [TypeFilter<LoggingAsyncPageFilter>]
     [ResponseHeader("Author", "suzuki")]
-    public class Laboratory(ILogger<Laboratory> logger) : PageModel
+    public class LaboratoryModel(ILogger<LaboratoryModel> logger) : PageModel
     {
-        private readonly ILogger<Laboratory> _logger = logger;
+        private readonly ILogger<LaboratoryModel> _logger = logger;
 
         public void OnGet()
         {

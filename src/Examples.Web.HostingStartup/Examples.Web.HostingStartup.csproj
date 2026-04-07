@@ -4,7 +4,6 @@
     <TargetFrameworks>$(LTSFrameworks)</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Examples.Web</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
