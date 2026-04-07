@@ -5,6 +5,7 @@
 - [Tiny colored console](#tiny-colored-console)
   - [Implemented in code](#implemented-in-code)
   - [You can do it just by setting it up](#you-can-do-it-just-by-setting-it-up)
+- [The log is generated twice](#the-log-is-generated-twice)
 - [References](#references)
 
 ## Tiny colored console
@@ -46,7 +47,29 @@ in `appsettings.json`:
       }
     }
   },
-  "AllowedHosts": "*"
+}
+```
+
+## The log is generated twice
+
+If both console and debug targets are active, logs will be output to the VS Code debug console twice, so you need to disable one of them.
+
+in `appsettings.json`:
+
+```diff
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.AspNetCore.Hosting.Diagnostics": "Information"
++    },
++    "Debug": {
++      "LogLevel": {
++        "Default": "None"
+    　　}
+    }
+  },
 }
 ```
 
