@@ -5,6 +5,7 @@ using Examples.Web.WebApi.Applications;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using NLog;
 using NLog.Web;
+
 // Early init of NLog to allow startup and exception logging, before host is built
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");

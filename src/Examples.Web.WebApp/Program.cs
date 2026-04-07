@@ -1,6 +1,7 @@
 using Examples.Web.Infrastructure;
 using Examples.Web.WebApp.Applications.Environments;
 using Examples.Web.WebApp.Applications.Laboratories.Filters;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //# Add default configuration.
