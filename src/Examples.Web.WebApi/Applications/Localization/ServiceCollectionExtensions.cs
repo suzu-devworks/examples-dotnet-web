@@ -1,7 +1,7 @@
 using Examples.Web.Infrastructure.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace Examples.WebAPI.Applications.Localization;
+namespace Examples.WebApi.Applications.Localization;
 
 public static class ServiceCollectionExtensions
 {

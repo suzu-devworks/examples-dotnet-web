@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Examples.Web.WebAPI.Controllers;
+namespace Examples.Web.WebApi.Controllers;
 
 [ApiController]
 [SwaggerTag("Examples")]
@@ -196,9 +196,9 @@ public class PaginationController(ILogger<PaginationController> logger) : Contro
             var cursor1 = cursor?.Id ?? 1L;
 
             // cursor SQL is:
-            //  SELECT ... 
-            //  FROM ... 
-            //  WHERE 
+            //  SELECT ...
+            //  FROM ...
+            //  WHERE
             //     (sort_column1 > cursor1)
             //     OR (sort_column1 = cursor1 AND sort_column2 > cursor2)
             //     OR (sort_column1 = cursor1 AND sort_column2 0 cursor2 AND sort_column3 > cursor3)

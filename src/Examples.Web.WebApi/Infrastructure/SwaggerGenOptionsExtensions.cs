@@ -20,7 +20,7 @@ public static class SwaggerGenOptionsExtensions
         options.SwaggerDoc("v1", new()
         {
             Version = "v1",
-            Title = "Examples.Web.WebAPI",
+            Title = "Examples.Web.WebApi",
             Description = "&#127861; ASP.NET Core Web API examples.",
             License = new OpenApiLicense
             {

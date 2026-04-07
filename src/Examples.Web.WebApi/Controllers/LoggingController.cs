@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Examples.Web.WebAPI.Controllers;
+namespace Examples.Web.WebApi.Controllers;
 
 [ApiController]
 [SwaggerTag("Configurations")]

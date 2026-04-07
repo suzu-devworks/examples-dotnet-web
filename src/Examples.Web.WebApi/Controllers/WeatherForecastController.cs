@@ -1,7 +1,7 @@
-using Examples.Web.WebAPI.Applications.WeatherForecast.Models;
+using Examples.Web.WebApi.Applications.WeatherForecast.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Examples.Web.WebAPI.Controllers;
+namespace Examples.Web.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]

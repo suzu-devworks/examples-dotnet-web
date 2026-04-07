@@ -1,13 +1,13 @@
 using System.Globalization;
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Swagger;
-using Examples.WebAPI.Applications.Localization;
-using Examples.WebAPI.Applications.Localization.Models;
+using Examples.WebApi.Applications.Localization;
+using Examples.WebApi.Applications.Localization.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Examples.Web.WebAPI.Controllers;
+namespace Examples.Web.WebApi.Controllers;
 
 /// <summary>
 /// Localization examples controller.

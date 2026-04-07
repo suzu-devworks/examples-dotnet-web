@@ -1,6 +1,6 @@
-using Examples.WebAPI.Applications.Localization;
+using Examples.WebApi.Applications.Localization;
 
-namespace Examples.Web.WebAPI.Applications;
+namespace Examples.Web.WebApi.Applications;
 
 public static class ServiceCollectionExtensions
 {

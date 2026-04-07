@@ -3,7 +3,7 @@ using Examples.Web.Infrastructure.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Examples.Web.WebAPI.Controllers;
+namespace Examples.Web.WebApi.Controllers;
 
 /// <summary>
 /// A controller for testing custom serializers.

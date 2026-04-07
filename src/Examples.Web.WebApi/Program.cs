@@ -1,7 +1,7 @@
 using Examples.Web.Infrastructure;
 using Examples.Web.Infrastructure.Routing;
 using Examples.Web.Infrastructure.Swagger;
-using Examples.Web.WebAPI.Applications;
+using Examples.Web.WebApi.Applications;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using NLog;
 using NLog.Web;
@@ -64,8 +64,8 @@ try
         app.UseSwaggerUI(options =>
         {
             //# swagger document generated to json and yaml.
-            options.SwaggerEndpoint("v1/swagger.json", "Examples.Web.WebAPI v1");
-            options.SwaggerEndpoint("v1/swagger.yaml", "Examples.Web.WebAPI v1(yaml)");
+            options.SwaggerEndpoint("v1/swagger.json", "Examples.Web.WebApi v1");
+            options.SwaggerEndpoint("v1/swagger.yaml", "Examples.Web.WebApi v1(yaml)");
 
             //# Swagger UI at the app's root.
             //options.RoutePrefix = string.Empty;

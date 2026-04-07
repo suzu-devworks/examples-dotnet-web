@@ -1,4 +1,4 @@
-namespace Examples.Web.WebAPI.Applications.WeatherForecast.Models;
+namespace Examples.Web.WebApi.Applications.WeatherForecast.Models;
 
 public record WeatherForecast
 {

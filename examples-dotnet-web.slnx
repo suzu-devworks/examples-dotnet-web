@@ -7,7 +7,7 @@
     <Project Path="src/Examples.Web.Infrastructure.Swagger/Examples.Web.Infrastructure.Swagger.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Tests/Examples.Web.Infrastructure.Tests.csproj" />
     <Project Path="src/Examples.Web.Infrastructure/Examples.Web.Infrastructure.csproj" />
-    <Project Path="src/Examples.Web.WebAPI/Examples.Web.WebAPI.csproj" />
+    <Project Path="src/Examples.Web.WebApi/Examples.Web.WebApi.csproj" />
     <Project Path="src/Examples.Web.WebApp/Examples.Web.WebApp.csproj" />
   </Folder>
 </Solution>

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Examples.WebAPI.Applications.Localization.Models;
+namespace Examples.WebApi.Applications.Localization.Models;
 
 public class RegisterData
 {
