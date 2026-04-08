@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>$(LatestFramework)</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>2108ab99-bf57-48da-ab6e-980a31607305</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);IDE0052</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\fixtures\Examples.Web.HostingStartup1\Examples.Web.HostingStartup1.csproj" />
+    <ProjectReference Include="..\fixtures\Examples.Web.HostingStartup2\Examples.Web.HostingStartup2.csproj" />
+  </ItemGroup>
+
+</Project>

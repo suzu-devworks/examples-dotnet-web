@@ -14,7 +14,7 @@ public static class ApplicationBuilderExtensions
     /// Sets the security values to HTTP header.
     /// </summary>
     /// <param name="app"></param>
-    /// /// <returns></returns>
+    /// <returns></returns>
     public static IApplicationBuilder UseSecurityHttpResponseHeader(this IApplicationBuilder app)
     {
         app.UseMiddleware<Middleware>();

@@ -39,8 +39,7 @@
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
   },
-  "csharpOrganizeUsings.sortOrder": "System",
-  "csharpOrganizeUsings.splitGroups": false,
+  "dotnet.formatting.organizeImportsOnFormat": true,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.associations": {
@@ -51,7 +50,6 @@
   "markdownlint.config": {
     "MD024": false
   },
-  "omnisharp.enableAsyncCompletion": true,
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
   "remote.autoForwardPortsFallback": 0

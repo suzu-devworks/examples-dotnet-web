@@ -1,8 +1,8 @@
 using Examples.Web.Authentication.Identity.Api;
 using Examples.Web.Infrastructure;
+using Examples.Web.Infrastructure.Swagger;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
