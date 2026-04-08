@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Examples.Web.WebApp.Applications.Laboratories.Filters;
 
+/// <summary>
+/// An <see cref="ResultFilterAttribute"/> that adds a response header
+/// with filter execution timeline information for diagnostics purposes.
+/// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public sealed class FilterDiagnosticsResponseHeaderAttribute : ResultFilterAttribute
 {

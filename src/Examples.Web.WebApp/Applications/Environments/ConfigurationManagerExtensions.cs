@@ -1,5 +1,8 @@
 namespace Examples.Web.WebApp.Applications.Environments;
 
+/// <summary>
+/// Extension methods for adding application configuration to a <see cref="ConfigurationManager"/>.
+/// </summary>
 public static class ConfigurationManagerExtensions
 {
     public static ConfigurationManager AddApplicationConfiguration(this ConfigurationManager configuration)

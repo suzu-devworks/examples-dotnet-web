@@ -2,6 +2,10 @@ using System.Globalization;
 
 namespace Examples.Web.WebApp.Applications.Laboratories.Filters;
 
+/// <summary>
+/// A helper class to track filter execution for diagnostics purposes,
+/// allowing recording of passed filters and their execution timeline within the context of an HTTP request.
+/// </summary>
 public static class FilterDiagnosticsTracker
 {
     private const string PassedFiltersKey = "Laboratory.FilterDiagnostics.PassedFilters";

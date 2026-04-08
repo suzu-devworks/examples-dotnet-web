@@ -2,6 +2,9 @@
 
 namespace Examples.Web.WebApp.Applications.Environments;
 
+/// <summary>
+/// A sample <see cref="IHostingStartup"/> implementation to demonstrate the hosting startup assembly discovery and configuration ordering for service key injection.
+/// </summary>
 public class ServiceKeyInjection : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder)
