@@ -8,10 +8,12 @@ public class LoggingAsyncResourceFilter(ILogger<LoggingAsyncResourceFilter> logg
 
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
-        _logger.LogTrace("{name}: called(before next).", nameof(OnResourceExecutionAsync));
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncResourceFilter), "OnResourceExecutionAsync.BeforeNext");
+        _logger.ProcessingOrderCalledBeforeNext(nameof(OnResourceExecutionAsync));
 
         var executed = await next();
 
-        _logger.LogTrace("{name}: called(after next): Canceled={canceled}.", nameof(OnResourceExecutionAsync), executed.Canceled);
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncResourceFilter), "OnResourceExecutionAsync.AfterNext");
+        _logger.ProcessingOrderCalledAfterNext(nameof(OnResourceExecutionAsync), executed.Canceled);
     }
 }

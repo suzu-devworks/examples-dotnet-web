@@ -8,11 +8,13 @@ public class LoggingResultFilter(ILogger<LoggingResultFilter> logger) : IResultF
 
     public void OnResultExecuting(ResultExecutingContext context)
     {
-        _logger.LogTrace("{name}: called.", nameof(OnResultExecuting));
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingResultFilter), nameof(OnResultExecuting));
+        _logger.ProcessingOrderCalled(nameof(OnResultExecuting));
     }
 
     public void OnResultExecuted(ResultExecutedContext context)
     {
-        _logger.LogTrace("{name}: called: Canceled={canceled}", nameof(OnResultExecuted), context.Canceled);
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingResultFilter), nameof(OnResultExecuted));
+        _logger.ProcessingOrderCalledWithCanceled(nameof(OnResultExecuted), context.Canceled);
     }
 }

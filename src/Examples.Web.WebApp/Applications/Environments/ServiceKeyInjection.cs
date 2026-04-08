@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+[assembly: HostingStartup(typeof(Examples.Web.WebApp.Applications.Environments.ServiceKeyInjection))]
 
-[assembly: HostingStartup(typeof(Examples.Web.HostingStartup.ServiceKeyInjection))]
+namespace Examples.Web.WebApp.Applications.Environments;
 
-namespace Examples.Web.HostingStartup;
-
+/// <summary>
+/// A sample <see cref="IHostingStartup"/> implementation to demonstrate the hosting startup assembly discovery and configuration ordering for service key injection.
+/// </summary>
 public class ServiceKeyInjection : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder)

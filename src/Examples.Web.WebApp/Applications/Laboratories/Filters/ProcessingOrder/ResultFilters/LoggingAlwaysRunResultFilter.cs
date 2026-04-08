@@ -8,11 +8,13 @@ public class LoggingAlwaysRunResultFilter(ILogger<LoggingAlwaysRunResultFilter> 
 
     public void OnResultExecuting(ResultExecutingContext context)
     {
-        _logger.LogTrace("{name}: called.", nameof(OnResultExecuting));
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAlwaysRunResultFilter), nameof(OnResultExecuting));
+        _logger.ProcessingOrderCalled(nameof(OnResultExecuting));
     }
 
     public void OnResultExecuted(ResultExecutedContext context)
     {
-        _logger.LogTrace("{name}: called: Canceled={canceled}", nameof(OnResultExecuted), context.Canceled);
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAlwaysRunResultFilter), nameof(OnResultExecuted));
+        _logger.ProcessingOrderCalledWithCanceled(nameof(OnResultExecuted), context.Canceled);
     }
 }

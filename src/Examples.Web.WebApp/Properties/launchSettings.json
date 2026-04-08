@@ -17,7 +17,7 @@
       "applicationUrl": "https://localhost:7210;http://localhost:5140",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Examples.Web.HostingStartup",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Examples.Web.HostingStartup2;Examples.Web.HostingStartup1"
       }
     }
   }

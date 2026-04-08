@@ -8,6 +8,7 @@ public class LoggingAsyncExceptionFilter(ILogger<LoggingAsyncExceptionFilter> lo
 
     public Task OnExceptionAsync(ExceptionContext context)
     {
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncExceptionFilter), nameof(OnExceptionAsync));
         _logger.LogTrace("{name}: called with {exception}.", nameof(OnExceptionAsync), context.Exception);
 
         return Task.CompletedTask;

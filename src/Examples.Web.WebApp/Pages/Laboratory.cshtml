@@ -7,13 +7,37 @@
 <h1>@ViewData["Title"]</h1>
 <p>This page is used to check the operation of various features of ASP.NET.</p>
 
-<section>
-    <h2>Filters for Razor Page</h2>
-    <div>
-        <form method="post">
-            <button asp-page-handler="Button1" class="btn btn-primary" value="1">Button</button>
-            <button asp-page-handler="Button2" class="btn btn btn-danger">Throws</button>
-            <button asp-page-handler="Button3" class="btn btn btn-secondary">Short Circuit</button>
-        </form>
+<section class="card">
+    <div class="card-body">
+        <h2 class="card-title">Filters for Razor Page</h2>
+        <div class="card-text">
+            <form method="post">
+                <button asp-page-handler="Button1" class="btn btn-primary" value="1">Button</button>
+                <button asp-page-handler="Button2" class="btn btn btn-danger">Throws</button>
+                <button asp-page-handler="Button3" class="btn btn btn-secondary">Short Circuit</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="card mt-4">
+    <div class="card-body">
+        <h2 class="card-title">Filter Diagnostics</h2>
+        <p class="card-text">This request returns the same diagnostics in response headers and in this page.</p>
+
+        <h3>Execution timeline</h3>
+        @if (Model.FilterTimeline.Count == 0)
+        {
+            <p>No timeline entries were recorded for this request.</p>
+        }
+        else
+        {
+            <ol>
+                @foreach (var step in Model.FilterTimeline)
+                {
+                    <li>@step</li>
+                }
+            </ol>
+        }
     </div>
 </section>

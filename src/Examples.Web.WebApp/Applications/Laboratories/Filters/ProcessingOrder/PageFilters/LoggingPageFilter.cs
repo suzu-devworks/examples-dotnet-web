@@ -8,16 +8,19 @@ public class LoggingPageFilter(ILogger<LoggingPageFilter> logger) : IPageFilter
 
     public void OnPageHandlerExecuted(PageHandlerExecutedContext context)
     {
-        _logger.LogTrace("{name}: called.", nameof(OnPageHandlerExecuted));
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingPageFilter), nameof(OnPageHandlerExecuted));
+        _logger.ProcessingOrderCalled(nameof(OnPageHandlerExecuted));
     }
 
     public void OnPageHandlerExecuting(PageHandlerExecutingContext context)
     {
-        _logger.LogTrace("{name}: called.", nameof(OnPageHandlerExecuting));
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingPageFilter), nameof(OnPageHandlerExecuting));
+        _logger.ProcessingOrderCalled(nameof(OnPageHandlerExecuting));
     }
 
     public void OnPageHandlerSelected(PageHandlerSelectedContext context)
     {
-        _logger.LogTrace("{name}: called.", nameof(OnPageHandlerSelected));
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingPageFilter), nameof(OnPageHandlerSelected));
+        _logger.ProcessingOrderCalled(nameof(OnPageHandlerSelected));
     }
 }

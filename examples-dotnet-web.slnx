@@ -3,11 +3,14 @@
     <Project Path="src/Examples.Web.Authentication.Basic/Examples.Web.Authentication.Basic.csproj" />
     <Project Path="src/Examples.Web.Authentication.Cookie/Examples.Web.Authentication.Cookie.csproj" />
     <Project Path="src/Examples.Web.Authentication.Identity/Examples.Web.Authentication.Identity.csproj" />
-    <Project Path="src/Examples.Web.HostingStartup/Examples.Web.HostingStartup.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Swagger/Examples.Web.Infrastructure.Swagger.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Tests/Examples.Web.Infrastructure.Tests.csproj" />
     <Project Path="src/Examples.Web.Infrastructure/Examples.Web.Infrastructure.csproj" />
     <Project Path="src/Examples.Web.WebApi/Examples.Web.WebApi.csproj" />
     <Project Path="src/Examples.Web.WebApp/Examples.Web.WebApp.csproj" />
+  </Folder>
+  <Folder Name="/src/fixtures/">
+    <Project Path="src/fixtures/Examples.Web.HostingStartup1/Examples.Web.HostingStartup1.csproj" />
+    <Project Path="src/fixtures/Examples.Web.HostingStartup2/Examples.Web.HostingStartup2.csproj" />
   </Folder>
 </Solution>

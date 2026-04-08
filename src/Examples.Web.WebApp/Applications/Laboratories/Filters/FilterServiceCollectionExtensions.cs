@@ -4,7 +4,7 @@ using Examples.Web.WebApp.Applications.Laboratories.Filters.ProcessingOrder;
 namespace Examples.Web.WebApp.Applications.Laboratories.Filters;
 
 /// <summary>
-/// /// Extension methods for adding custom HTTP filter to an <see cref="IServiceCollection" />.
+/// Extension methods for adding custom HTTP filter to an <see cref="IServiceCollection" />.
 /// </summary>
 public static class FilterServiceCollectionExtensions
 {
