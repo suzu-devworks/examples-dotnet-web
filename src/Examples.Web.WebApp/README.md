@@ -44,11 +44,12 @@ In practice, each library would likely provide its own extension methods, so thi
 
 #### Learn the order of filter execution and how to use them
 
+- [Filters in ASP.NET Core](../../docs/filters/filters_in_aspnetcore.md)
 - [Filter methods for Razor Pages in ASP.NET Core](../../docs/filters/filters_in_razor_pages.md)
 
 Prepare the following action buttons and use logs to verify how each filter type is defined and in what order they run.
 
-- Normal behavior (Action returns OK)まちが
+- Normal behavior (Action returns OK)
 - Exception behavior (Action throws)
 - Short-circuit behavior
 

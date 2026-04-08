@@ -85,4 +85,4 @@ Considering that the `ILogger` interface will be called by other extension metho
 ## References
 
 - [NLog](https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-6)
-- [Config |  NLog](htthttps://nlog-project.org/config/)
+- [Config |  NLog](https://nlog-project.org/config/)
