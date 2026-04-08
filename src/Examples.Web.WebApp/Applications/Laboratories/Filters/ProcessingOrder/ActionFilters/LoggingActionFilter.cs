@@ -9,12 +9,12 @@ public class LoggingActionFilter(ILogger<LoggingActionFilter> logger) : IActionF
     public void OnActionExecuting(ActionExecutingContext context)
     {
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingActionFilter), nameof(OnActionExecuting));
-        _logger.LogTrace("{name}: called.", nameof(OnActionExecuting));
+        _logger.ProcessingOrderCalled(nameof(OnActionExecuting));
     }
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingActionFilter), nameof(OnActionExecuted));
-        _logger.LogTrace("{name}: called: Canceled={canceled}", nameof(OnActionExecuted), context.Canceled);
+        _logger.ProcessingOrderCalledWithCanceled(nameof(OnActionExecuted), context.Canceled);
     }
 }

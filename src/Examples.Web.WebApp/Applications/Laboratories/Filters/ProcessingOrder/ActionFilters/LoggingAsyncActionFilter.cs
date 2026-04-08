@@ -9,11 +9,11 @@ public class LoggingAsyncActionFilter(ILogger<LoggingAsyncActionFilter> logger) 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncActionFilter), "OnActionExecutionAsync.BeforeNext");
-        _logger.LogTrace("{name}: called(before next).", nameof(OnActionExecutionAsync));
+        _logger.ProcessingOrderCalledBeforeNext(nameof(OnActionExecutionAsync));
 
         var executed = await next();
 
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncActionFilter), "OnActionExecutionAsync.AfterNext");
-        _logger.LogTrace("{name}: called(after next): Canceled={canceled}.", nameof(OnActionExecutionAsync), executed.Canceled);
+        _logger.ProcessingOrderCalledAfterNext(nameof(OnActionExecutionAsync), executed.Canceled);
     }
 }

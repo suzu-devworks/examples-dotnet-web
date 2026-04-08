@@ -9,13 +9,13 @@ public class LoggingResourceFilter(ILogger<LoggingResourceFilter> logger) : IRes
     public void OnResourceExecuting(ResourceExecutingContext context)
     {
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingResourceFilter), nameof(OnResourceExecuting));
-        _logger.LogTrace("{name}: called.", nameof(OnResourceExecuting));
+        _logger.ProcessingOrderCalled(nameof(OnResourceExecuting));
     }
 
     public void OnResourceExecuted(ResourceExecutedContext context)
     {
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingResourceFilter), nameof(OnResourceExecuted));
-        _logger.LogTrace("{name}: called: Canceled={canceled}", nameof(OnResourceExecuted), context.Canceled);
+        _logger.ProcessingOrderCalledWithCanceled(nameof(OnResourceExecuted), context.Canceled);
     }
 
 }

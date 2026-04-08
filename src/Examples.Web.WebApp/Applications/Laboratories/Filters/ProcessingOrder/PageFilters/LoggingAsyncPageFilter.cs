@@ -9,18 +9,18 @@ public class LoggingAsyncPageFilter(ILogger<LoggingAsyncPageFilter> logger) : IA
     public async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
     {
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncPageFilter), "OnPageHandlerExecutionAsync.BeforeNext");
-        _logger.LogTrace("{name}: called(before next).", nameof(OnPageHandlerExecutionAsync));
+        _logger.ProcessingOrderCalledBeforeNext(nameof(OnPageHandlerExecutionAsync));
 
         var executed = await next();
 
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncPageFilter), "OnPageHandlerExecutionAsync.AfterNext");
-        _logger.LogTrace("{name}: called(after next): Canceled={canceled}.", nameof(OnPageHandlerExecutionAsync), executed.Canceled);
+        _logger.ProcessingOrderCalledAfterNext(nameof(OnPageHandlerExecutionAsync), executed.Canceled);
     }
 
     public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
     {
         FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingAsyncPageFilter), nameof(OnPageHandlerSelectionAsync));
-        _logger.LogTrace("{name}: called.", nameof(OnPageHandlerSelectionAsync));
+        _logger.ProcessingOrderCalled(nameof(OnPageHandlerSelectionAsync));
 
         return Task.CompletedTask;
     }
