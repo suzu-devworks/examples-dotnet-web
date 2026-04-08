@@ -9,6 +9,7 @@
     - [2. Middleware pipeline (Program.cs)](#2-middleware-pipeline-programcs)
     - [3. Configure appsettings.json](#3-configure-appsettingsjson)
       - [Expiration settings](#expiration-settings)
+  - [Authentication flow](#authentication-flow)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
@@ -105,6 +106,70 @@ Priority and behavior:
 - `ExpiresUtc` is set during `SignInAsync`, so it overrides `ExpireTimeSpan` for that sign-in ticket.
 - With `SlidingExpiration = true`, active sessions can be re-issued before expiration.
 - `IsPersistent` determines whether the cookie becomes persistent (survives browser restart) or session-only.
+
+### Authentication flow
+
+```mermaid
+sequenceDiagram
+  participant C as Client
+
+  box Middleware Pipeline
+    participant ANM as AuthenticationMiddleware
+    participant AZM as AuthorizationMiddleware
+  end
+
+  participant ANS as (IAuthenticationService)<br>AuthenticationService
+  participant ANH as CookieAuthenticationHandler
+
+  participant CAE as CustomCookieAuthenticationEvents
+  participant LP as Login PageModel
+  participant UR as IUserRepository
+
+  C->>ANM: GET /Privacy (no auth cookie)
+  ANM->>ANS: AuthenticateAsync(context, Cookies)
+  ANS->>ANH: AuthenticateAsync()
+  ANH-->>ANM: AuthenticateResult.NoResult
+  ANM->>AZM: _next(context)
+  AZM->>ANS: ChallengeAsync(context, Cookies)
+  ANS->>ANH: ChallengeAsync()
+  ANH-->>C: 302 Redirect to /Account/Login
+
+  C->>LP: POST /Account/Login (email, password)
+  LP->>UR: GetUserByEmailAsync(email)
+  UR-->>LP: ApplicationUser / null
+
+  alt Login succeeded
+    LP->>LP: Build ClaimsPrincipal + AuthenticationProperties
+    LP->>ANS: SignInAsync(context, Cookies, principal, properties)
+    ANS->>ANH: SignInAsync()
+    ANH-->>C: Set-Cookie: .AspNetCore.Cookies=...
+    LP-->>C: 302 Redirect to returnUrl
+
+    C->>ANM: GET /Privacy (with auth cookie)
+    ANM->>ANS: AuthenticateAsync(context, Cookies)
+    ANS->>ANH: AuthenticateAsync()
+    ANH->>ANH: HandleAuthenticateAsync()
+    ANH->>CAE: ValidatePrincipal(context)
+    CAE->>UR: ValidateLastChangedAsync(email, lastChanged)
+    UR-->>CAE: true / false
+
+    alt Principal is valid
+      CAE-->>ANH: Accept principal
+      ANH-->>ANM: AuthenticateResult.Success (ClaimsPrincipal)
+      ANM->>AZM: _next(context)
+    else Principal is rejected
+      CAE->>ANS: SignOutAsync(context, Cookies)
+      ANS->>ANH: SignOutAsync()
+      ANH-->>ANM: AuthenticateResult.Fail
+      ANM->>AZM: _next(context)
+      AZM->>ANS: ChallengeAsync(context, Cookies)
+      ANS->>ANH: ChallengeAsync()
+      ANH-->>C: 302 Redirect to /Account/Login
+    end
+  else Login failed
+    LP-->>C: Redisplay login page with validation error
+  end
+```
 
 ## Development
 
