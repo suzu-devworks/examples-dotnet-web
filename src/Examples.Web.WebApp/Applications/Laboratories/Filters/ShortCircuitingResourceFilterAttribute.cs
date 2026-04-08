@@ -12,11 +12,14 @@ namespace Examples.Web.WebApp.Applications.Laboratories.Filters
 
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
+            FilterDiagnosticsTracker.Record(context.HttpContext, nameof(ShortCircuitingResourceFilterAttribute), nameof(OnResourceExecuting));
             if (!IsHandled(context.HttpContext))
             {
+                FilterDiagnosticsTracker.Record(context.HttpContext, nameof(ShortCircuitingResourceFilterAttribute), "NotHandled");
                 return;
             }
 
+            FilterDiagnosticsTracker.Record(context.HttpContext, nameof(ShortCircuitingResourceFilterAttribute), "ShortCircuited");
             // be short-circuited.
             context.Result = new ContentResult()
             {
@@ -26,6 +29,7 @@ namespace Examples.Web.WebApp.Applications.Laboratories.Filters
 
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
+            FilterDiagnosticsTracker.Record(context.HttpContext, nameof(ShortCircuitingResourceFilterAttribute), nameof(OnResourceExecuted));
         }
 
         private bool IsHandled(HttpContext httpContext)

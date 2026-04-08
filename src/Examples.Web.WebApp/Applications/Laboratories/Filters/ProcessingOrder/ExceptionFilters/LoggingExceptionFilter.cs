@@ -8,6 +8,7 @@ public class LoggingExceptionFilter(ILogger<LoggingExceptionFilter> logger) : IE
 
     public void OnException(ExceptionContext context)
     {
+        FilterDiagnosticsTracker.Record(context.HttpContext, nameof(LoggingExceptionFilter), nameof(OnException));
         _logger.LogTrace("{name}: called with {exception}.", nameof(OnException), context.Exception);
     }
 }

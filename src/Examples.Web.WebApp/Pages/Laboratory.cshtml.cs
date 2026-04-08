@@ -10,10 +10,13 @@ namespace Examples.Web.WebUI.Pages
     [ShortCircuitingRazorMethodPageFilter(["Button3"])]
     [ServiceFilter<LoggingAsyncResultFilter>]
     [TypeFilter<LoggingAsyncPageFilter>]
+    [FilterDiagnosticsResponseHeader]
     [ResponseHeader("Author", "suzuki")]
     public class LaboratoryModel(ILogger<LaboratoryModel> logger) : PageModel
     {
         private readonly ILogger<LaboratoryModel> _logger = logger;
+
+        public IReadOnlyList<string> FilterTimeline => FilterDiagnosticsTracker.GetTimeline(HttpContext);
 
         public void OnGet()
         {
