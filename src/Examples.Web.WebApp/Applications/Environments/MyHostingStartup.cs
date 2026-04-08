@@ -8,9 +8,27 @@ public class MyHostingStartup : IHostingStartup
     {
         builder.ConfigureAppConfiguration(config =>
             config.AddInMemoryCollection(new Dictionary<string, string?>
-             {
-                {"DevAccount", "DEV_5555555-5555"},
-                {"ProdAccount", "PROD_6666666-6666"}
-             }));
+            {
+                ["Demo:Source:MyHostingStartup:ConfigurePattern"] = "Defined MyHostingStartup",
+                ["Demo:OrderProbe:All"] = "MyHostingStartup ConfigureAppConfiguration",
+                ["Demo:OrderProbe:ConfigurePattern"] = "MyHostingStartup ConfigureAppConfiguration",
+                ["Demo:Compare:MyHostingStartup"] = "From MyHostingStartup ConfigureAppConfiguration",
+                ["Demo:Compare:ConfigureVsAppSettings"] = "From MyHostingStartup ConfigureAppConfiguration",
+                ["Demo:Compare:ConfigureVsProgramConfigManager"] = "From MyHostingStartup ConfigureAppConfiguration",
+            }));
+
+        var builtConfig = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Demo:Source:MyHostingStartup:UsePattern"] = "Defined MyHostingStartup",
+                ["Demo:OrderProbe:All"] = "MyHostingStartup ConfigureAppConfiguration",
+                ["Demo:OrderProbe:UsePattern"] = "MyHostingStartup UseConfiguration",
+                ["Demo:Compare:MyHostingStartup"] = "From MyHostingStartup UseConfiguration",
+                ["Demo:Compare:UseVsAppSettings"] = "From MyHostingStartup UseConfiguration",
+                ["Demo:Compare:UseVsProgramConfigManager"] = "From MyHostingStartup UseConfiguration",
+            })
+            .Build();
+
+        builder.UseConfiguration(builtConfig);
     }
 }

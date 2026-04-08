@@ -13,21 +13,82 @@
         <div class="card-text">
             <p>Call ConfigureAppConfiguration:</p>
             <ul>
-                <li><span>ServiceKeyDevelopmentLibrary: </span><span>@Model.ServiceKeyDevelopmentLibrary</span></li>
-                <li><span>ServiceKeyProductionLibrary: </span><span>@Model.ServiceKeyProductionLibrary</span></li>
-                <li><span>ServiceKeyDevelopment: </span><span>@Model.ServiceKeyDevelopment</span></li>
-                <li><span>ServiceKeyProduction: </span><span>@Model.ServiceKeyProduction</span></li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>ServiceKeyDevelopmentLibrary:</span>
+                    <span
+                    class="font-monospace small bg-body-secondary rounded px-1">@Model.ServiceKeyDevelopmentLibrary</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>ServiceKeyProductionLibrary:</span>
+                    <span
+                    class="font-monospace small bg-body-secondary rounded px-1">@Model.ServiceKeyProductionLibrary</span>
+                </li>
             </ul>
             <p>Priority:</p>
             <ul>
                 @foreach (var env in Model.Environments)
                 {
-                    <li><span>@env.Key: </span><span>@env.Value</span></li>
+                    <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                        <span>@env.Key:</span>
+                        <span class="font-monospace small bg-body-secondary rounded px-1">@env.Value</span>
+                    </li>
                 }
+            </ul>
+            <p>Expected:</p>
+            <ul>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Source:*:</span>
+                    <span class="fst-italic">Source of each key by pattern and HostingStartup.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:OrderProbe:All:</span>
+                    <span class="fst-italic">Final winner when all sources write the same key.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:OrderProbe:ConfigurePattern:</span>
+                    <span class="fst-italic">Winner among ConfigureAppConfiguration values.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:OrderProbe:UsePattern:</span>
+                    <span class="fst-italic">Winner among UseConfiguration values.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:MyHostingStartup:</span>
+                    <span class="fst-italic">Winning pattern in MyHostingStartup.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:HostingStartup1:</span>
+                    <span class="fst-italic">Winning pattern in HostingStartup1.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:HostingStartup2:</span>
+                    <span class="fst-italic">Winning pattern in HostingStartup2.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:ConfigureVsAppSettings:</span>
+                    <span class="fst-italic">ConfigureAppConfiguration vs appsettings.json.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:UseVsAppSettings:</span>
+                    <span class="fst-italic">UseConfiguration vs appsettings.json.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:ConfigureVsProgramConfigManager:</span>
+                    <span class="fst-italic">ConfigureAppConfiguration vs Program(ConfigurationManager).</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:UseVsProgramConfigManager:</span>
+                    <span class="fst-italic">UseConfiguration vs Program(ConfigurationManager).</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:AssemblyOrder:ConfigureAppConfiguration:</span>
+                    <span class="fst-italic">ConfigureAppConfiguration result by assembly load order.</span>
+                </li>
+                <li class="d-flex align-items-baseline gap-2 flex-wrap">
+                    <span>Demo:Compare:AssemblyOrder:UseConfiguration:</span>
+                    <span class="fst-italic">UseConfiguration result by assembly load order.</span>
+                </li>
             </ul>
         </div>
     </div>
 </section>
-<div>
-
-</div>

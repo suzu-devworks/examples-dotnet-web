@@ -35,8 +35,8 @@ Set up the following environments, override environment variables in each one, a
 
 - ASP.NET (this) Startup | [Program.cs](./Program.cs)
 - ASP.NET (this) IHostingStartup | [MyHostingStartup.cs](./Applications/Environments/MyHostingStartup.cs)
-- Other Library 1 IHostingStartup | [x](../fixtures/Examples.Web.HostingStartup1/)
-- Other Library 2 IHostingStartup | [x](../fixtures/Examples.Web.HostingStartup2/)
+- Other Library 1 IHostingStartup | [PriorityViewHostingStartup.cs](../fixtures/Examples.Web.HostingStartup1/PriorityViewHostingStartup.cs)
+- Other Library 2 IHostingStartup | [PriorityViewHostingStartup.cs](../fixtures/Examples.Web.HostingStartup2/PriorityViewHostingStartup.cs)
 
 In practice, each library would likely provide its own extension methods, so this section does not go too deep.
 
@@ -48,7 +48,7 @@ In practice, each library would likely provide its own extension methods, so thi
 
 Prepare the following action buttons and use logs to verify how each filter type is defined and in what order they run.
 
-- Normal behavior (Action returns OK)
+- Normal behavior (Action returns OK)まちが
 - Exception behavior (Action throws)
 - Short-circuit behavior
 

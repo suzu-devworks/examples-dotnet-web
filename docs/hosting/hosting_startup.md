@@ -72,11 +72,18 @@ in `appsettings.json`:
 
 ## Which should take priority
 
-- When `builder.ConfigureAppConfiguration()` is used, hosting startup configuration to override app configuration.
+With the classic `WebHostBuilder` pipeline:
 
-- When `builder.UseConfiguration()` is used, the app's configuration values take precedence over those specified by the hosting startup.
+- `builder.ConfigureAppConfiguration()` lets the hosting startup override `appsettings.json`.
+- `builder.UseConfiguration()` adds host settings earlier, so `appsettings.json` can override them later.
 
-However, it seems that it will eventually be overwritten in WebApplicationBuilder.Configuration.
+With `WebApplicationBuilder`, this section does **not** behave the same way.
+
+- `appsettings.json` is loaded during `WebApplication.CreateBuilder(args)`.
+- After that, settings from `IHostingStartup` are applied to `WebApplicationBuilder.Configuration`.
+- As a result, both `ConfigureAppConfiguration()` and `UseConfiguration()` from `IHostingStartup` can end up overriding `appsettings.json`.
+
+In short: the rule above is reliable for `WebHostBuilder`, but not for `WebApplicationBuilder`.
 
 ### Disable automatic loading of hosting startup assemblies
 
@@ -116,4 +123,4 @@ A hosting startup assembly can also be set using the Hosting Startup Assemblies 
 
 ## References
 
-- [Use hosting startup assemblies in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/fundamentals/host/platform-specific-configuration?view=aspnetcore-8.0)
+- [Use hosting startup assemblies in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/fundamentals/host/platform-specific-configuration)
