@@ -80,6 +80,36 @@ OpenAPI (Swagger) is a language-agnostic specification for describing REST APIs.
 
 - [gRPC JSON transcoding documentation with Swagger / OpenAPI](https://learn.microsoft.com/ja-jp/aspnet/core/grpc/json-transcoding-openapi)
 
+**1. Add a package reference**:
+
+```shell
+dotnet add package Microsoft.AspNetCore.Grpc.Swagger
+```
+
+**2. In the `Program.cs` file**:
+
+```diff
+  var builder = WebApplication.CreateBuilder(args);
+  builder.Services.AddGrpc().AddJsonTranscoding();
++ builder.Services.AddGrpcSwagger();
++ builder.Services.AddSwaggerGen(c =>
++ {
++     c.SwaggerDoc("v1",
++         new OpenApiInfo { Title = "gRPC transcoding", Version = "v1" });
++ });
+ 
+  var app = builder.Build();
++ app.UseSwagger();
++ if (app.Environment.IsDevelopment())
++ {
++     app.UseSwaggerUI(c =>
++     {
++         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
++     });
++ }
+  app.MapGrpcService<GreeterService>();
+```
+
 ## Development
 
 ### Build
