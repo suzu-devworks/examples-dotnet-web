@@ -4,6 +4,7 @@
 
 - [Overview](#overview)
 - [Examples](#examples)
+  - [Logging](#logging)
   - [gRPC Json Transcoding](#grpc-json-transcoding)
   - [Use Swagger](#use-swagger)
 - [Development](#development)
@@ -16,6 +17,11 @@
 This project is intended for testing and learning the functionality of the ASP.NET gRPC API.
 
 ## Examples
+
+### Logging
+
+- [Can the console logs look a bit better?](../../docs/logging/logging_use_console.md#tiny-colored-console)
+- [Aren't the logs being output twice?](../../docs/logging/logging_use_console.md#the-log-is-generated-twice)
 
 ### gRPC Json Transcoding
 
