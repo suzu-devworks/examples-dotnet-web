@@ -1,3 +1,4 @@
+using System.Reflection;
 using Examples.Web.WebApi.Grpc.Services;
 using Microsoft.OpenApi.Models;
 
@@ -9,6 +10,11 @@ builder.Services.AddGrpcSwagger();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "gRPC transcoding", Version = "v1" });
+
+    var xmlFilePath = $"{Assembly.GetEntryAssembly()!.GetName().Name}.xml";
+    var filePath = Path.Combine(AppContext.BaseDirectory, xmlFilePath);
+    c.IncludeXmlComments(filePath);
+    c.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
 });
 
 var app = builder.Build();
@@ -19,6 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examples.Web.WebApi.Grpc API V1");
+        c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
     });
 }
 

@@ -110,6 +110,33 @@ dotnet add package Microsoft.AspNetCore.Grpc.Swagger
   app.MapGrpcService<GreeterService>();
 ```
 
+**3. Add OpenAPI descriptions from .proto comments**:
+
+project file (.csproj):
+
+```diff
+  <PropertyGroup>
++    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+```
+
+In the `Program.cs` file:
+
+```diff
++ using Examples.Web.Infrastructure.Swagger;
+
+  builder.Services.AddSwaggerGen(c =>
+  {
+      c.SwaggerDoc("v1",
+          new OpenApiInfo { Title = "gRPC transcoding", Version = "v1" });
+
+
+    var filePath = Path.Combine(System.AppContext.BaseDirectory, "Server.xml");
+    c.IncludeXmlComments(filePath);
+    c.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
+  });
+```
+
 ## Development
 
 ### Build
@@ -142,19 +169,32 @@ dotnet sln add src/Examples.Web.Infrastructure/
 cd src/Examples.Web.Infrastructure
 cd ../../
 
+## Examples.Web.Infrastructure.Swagger
+dotnet new classlib -o src/Examples.Web.Infrastructure.Swagger
+dotnet sln add src/Examples.Web.Infrastructure.Swagger/
+cd src/Examples.Web.Infrastructure.Swagger
+dotnet add package Swashbuckle.AspNetCore
+dotnet add package Swashbuckle.AspNetCore.Annotations
+cd ../../
+
 ## Examples.Web.Infrastructure.GrpcClient
 dotnet new classlib -o src/Examples.Web.Infrastructure.GrpcClient
 dotnet sln add src/Examples.Web.Infrastructure.GrpcClient/
 cd src/Examples.Web.Infrastructure.GrpcClient
-cd ../../../
+dotnet add package Grpc.Net.Client
+dotnet add package Google.Protobuf
+dotnet add package Grpc.Tools
+cd ../../
 
 ## Examples.Web.WebApi.Grpc
 dotnet new webapp -o src/Examples.Web.WebApi.Grpc
 dotnet sln add src/Examples.Web.WebApi.Grpc/
 cd src/Examples.Web.WebApi.Grpc
 dotnet add reference ../Examples.Web.Infrastructure
+dotnet add reference ../Examples.Web.Infrastructure.Swagger
 dotnet add reference ../Examples.Web.Infrastructure.GrpcClient
 dotnet add package Microsoft.AspNetCore.Grpc.JsonTranscoding
+dotnet add package Microsoft.AspNetCore.Grpc.Swagger
 
 dotnet user-secrets init
 cd ../../
