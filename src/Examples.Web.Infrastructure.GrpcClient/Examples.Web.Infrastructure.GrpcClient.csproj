@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(LTSFrameworks)</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Examples.Web</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos/**/*.proto" GrpcServices="Client" AdditionalImportDirs="Protos;$(SharedProtoRoot)/Protos" />
+  </ItemGroup>
+
+  <!-- Shared proto files from the Web API project -->
+  <PropertyGroup>
+    <SharedProtoRoot>../Examples.Web.WebApi.Grpc</SharedProtoRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(SharedProtoRoot)/Protos/greet.proto" Link="Protos/greet.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.34.1" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.80.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
