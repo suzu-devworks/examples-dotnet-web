@@ -23,6 +23,57 @@ gRPC JSON transcoding is an extension for ASP.NET Core that creates RESTful JSON
 
 - [gRPC JSON transcoding in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/grpc/json-transcoding)
 
+**1. Add a package reference**:
+
+```shell
+dotnet add package Microsoft.AspNetCore.Grpc.JsonTranscoding
+```
+
+**2. In the `Program.cs` file**:
+
+```diff
+  // Add services to the container.
+- builder.Services.AddGrpc();
++ builder.Services.AddGrpc().AddJsonTranscoding();
+
+```
+
+**3. Add property group in the project file (.csproj)**:
+
+```diff
+  <PropertyGroup>
++    <IncludeHttpRuleProtos>true</IncludeHttpRuleProtos>
+  </PropertyGroup>
+```
+
+**4. Annotate gRPC methods in your .proto files with HTTP bindings and routes**:
+
+```diff
++ import "google/api/annotations.proto";
+
+  // The greeting service definition.
+  service Greeter {
+-   rpc SayHello (HelloRequest) returns (HelloReply);
++   rpc SayHello (HelloRequest) returns (HelloReply) {
++     option (google.api.http) = {
++       get: "/v1/greeter/{name}"
++     };
+    }
+  }
+```
+
+Let's try testing it with curl:
+
+```shell
+curl -v -k https://localhost:7271/v1/greeter/world
+```
+
+Returns:
+
+```console
+{"message":"Hello world"}
+```
+
 ### Use Swagger
 
 OpenAPI (Swagger) is a language-agnostic specification for describing REST APIs. gRPC JSON transcoding supports generating OpenAPI from transcoded RESTful APIs.
@@ -73,6 +124,7 @@ dotnet sln add src/Examples.Web.WebApi.Grpc/
 cd src/Examples.Web.WebApi.Grpc
 dotnet add reference ../Examples.Web.Infrastructure
 dotnet add reference ../Examples.Web.Infrastructure.GrpcClient
+dotnet add package Microsoft.AspNetCore.Grpc.JsonTranscoding
 
 dotnet user-secrets init
 cd ../../
