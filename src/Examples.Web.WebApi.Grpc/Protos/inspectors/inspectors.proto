@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "Examples.Web.WebApi.Grpc.Inspectors";
+package inspectors;
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+// The inspector service definition.
+service Inspector {
+  // validation method
+  rpc Validation (ValidationRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get: "/v1/validation"
+    };
+  }
+}
+
+// The request message containing the user's name.
+message ValidationRequest {
+  string name = 1;
+}
