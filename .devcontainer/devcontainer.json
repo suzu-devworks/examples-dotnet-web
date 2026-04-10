@@ -19,7 +19,8 @@
         "ms-dotnettools.csdevkit",
         "aliasadidev.nugetpackagemanagergui",
         "esbenp.prettier-vscode",
-        "DotJoshJohnson.xml"
+        "DotJoshJohnson.xml",
+        "DrBlury.protobuf-vsc"
       ]
     }
   }

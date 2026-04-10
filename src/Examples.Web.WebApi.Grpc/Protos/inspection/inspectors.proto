@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "Examples.Web.WebApi.Grpc.Inspection";
+package inspection;
+
+import "google/api/annotations.proto";
+import "google/api/httpbody.proto";
+import "google/protobuf/empty.proto";
+
+// The inspector service definition.
+service Inspector {
+  // For learning FluentValidation
+  rpc Validation (ValidationRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get: "/v1/validation"
+    };
+  }
+
+  // How to use HttpBody
+  rpc Download (DownloadRequest) returns (google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/v1/downloads/{id}/{filename}"
+    };
+  }
+}
+
+// The request message containing the user's name.
+message ValidationRequest {
+  string name = 1;
+}
+
+// The request message for download.
+message DownloadRequest {
+  string id       = 1;
+  string filename = 2;
+}

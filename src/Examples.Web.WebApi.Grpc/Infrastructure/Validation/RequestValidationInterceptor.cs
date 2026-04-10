@@ -2,7 +2,7 @@ using FluentValidation;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
-namespace Examples.Web.Infrastructure.Validators;
+namespace Examples.Web.Infrastructure.Validation;
 
 /// <summary>
 /// Validates incoming gRPC requests using FluentValidation.

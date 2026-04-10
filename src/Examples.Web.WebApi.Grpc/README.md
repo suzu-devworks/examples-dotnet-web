@@ -7,10 +7,11 @@
   - [Logging](#logging)
   - [Routing](#routing)
     - [Auto gRPC Service registration](#auto-grpc-service-registration)
-  - [Open Api](#open-api)
-    - [gRPC Json Transcoding](#grpc-json-transcoding)
+  - [gRPC Json Transcoding](#grpc-json-transcoding)
+    - [Use gRPC Json Transcoding](#use-grpc-json-transcoding)
     - [Use OpenAPI (Swagger)](#use-openapi-swagger)
     - [Add OpenAPI descriptions from .proto comments](#add-openapi-descriptions-from-proto-comments)
+    - [Use HttpBody](#use-httpbody)
   - [Fluent Validation](#fluent-validation)
 - [Development](#development)
   - [Build](#build)
@@ -47,9 +48,9 @@ Let's register it using reflection with [`Examples.Web.Infrastructure.Grpc.Appli
 + app.MapGrpcServices<Program>();
 ```
 
-### Open Api
+### gRPC Json Transcoding
 
-#### gRPC Json Transcoding
+#### Use gRPC Json Transcoding
 
 gRPC JSON transcoding is an extension for ASP.NET Core that creates RESTful JSON APIs for gRPC services
 
@@ -176,6 +177,71 @@ We'll take a shortcut by using [`Examples.Web.Infrastructure.OpenApi.SwaggerGenO
 +     c.IncludeXmlComments<Program>();
   });
 ```
+
+#### Use HttpBody
+
+Typically, gRPC uses binary serialization (Protobuf) over HTTP/2, making it incompatible with REST's JSON request body. However, to use HttpBody (HTTP request body) for file downloads and similar purposes, gRPC's JSON transcoding feature is primarily used.
+
+**1. Add a package reference**:
+
+To use `google.api.HttpBody`, you can download the file (<https://github.com/googleapis/googleapis/tree/master/google>), but it's usually included in this package.
+
+```shell
+dotnet add package Google.Api.CommonProtos
+```
+
+However, to enable this, you need to configure it in your project file (*.csproj).
+
+```diff
+  <PropertyGroup>
++   <IncludeGoogleApiCommonProtos>true</IncludeGoogleApiCommonProtos>
+  </PropertyGroup>
+```
+
+ This wasn't mentioned in any of the documentation. Looking at the code [here&#x2197;](https://github.com/googleapis/gax-dotnet/blob/main/Google.Api.CommonProtos/build/Google.Api.CommonProtos.targets#L14), it seems that it won't be enabled unless you set the property.
+
+**2. We will implement the API.**:
+
+```proto
+import "google/api/httpbody.proto";
+
+// The inspector service definition.
+service Inspector {
+
+  // How to use HttpBody
+  rpc Download (DownloadRequest) returns (google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/v1/downloads/{id}/{filename}"
+    };
+  }
+}
+```
+
+```cs
+  using var stream = await GetPdfStreamAsync(request.Id, context.CancellationToken);
+
+  // 'attachment' means the file will be downloaded, not displayed in the browser.
+  // 'inline' means the file will be displayed in the browser, not downloaded.
+  var contentDisposition = new ContentDispositionHeaderValue("attachment")
+  {
+      FileName = GetContentDispositionFileName(request.Filename),
+      FileNameStar = request.Filename,
+  };
+
+  var httpContext = context.GetHttpContext();
+  httpContext.Response.Headers.ContentDisposition = contentDisposition.ToString();
+  httpContext.Response.Headers.ContentLength = stream.Length;
+
+  var httpBody = new HttpBody
+  {
+      ContentType = System.Net.Mime.MediaTypeNames.Application.Pdf,
+      Data = ByteString.FromStream(stream)
+  };
+
+  return httpBody;
+```
+
+There are no problems with `attachments`, but when returning `inline`, some PDF readers seem to automatically use the filename as the end of the URL path even if you set `filename*=`.
 
 ### Fluent Validation
 

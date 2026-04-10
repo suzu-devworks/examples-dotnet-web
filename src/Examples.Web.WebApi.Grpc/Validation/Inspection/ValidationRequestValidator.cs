@@ -1,7 +1,7 @@
-using Examples.Web.WebApi.Grpc.Inspectors;
+using Examples.Web.WebApi.Grpc.Inspection;
 using FluentValidation;
 
-namespace Examples.Web.WebApi.Grpc.Services.Inspectors;
+namespace Examples.Web.WebApi.Grpc.Validation.Inspection;
 
 public class ValidationRequestValidator : AbstractValidator<ValidationRequest>
 {

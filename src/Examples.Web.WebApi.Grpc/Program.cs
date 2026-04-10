@@ -1,6 +1,6 @@
 using Examples.Web.Infrastructure.Grpc;
 using Examples.Web.Infrastructure.OpenApi;
-using Examples.Web.Infrastructure.Validators;
+using Examples.Web.Infrastructure.Validation;
 using FluentValidation;
 using Microsoft.OpenApi.Models;
 
