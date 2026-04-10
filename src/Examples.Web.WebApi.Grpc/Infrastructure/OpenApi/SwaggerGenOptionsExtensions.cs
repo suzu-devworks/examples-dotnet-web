@@ -30,7 +30,8 @@ public static class SwaggerGenOptionsExtensions
     {
         var xmlFilePath = $"{assembly.GetName().Name}.xml";
         var path = Path.Combine(AppContext.BaseDirectory, xmlFilePath);
-        options.IncludeXmlComments(path);
+        options.IncludeXmlComments(path, includeControllerXmlComments: true);
+        options.IncludeGrpcXmlComments(path, includeControllerXmlComments: true);
 
         return options;
     }
