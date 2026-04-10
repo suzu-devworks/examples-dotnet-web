@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-option csharp_namespace = "Examples.Web.WebApi.Grpc.Inspectors";
-package inspectors;
+option csharp_namespace = "Examples.Web.WebApi.Grpc.Inspection";
+package inspection;
 
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";

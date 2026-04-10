@@ -1,8 +1,8 @@
-using Examples.Web.WebApi.Grpc.Inspectors;
+using Examples.Web.WebApi.Grpc.Inspection;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 
-namespace Examples.Web.WebApi.Grpc.Services.Inspectors;
+namespace Examples.Web.WebApi.Grpc.Services.Inspection;
 
 public class InspectorService(ILogger<InspectorService> logger) : Inspector.InspectorBase
 {
