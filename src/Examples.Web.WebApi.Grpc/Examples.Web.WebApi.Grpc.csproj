@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>d8eff620-f6b8-4953-973c-4471d853404f</UserSecretsId>
     <IncludeHttpRuleProtos>true</IncludeHttpRuleProtos>
+    <IncludeGoogleApiCommonProtos>true</IncludeGoogleApiCommonProtos>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -20,6 +21,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="10.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.10.5" />
