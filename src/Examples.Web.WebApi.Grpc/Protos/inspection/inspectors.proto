@@ -6,13 +6,15 @@ package inspection;
 import "google/api/annotations.proto";
 import "google/api/httpbody.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 // The inspector service definition.
 service Inspector {
   // For learning FluentValidation
   rpc Validation (ValidationRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get: "/v1/validation"
+      post: "/v1/validation"
+      body: "*"
     };
   }
 
@@ -24,9 +26,31 @@ service Inspector {
   }
 }
 
-// The request message containing the user's name.
+// The validation status.
+enum ValidationStatus {
+  VALIDATION_STATUS_UNKNOWN = 0;
+  VALIDATION_STATUS_SUCCESS = 1;
+  VALIDATION_STATUS_FAILURE = 2;
+}
+
+// The validation item.
+message ValidationItem {
+  string id       = 1;
+  int32  quantity = 2;
+}
+
+// The request message for learning FluentValidation.
 message ValidationRequest {
-  string name = 1;
+  string                    name       = 1;
+  ValidationStatus          status     = 2;
+  google.protobuf.Timestamp created_at = 3;
+
+  string date_ymd_from = 4; // (yyyy-MM-dd)
+  string date_ymd_to   = 5; // (yyyy-MM-dd)
+  string time_hms_from = 6; // (H:mm:ss)
+  string time_hms_to   = 7; // (H:mm:ss)
+
+  repeated ValidationItem items = 8;
 }
 
 // The request message for download.
