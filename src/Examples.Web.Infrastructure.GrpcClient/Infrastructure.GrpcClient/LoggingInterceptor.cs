@@ -37,12 +37,12 @@ public partial class LoggingInterceptor(ILogger<LoggingInterceptor> logger) : In
         try
         {
             var response = await inner;
-            LogGrpcSuccess();
+            LogGrpcSuccess(context.Method.FullName);
             return response;
         }
         catch (Exception ex)
         {
-            LogGrpcError(ex);
+            LogGrpcError(context.Method.FullName, ex);
             throw;
         }
     }
@@ -50,10 +50,10 @@ public partial class LoggingInterceptor(ILogger<LoggingInterceptor> logger) : In
     [LoggerMessage(0, LogLevel.Information, "Starting gRPC call: {Name}")]
     private partial void LogGrpcStart(string name);
 
-    [LoggerMessage(1, LogLevel.Information, "gRPC call succeeded")]
-    private partial void LogGrpcSuccess();
+    [LoggerMessage(1, LogLevel.Information, "gRPC call succeeded: {Name}")]
+    private partial void LogGrpcSuccess(string name);
 
-    [LoggerMessage(2, LogLevel.Error, "gRPC call failed")]
-    private partial void LogGrpcError(Exception ex);
+    [LoggerMessage(2, LogLevel.Error, "gRPC call failed: {Name}")]
+    private partial void LogGrpcError(string name, Exception ex);
 
 }
