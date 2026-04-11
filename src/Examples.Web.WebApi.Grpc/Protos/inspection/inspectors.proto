@@ -18,10 +18,17 @@ service Inspector {
     };
   }
 
-  // How to use HttpBody
+  // For learning HttpBody Response
   rpc Download (DownloadRequest) returns (google.api.HttpBody) {
     option (google.api.http) = {
       get: "/v1/downloads/{id}/{filename}"
+    };
+  }
+
+  // For learning PassThrough gRPCCall.
+  rpc PassThroughGreeter (PassThroughGreeterRequest) returns (PassThroughGreeterReply) {
+    option (google.api.http) = {
+      get: "/v1/passthrough/greeter/{name}"
     };
   }
 }
@@ -57,4 +64,14 @@ message ValidationRequest {
 message DownloadRequest {
   string id       = 1;
   string filename = 2;
+}
+
+// The request message for learning PassThrough gRPCCall.
+message PassThroughGreeterRequest {
+  string name = 1;
+}
+
+// The response message for learning PassThrough gRPCCall.
+message PassThroughGreeterReply {
+  string message = 1;
 }

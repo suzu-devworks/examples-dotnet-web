@@ -8,7 +8,6 @@ namespace Examples.Web.WebApi.Grpc.Services.Inspection;
 
 public partial class InspectorService
 {
-
     public override async Task<HttpBody> Download(DownloadRequest request, ServerCallContext context)
     {
         using var stream = await GetPdfStreamAsync(request.Id, context.CancellationToken);
@@ -34,7 +33,7 @@ public partial class InspectorService
         return httpBody;
     }
 
-    private Task<Stream> GetPdfStreamAsync(string id, CancellationToken cancellationToken)
+    private static Task<Stream> GetPdfStreamAsync(string id, CancellationToken cancellationToken)
     {
         _ = id; // ignore IDE0060
         _ = cancellationToken; // ignore IDE0060
