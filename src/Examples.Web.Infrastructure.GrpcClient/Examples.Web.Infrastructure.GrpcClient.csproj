@@ -5,18 +5,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Examples.Web</RootNamespace>
+    <IncludeGoogleApiCommonProtos>true</IncludeGoogleApiCommonProtos>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Protobuf Include="Protos/**/*.proto" GrpcServices="Client" AdditionalImportDirs="Protos;$(SharedProtoRoot)/Protos" />
-  </ItemGroup>
 
   <!-- Shared proto files from the Web API project -->
   <PropertyGroup>
     <SharedProtoRoot>../Examples.Web.WebApi.Grpc</SharedProtoRoot>
   </PropertyGroup>
+
   <ItemGroup>
-    <None Include="$(SharedProtoRoot)/Protos/greet.proto" Link="Protos/greet.proto" />
+    <Protobuf Include="Protos/**/*.proto" GrpcServices="Client" Access="Internal" />
+    <Protobuf Include="$(SharedProtoRoot)/Protos/greet.proto" Link="Protos/greet.proto" GrpcServices="Client" Access="Internal" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,9 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />
     <PackageReference Include="Google.Protobuf" Version="3.34.1" />
     <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.80.0">
+    <!-- On Apple Silicon, Grpc.Tools will display error code 139 in version 2.69.0 and later
+      unless the (https://github.com/grpc/grpc/issues/38538) issue is resolved. -->
+    <PackageReference Include="Grpc.Tools" Version="2.68.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
