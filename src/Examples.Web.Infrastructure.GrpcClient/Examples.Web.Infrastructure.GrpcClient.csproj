@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(LTSFrameworks)</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Examples.Web</RootNamespace>
+    <IncludeGoogleApiCommonProtos>true</IncludeGoogleApiCommonProtos>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);IDE0052</NoWarn>
+  </PropertyGroup>
+
+  <!-- Shared proto files from the Web API project -->
+  <PropertyGroup>
+    <SharedProtoRoot>../Examples.Web.WebApi.Grpc</SharedProtoRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos/**/*.proto" GrpcServices="Client" Access="Internal" />
+    <Protobuf Include="$(SharedProtoRoot)/Protos/greet.proto" Link="Protos/greet.proto" GrpcServices="Client" Access="Internal" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.34.1" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.76.0" />
+    <!-- On Apple Silicon, Grpc.Tools will display error code 139 in version 2.69.0 and later
+      unless the (https://github.com/grpc/grpc/issues/38538) issue is resolved. -->
+    <PackageReference Include="Grpc.Tools" Version="2.68.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
