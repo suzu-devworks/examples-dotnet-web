@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using Examples.Web.Infrastructure;
 using Examples.Web.WebApi.Grpc.Inspection;
 using Google.Api;
 using Google.Protobuf;
@@ -17,7 +18,7 @@ public partial class InspectorService
         var contentDisposition = new ContentDispositionHeaderValue("attachment")
         {
             FileName = GetContentDispositionFileName(request.Filename),
-            FileNameStar = request.Filename,
+            FileNameStar = request.Filename?.Sanitize(),
         };
 
         var httpContext = context.GetHttpContext();
