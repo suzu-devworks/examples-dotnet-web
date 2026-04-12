@@ -6,7 +6,6 @@ namespace Examples.Web.WebApi.Grpc.Services.Inspection;
 
 public partial class InspectorService
 {
-
     public override Task<Empty> Validation(ValidationRequest request, ServerCallContext context)
     {
         _logger.LogInformation("The message is received from {Name}", request.Name);

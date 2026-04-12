@@ -1,4 +1,5 @@
 using Examples.Web.Infrastructure.Grpc;
+using Examples.Web.Infrastructure.GrpcClient;
 using Examples.Web.Infrastructure.OpenApi;
 using Examples.Web.Infrastructure.Validation;
 using FluentValidation;
@@ -19,6 +20,9 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments<Program>();
 });
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+//# Add custom gRPC client services
+builder.Services.AddGrpcClients(builder.Configuration);
 
 var app = builder.Build();
 

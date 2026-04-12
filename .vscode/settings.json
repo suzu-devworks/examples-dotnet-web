@@ -53,6 +53,7 @@
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
   "protobuf.includes": [
+    "${env:HOME}/.nuget/packages/./microsoft.aspnetcore.grpc.jsontranscoding/10.0.5/content/protos",
     "${env:HOME}/.nuget/packages/google.api.commonprotos/2.17.0/content/protos"
   ],
   "remote.autoForwardPortsFallback": 0
