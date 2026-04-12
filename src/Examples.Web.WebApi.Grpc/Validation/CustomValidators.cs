@@ -47,6 +47,46 @@ public static class CustomValidators
     }
 
     /// <summary>
+    /// Validates that a date string (format "yyyy-MM-dd") is after or equal to a reference date obtained from the model.
+    /// If either value cannot be parsed, validation passes to avoid blocking independent validation errors.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="ruleBuilder"></param>
+    /// <param name="getFromValue">A function to retrieve the "from" date string from the model.</param>
+    /// <returns></returns>
+    public static IRuleBuilderOptions<T, string> IsAfterAsDate<T>(this IRuleBuilder<T, string> ruleBuilder, Func<T, string> getFromValue)
+    {
+        return ruleBuilder.Must((request, dateTo) =>
+        {
+            if (!DateOnly.TryParseExact(getFromValue(request), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
+                return true;
+            if (!DateOnly.TryParseExact(dateTo, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
+                return true;
+            return to >= from;
+        }).WithMessage("The date must be after or equal to the from date.");
+    }
+
+    /// <summary>
+    /// Validates that a time string (format "HH:mm:ss") is after a reference time obtained from the model.
+    /// If either value cannot be parsed, validation passes to avoid blocking independent validation errors.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="ruleBuilder"></param>
+    /// <param name="getFromValue">A function to retrieve the "from" time string from the model.</param>
+    /// <returns></returns>
+    public static IRuleBuilderOptions<T, string> IsAfterAsTime<T>(this IRuleBuilder<T, string> ruleBuilder, Func<T, string> getFromValue)
+    {
+        return ruleBuilder.Must((request, timeTo) =>
+        {
+            if (!TimeOnly.TryParseExact(getFromValue(request), "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
+                return true;
+            if (!TimeOnly.TryParseExact(timeTo, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
+                return true;
+            return to > from;
+        }).WithMessage("The time must be after the from time.");
+    }
+
+    /// <summary>
     /// Validates that an integer value is within a specified range (inclusive).
     /// </summary>
     /// <typeparam name="T"></typeparam>

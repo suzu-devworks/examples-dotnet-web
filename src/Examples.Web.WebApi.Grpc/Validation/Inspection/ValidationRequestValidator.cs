@@ -1,4 +1,3 @@
-using System.Globalization;
 using Examples.Web.WebApi.Grpc.Inspection;
 using FluentValidation;
 
@@ -31,14 +30,7 @@ public class ValidationRequestValidator : AbstractValidator<ValidationRequest>
             .DependentRules(() =>
             {
                 RuleFor(x => x.DateYmdTo)
-                    .Must((request, dateYmdTo) =>
-                    {
-                        if (!DateOnly.TryParseExact(request.DateYmdFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
-                            return true;
-                        if (!DateOnly.TryParseExact(dateYmdTo, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
-                            return true;
-                        return to >= from;
-                    })
+                    .IsAfterAsDate(x => x.DateYmdFrom)
                     .WithMessage("DateYmdTo must be greater than or equal to DateYmdFrom.");
             })
             .When(x => !string.IsNullOrEmpty(x.DateYmdTo));
@@ -54,14 +46,7 @@ public class ValidationRequestValidator : AbstractValidator<ValidationRequest>
             .DependentRules(() =>
             {
                 RuleFor(x => x.TimeHmsTo)
-                    .Must((request, timeHmsTo) =>
-                    {
-                        if (!TimeOnly.TryParseExact(request.TimeHmsFrom, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
-                            return true;
-                        if (!TimeOnly.TryParseExact(timeHmsTo, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
-                            return true;
-                        return to > from;
-                    })
+                    .IsAfterAsTime(x => x.TimeHmsFrom)
                     .WithMessage("TimeHmsTo must be greater than TimeHmsFrom.")
                     .When(x => !string.IsNullOrEmpty(x.TimeHmsFrom));
             })
