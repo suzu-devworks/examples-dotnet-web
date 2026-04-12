@@ -45,7 +45,7 @@ Let's register it using reflection with [`Examples.Web.Infrastructure.Grpc.Appli
 ```diff
   // Configure the HTTP request pipeline.
 - app.MapGrpcService<GreeterService>();
-+ app.MapGrpcServices<Program>();
++ app.MapGrpcServicesWithReflection<Program>();
 ```
 
 ### gRPC Json Transcoding

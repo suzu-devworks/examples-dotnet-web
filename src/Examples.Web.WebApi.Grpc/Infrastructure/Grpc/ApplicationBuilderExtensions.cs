@@ -15,12 +15,12 @@ public static class ApplicationBuilderExtensions
     /// <typeparam name="TAssemblyMarker">A type from the assembly to scan for gRPC services.</typeparam>
     /// <param name="app">The application builder.</param>
     /// <returns>The application builder for chaining.</returns>
-    public static IApplicationBuilder MapGrpcServices<TAssemblyMarker>(this IApplicationBuilder app)
+    public static IApplicationBuilder MapGrpcServicesWithReflection<TAssemblyMarker>(this IApplicationBuilder app)
     {
         ArgumentNullException.ThrowIfNull(app);
 
         var assembly = typeof(TAssemblyMarker).Assembly;
-        return app.MapGrpcServices<TAssemblyMarker>(assembly);
+        return app.MapGrpcServicesWithReflection<TAssemblyMarker>(assembly);
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ public static class ApplicationBuilderExtensions
     /// <param name="assembly">The assembly to scan for gRPC services.</param>
     /// <returns>The application builder for chaining.</returns>
     /// <exception cref="ArgumentNullException">Thrown if app or assembly is null.</exception>
-    public static IApplicationBuilder MapGrpcServices<TAssemblyMarker>(this IApplicationBuilder app, Assembly assembly)
+    public static IApplicationBuilder MapGrpcServicesWithReflection<TAssemblyMarker>(this IApplicationBuilder app, Assembly assembly)
     {
         ArgumentNullException.ThrowIfNull(app);
         ArgumentNullException.ThrowIfNull(assembly);
