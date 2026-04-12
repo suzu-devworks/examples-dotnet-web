@@ -1,3 +1,4 @@
+using System.Globalization;
 using Examples.Web.WebApi.Grpc.Inspection;
 using FluentValidation;
 
@@ -30,7 +31,14 @@ public class ValidationRequestValidator : AbstractValidator<ValidationRequest>
             .DependentRules(() =>
             {
                 RuleFor(x => x.DateYmdTo)
-                    .GreaterThanOrEqualTo(x => x.DateYmdFrom)
+                    .Must((request, dateYmdTo) =>
+                    {
+                        if (!DateOnly.TryParseExact(request.DateYmdFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
+                            return true;
+                        if (!DateOnly.TryParseExact(dateYmdTo, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
+                            return true;
+                        return to >= from;
+                    })
                     .WithMessage("DateYmdTo must be greater than or equal to DateYmdFrom.");
             })
             .When(x => !string.IsNullOrEmpty(x.DateYmdTo));
@@ -39,14 +47,25 @@ public class ValidationRequestValidator : AbstractValidator<ValidationRequest>
             .NotEmpty()
             .WithMessage("TimeHmsFrom is required.")
             .IsValidTime()
-            .WithMessage("TimeHmsFrom must be a valid time in the format HH:mm:ss.");
+            .WithMessage("TimeHmsFrom must be a valid time in the format H:mm:ss.");
         RuleFor(x => x.TimeHmsTo)
             .IsValidTime()
-            .WithMessage("TimeHmsTo must be a valid time in the format HH:mm:ss.")
-            .When(x => !string.IsNullOrEmpty(x.TimeHmsTo))
-            .GreaterThan(x => x.TimeHmsFrom)
-            .WithMessage("TimeHmsTo must be greater than TimeHmsFrom.")
-            .When(x => !string.IsNullOrEmpty(x.TimeHmsFrom) && !string.IsNullOrEmpty(x.TimeHmsTo));
+            .WithMessage("TimeHmsTo must be a valid time in the format H:mm:ss.")
+            .DependentRules(() =>
+            {
+                RuleFor(x => x.TimeHmsTo)
+                    .Must((request, timeHmsTo) =>
+                    {
+                        if (!TimeOnly.TryParseExact(request.TimeHmsFrom, "H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
+                            return true;
+                        if (!TimeOnly.TryParseExact(timeHmsTo, "H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
+                            return true;
+                        return to > from;
+                    })
+                    .WithMessage("TimeHmsTo must be greater than TimeHmsFrom.")
+                    .When(x => !string.IsNullOrEmpty(x.TimeHmsFrom));
+            })
+            .When(x => !string.IsNullOrEmpty(x.TimeHmsTo));
 
         RuleForEach(x => x.Items)
             .SetValidator(new ValidationItemValidator(indexed: true));

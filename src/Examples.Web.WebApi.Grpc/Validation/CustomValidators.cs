@@ -1,3 +1,4 @@
+using System.Globalization;
 using FluentValidation;
 
 namespace Examples.Web.WebApi.Grpc.Validation;
@@ -22,7 +23,7 @@ public static class CustomValidators
                 return false;
             }
 
-            return DateTime.TryParseExact(dateString, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out _);
+            return DateOnly.TryParseExact(dateString, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
         }).WithMessage("The date must be in the format 'yyyy-MM-dd'.");
     }
 
@@ -41,7 +42,7 @@ public static class CustomValidators
                 return false;
             }
 
-            return DateTime.TryParseExact(timeString, "H:mm:ss", null, System.Globalization.DateTimeStyles.None, out _);
+            return TimeOnly.TryParseExact(timeString, "H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
         }).WithMessage("The time must be in the format 'H:mm:ss'.");
     }
 
