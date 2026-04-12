@@ -54,8 +54,8 @@ message ValidationRequest {
 
   string date_ymd_from = 4; // (yyyy-MM-dd)
   string date_ymd_to   = 5; // (yyyy-MM-dd)
-  string time_hms_from = 6; // (H:mm:ss)
-  string time_hms_to   = 7; // (H:mm:ss)
+  string time_hms_from = 6; // (HH:mm:ss)
+  string time_hms_to   = 7; // (HH:mm:ss)
 
   repeated ValidationItem items = 8;
 }
