@@ -1,7 +1,7 @@
 using Examples.Web.Infrastructure.GrpcClient;
 using Examples.Web.WebApi.Grpc.Infrastructure;
 using Examples.Web.WebApi.Grpc.Infrastructure.OpenApi;
-using Examples.Web.WebApi.Grpc.Infrastructure.Validation;
+using Examples.Web.WebApi.Grpc.Validation;
 using FluentValidation;
 using Microsoft.OpenApi.Models;
 
