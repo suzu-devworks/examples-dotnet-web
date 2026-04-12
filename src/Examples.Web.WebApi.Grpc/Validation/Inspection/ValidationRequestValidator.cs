@@ -47,18 +47,18 @@ public class ValidationRequestValidator : AbstractValidator<ValidationRequest>
             .NotEmpty()
             .WithMessage("TimeHmsFrom is required.")
             .IsValidTime()
-            .WithMessage("TimeHmsFrom must be a valid time in the format H:mm:ss.");
+            .WithMessage("TimeHmsFrom must be a valid time in the format HH:mm:ss.");
         RuleFor(x => x.TimeHmsTo)
             .IsValidTime()
-            .WithMessage("TimeHmsTo must be a valid time in the format H:mm:ss.")
+            .WithMessage("TimeHmsTo must be a valid time in the format HH:mm:ss.")
             .DependentRules(() =>
             {
                 RuleFor(x => x.TimeHmsTo)
                     .Must((request, timeHmsTo) =>
                     {
-                        if (!TimeOnly.TryParseExact(request.TimeHmsFrom, "H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
+                        if (!TimeOnly.TryParseExact(request.TimeHmsFrom, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from))
                             return true;
-                        if (!TimeOnly.TryParseExact(timeHmsTo, "H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
+                        if (!TimeOnly.TryParseExact(timeHmsTo, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var to))
                             return true;
                         return to > from;
                     })

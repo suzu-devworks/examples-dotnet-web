@@ -28,7 +28,7 @@ public static class CustomValidators
     }
 
     /// <summary>
-    /// Validates that a string is a valid time in the format "H:mm:ss".
+    /// Validates that a string is a valid time in the format "HH:mm:ss".
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="ruleBuilder"></param>
@@ -42,8 +42,8 @@ public static class CustomValidators
                 return false;
             }
 
-            return TimeOnly.TryParseExact(timeString, "H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
-        }).WithMessage("The time must be in the format 'H:mm:ss'.");
+            return TimeOnly.TryParseExact(timeString, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+        }).WithMessage("The time must be in the format 'HH:mm:ss'.");
     }
 
     /// <summary>
