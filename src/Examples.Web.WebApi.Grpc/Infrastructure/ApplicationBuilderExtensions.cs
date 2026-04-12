@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Examples.Web.Infrastructure.Grpc;
+namespace Examples.Web.WebApi.Grpc.Infrastructure;
 
 /// <summary>
 /// Provides extension methods for configuring gRPC services on IApplicationBuilder.

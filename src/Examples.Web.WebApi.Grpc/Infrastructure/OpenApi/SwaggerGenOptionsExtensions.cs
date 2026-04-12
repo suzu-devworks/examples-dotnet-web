@@ -1,7 +1,7 @@
 using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Examples.Web.Infrastructure.OpenApi;
+namespace Examples.Web.WebApi.Grpc.Infrastructure.OpenApi;
 
 /// <summary>
 /// Provides extension methods for configuring <see cref="SwaggerGenOptions"/>.
