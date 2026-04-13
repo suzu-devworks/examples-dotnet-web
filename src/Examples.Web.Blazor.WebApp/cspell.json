@@ -1,0 +1,18 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    "wwwroot/*"
+  ],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "Blazor",
+    "onclick",
+    "rendermode",
+    "stylesheet"
+  ],
+  "ignoreWords": [],
+  "import": [
+    "../../.vscode/cspell.json"
+  ]
+}

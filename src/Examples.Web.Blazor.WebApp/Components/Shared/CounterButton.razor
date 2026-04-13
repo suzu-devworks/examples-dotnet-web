@@ -1,0 +1,14 @@
+﻿<button class="btn btn-primary" @onclick="IncrementCount">Click me: + @IncrementAmount </button>
+
+@code {
+    [Parameter]
+    public int IncrementAmount { get; set; } = 1;
+
+    [Parameter]
+    public EventCallback<int> OnIncrement { get; set; }
+
+    private void IncrementCount()
+    {
+        OnIncrement.InvokeAsync(IncrementAmount);
+    }
+}

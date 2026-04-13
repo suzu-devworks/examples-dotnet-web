@@ -1,0 +1,24 @@
+﻿@page "/interop"
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Interop</PageTitle>
+
+<h1>Interop (JS Interop)</h1>
+
+Check your developer tools.
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("console.log", "Hello from Blazor!");
+
+            var module = await JSRuntime.InvokeAsync<IJSObjectReference>(
+                 "import", "./js/interop-sample.js");
+
+            await module.InvokeVoidAsync("outputLog", "Hello Interop page via JS module!");
+        }
+    }
+}
