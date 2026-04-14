@@ -19,6 +19,8 @@ else
 }
 
 @code {
+    private const string CountStorageKey = "count";
+
     private bool isConnected;
     private int currentCount;
     private IJSObjectReference? _module;
@@ -34,7 +36,7 @@ else
 
             _dotNetRef = DotNetObjectReference.Create(this);
             _module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/interop-sample.js");
-            _listener = await _module.InvokeAsync<IJSObjectReference>("listenForStorageChanges", _dotNetRef, "count");
+            _listener = await _module.InvokeAsync<IJSObjectReference>("listenForStorageChanges", _dotNetRef, CountStorageKey);
 
             await InvokeAsync(StateHasChanged);
         }
@@ -42,14 +44,14 @@ else
 
     private async Task LoadStateAsync()
     {
-        var result = await ProtectedLocalStorage.GetAsync<int>("count");
+        var result = await ProtectedLocalStorage.GetAsync<int>(CountStorageKey);
         currentCount = result.Success ? result.Value : 0;
     }
 
     private async Task IncrementCount()
     {
         currentCount++;
-        await ProtectedLocalStorage.SetAsync("count", currentCount);
+        await ProtectedLocalStorage.SetAsync(CountStorageKey, currentCount);
     }
 
     [JSInvokable]
