@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedLocalStorage ProtectedLocalStorage
+@inject IJSRuntime JS
+@implements IAsyncDisposable
 @rendermode InteractiveServer
 
 @if (isConnected)
@@ -19,6 +21,9 @@ else
 @code {
     private bool isConnected;
     private int currentCount;
+    private IJSObjectReference? _module;
+    private IJSObjectReference? _listener;
+    private DotNetObjectReference<LocalStorageCounter>? _dotNetRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -26,6 +31,11 @@ else
         {
             await LoadStateAsync();
             isConnected = true;
+
+            _dotNetRef = DotNetObjectReference.Create(this);
+            _module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/interop-sample.js");
+            _listener = await _module.InvokeAsync<IJSObjectReference>("listenForStorageChanges", _dotNetRef, "count");
+
             await InvokeAsync(StateHasChanged);
         }
     }
@@ -40,5 +50,29 @@ else
     {
         currentCount++;
         await ProtectedLocalStorage.SetAsync("count", currentCount);
+    }
+
+    [JSInvokable]
+    public async Task OnStorageChanged()
+    {
+        await LoadStateAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_listener is not null)
+        {
+            try
+            {
+                await _listener.InvokeVoidAsync("dispose");
+            }
+            catch (JSDisconnectedException)
+            {
+                // Circuit has disconnected; JS interop is no longer available.
+            }
+        }
+
+        _dotNetRef?.Dispose();
     }
 }
