@@ -17,6 +17,8 @@ else
 }
 
 @code {
+    private const string CountStorageKey = "count";
+
     private bool isConnected;
     private int currentCount;
 
@@ -32,13 +34,13 @@ else
 
     private async Task LoadStateAsync()
     {
-        var result = await ProtectedSessionStore.GetAsync<int>("count");
+        var result = await ProtectedSessionStore.GetAsync<int>(CountStorageKey);
         currentCount = result.Success ? result.Value : 0;
     }
 
     private async Task IncrementCount()
     {
         currentCount++;
-        await ProtectedSessionStore.SetAsync("count", currentCount);
+        await ProtectedSessionStore.SetAsync(CountStorageKey, currentCount);
     }
 }
