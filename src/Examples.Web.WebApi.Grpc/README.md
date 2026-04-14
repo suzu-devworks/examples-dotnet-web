@@ -308,7 +308,7 @@ dotnet run --project src/Examples.Web.WebApi.Grpc/Examples.Web.WebApi.Grpc.cspro
 
 ### How the project was initialized
 
-This project was initialized with the following command:
+This project was initialized with the following commands:
 
 ```shell
 ## Solution
@@ -352,6 +352,6 @@ dotnet add package FluentValidation.DependencyInjectionExtensions
 dotnet user-secrets init
 cd ../../
 
-# Update outdated package
+# Check outdated packages
 dotnet list package --outdated
 ```

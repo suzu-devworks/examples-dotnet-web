@@ -175,7 +175,7 @@ sequenceDiagram
 
 ### How the project was initialized
 
-This project was initialized with the following command:
+This project was initialized with the following commands:
 
 ```shell
 ## Solution
@@ -190,7 +190,7 @@ dotnet add reference ../Examples.Web.Infrastructure/
 dotnet user-secrets init
 cd ../../
 
-# Update outdated package
+# Check outdated packages
 dotnet list package --outdated
 ```
 

@@ -73,7 +73,7 @@ dotnet run --project src/Examples.Web.WebApp/Examples.Web.WebApp.csproj
 
 ### How the project was initialized
 
-This project was initialized with the following command:
+This project was initialized with the following commands:
 
 ```shell
 ## Solution
@@ -108,6 +108,6 @@ dotnet add reference ../fixtures/Examples.Web.HostingStartup2
 dotnet user-secrets init
 cd ../../
 
-# Update outdated package
+# Check outdated packages
 dotnet list package --outdated
 ```
