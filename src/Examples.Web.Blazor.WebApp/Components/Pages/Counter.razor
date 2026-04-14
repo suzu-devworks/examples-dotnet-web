@@ -1,0 +1,26 @@
+﻿@page "/counter"
+@using Examples.Web.Blazor.WebApp.Components.Shared
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<section class="mb-3">
+    <CounterButton OnIncrement="HandleIncrement" />
+</section>
+
+<section class="mb-3">
+    <Examples.Web.Blazor.WebApp.Components.Shared.CounterButton IncrementAmount="5" OnIncrement="HandleIncrement" />
+</section>
+
+    @code {
+    private int currentCount = 0;
+
+    private void HandleIncrement(int incrementAmount)
+    {
+        currentCount += incrementAmount;
+    }
+}

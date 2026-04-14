@@ -3,6 +3,7 @@
     <Project Path="src/Examples.Web.Authentication.Basic/Examples.Web.Authentication.Basic.csproj" />
     <Project Path="src/Examples.Web.Authentication.Cookie/Examples.Web.Authentication.Cookie.csproj" />
     <Project Path="src/Examples.Web.Authentication.Identity/Examples.Web.Authentication.Identity.csproj" />
+    <Project Path="src/Examples.Web.Blazor.WebApp/Examples.Web.Blazor.WebApp.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.GrpcClient/Examples.Web.Infrastructure.GrpcClient.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Swagger/Examples.Web.Infrastructure.Swagger.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Tests/Examples.Web.Infrastructure.Tests.csproj" />
