@@ -1,6 +1,7 @@
 ﻿@page "/interop"
 @rendermode InteractiveServer
 @inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
 
 <PageTitle>Interop</PageTitle>
 
@@ -9,16 +10,26 @@
 Check your developer tools.
 
 @code {
+    private IJSObjectReference? _module;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await JSRuntime.InvokeVoidAsync("console.log", "Hello from Blazor!");
 
-            var module = await JSRuntime.InvokeAsync<IJSObjectReference>(
+            _module = await JSRuntime.InvokeAsync<IJSObjectReference>(
                  "import", "./js/interop-sample.js");
 
-            await module.InvokeVoidAsync("outputLog", "Hello Interop page via JS module!");
+            await _module.InvokeVoidAsync("outputLog", "Hello Interop page via JS module!");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            await _module.DisposeAsync();
         }
     }
 }
