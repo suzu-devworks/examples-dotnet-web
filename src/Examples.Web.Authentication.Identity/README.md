@@ -17,7 +17,7 @@
 
 ### How the project was initialized
 
-This project was initialized with the following command:
+This project was initialized with the following commands:
 
 ```shell
 ## Solution
@@ -50,7 +50,7 @@ dotnet ef database update
 
 cd ../../
 
-# Update outdated package
+# Check outdated packages
 dotnet list package --outdated
 
 # Tools
