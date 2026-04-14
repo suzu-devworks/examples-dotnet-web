@@ -7,8 +7,8 @@
     [Parameter]
     public EventCallback<int> OnIncrement { get; set; }
 
-    private void IncrementCount()
+    private async Task IncrementCount()
     {
-        OnIncrement.InvokeAsync(IncrementAmount);
+        await OnIncrement.InvokeAsync(IncrementAmount);
     }
 }
