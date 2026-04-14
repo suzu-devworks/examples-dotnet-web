@@ -2,8 +2,10 @@ using Microsoft.JSInterop;
 
 namespace Examples.Web.Blazor.WebApp.Components.Pages;
 
-public partial class Weather
+public partial class Weather : IAsyncDisposable
 {
+    private IJSObjectReference? _module;
+
     protected async Task CreateGraphAsync()
     {
         // Convert to Chart.js model
@@ -29,15 +31,24 @@ public partial class Weather
             }
         };
 
-        var module = await JSRuntime.InvokeAsync<IJSObjectReference>(
+        _module = await JSRuntime.InvokeAsync<IJSObjectReference>(
            "import", "./js/chart-module.js"
         );
 
-        await module.InvokeVoidAsync(
+        await _module.InvokeVoidAsync(
            "createGraph",
            graphCanvas,
            new LineGraph() { Data = temperatures }
         );
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            await _module.DisposeAsync();
+        }
+        GC.SuppressFinalize(this);
     }
 
     private class LineData
