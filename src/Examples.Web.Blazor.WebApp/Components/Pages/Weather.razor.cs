@@ -48,6 +48,7 @@ public partial class Weather : IAsyncDisposable
         {
             await _module.DisposeAsync();
         }
+        GC.SuppressFinalize(this);
     }
 
     private class LineData
