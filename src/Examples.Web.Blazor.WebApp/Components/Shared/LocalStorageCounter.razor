@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStorage
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+@rendermode InteractiveServer
+
+@if (isConnected)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>Current count: <strong>@currentCount</strong></p>
+            <button class="btn btn-secondary" @onclick="IncrementCount">Increment</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private bool isConnected;
+    private int currentCount;
+    private IJSObjectReference? _module;
+    private IJSObjectReference? _listener;
+    private DotNetObjectReference<LocalStorageCounter>? _dotNetRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadStateAsync();
+            isConnected = true;
+
+            _dotNetRef = DotNetObjectReference.Create(this);
+            _module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/interop-sample.js");
+            _listener = await _module.InvokeAsync<IJSObjectReference>("listenForStorageChanges", _dotNetRef, "count");
+
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task LoadStateAsync()
+    {
+        var result = await ProtectedLocalStorage.GetAsync<int>("count");
+        currentCount = result.Success ? result.Value : 0;
+    }
+
+    private async Task IncrementCount()
+    {
+        currentCount++;
+        await ProtectedLocalStorage.SetAsync("count", currentCount);
+    }
+
+    [JSInvokable]
+    public async Task OnStorageChanged()
+    {
+        await LoadStateAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_listener is not null)
+        {
+            try
+            {
+                await _listener.InvokeVoidAsync("dispose");
+            }
+            catch (JSDisconnectedException)
+            {
+                // Circuit has disconnected; JS interop is no longer available.
+            }
+        }
+
+        _dotNetRef?.Dispose();
+    }
+}

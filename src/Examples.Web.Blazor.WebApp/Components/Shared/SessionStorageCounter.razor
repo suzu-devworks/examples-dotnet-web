@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
+@rendermode InteractiveServer
+
+@if (isConnected)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>Current count: <strong>@currentCount</strong></p>
+            <button class="btn btn-secondary" @onclick="IncrementCount">Increment</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private bool isConnected;
+    private int currentCount;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadStateAsync();
+            isConnected = true;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task LoadStateAsync()
+    {
+        var result = await ProtectedSessionStore.GetAsync<int>("count");
+        currentCount = result.Success ? result.Value : 0;
+    }
+
+    private async Task IncrementCount()
+    {
+        currentCount++;
+        await ProtectedSessionStore.SetAsync("count", currentCount);
+    }
+}

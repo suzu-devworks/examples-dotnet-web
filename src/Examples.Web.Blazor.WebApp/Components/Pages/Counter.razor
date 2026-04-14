@@ -16,7 +16,15 @@
     <Examples.Web.Blazor.WebApp.Components.Shared.CounterButton IncrementAmount="5" OnIncrement="HandleIncrement" />
 </section>
 
-    @code {
+<section class="mb-3">
+    <SessionStorageCounter />
+</section>
+
+<section class="mb-3">
+    <LocalStorageCounter />
+</section>
+
+@code {
     private int currentCount = 0;
 
     private void HandleIncrement(int incrementAmount)

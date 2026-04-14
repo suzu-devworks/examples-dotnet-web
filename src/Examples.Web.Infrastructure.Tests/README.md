@@ -9,7 +9,7 @@
 
 ### How the project was initialized
 
-This project was initialized with the following command:
+This project was initialized with the following commands:
 
 ```shell
 ## Solution
@@ -30,6 +30,6 @@ cd src/Examples.Web.Infrastructure.Tests
 dotnet add reference ../Examples.Web.Infrastructure
 cd ../../
 
-# Update outdated package
+# Check outdated packages
 dotnet list package --outdated
 ```
