@@ -11,6 +11,8 @@
       - [Expiration settings](#expiration-settings)
   - [Authentication flow](#authentication-flow)
 - [Development](#development)
+  - [Build](#build)
+  - [Run](#run)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
 
@@ -172,6 +174,22 @@ sequenceDiagram
 ```
 
 ## Development
+
+### Build
+
+Build this project from the repository root:
+
+```shell
+dotnet build src/Examples.Web.Authentication.Cookie/
+```
+
+### Run
+
+Run this project from the repository root:
+
+```shell
+dotnet run --project src/Examples.Web.Authentication.Cookie/ -lp https
+```
 
 ### How the project was initialized
 

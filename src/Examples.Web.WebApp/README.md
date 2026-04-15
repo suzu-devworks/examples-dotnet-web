@@ -60,7 +60,7 @@ Prepare the following action buttons and use logs to verify how each filter type
 Build this project from the repository root:
 
 ```shell
-dotnet build src/Examples.Web.WebApp/Examples.Web.WebApp.csproj
+dotnet build src/Examples.Web.WebApp/
 ```
 
 ### Run
@@ -68,7 +68,7 @@ dotnet build src/Examples.Web.WebApp/Examples.Web.WebApp.csproj
 Run this project from the repository root:
 
 ```shell
-dotnet run --project src/Examples.Web.WebApp/Examples.Web.WebApp.csproj
+dotnet run --project src/Examples.Web.WebApp/ -lp https
 ```
 
 ### How the project was initialized

@@ -9,6 +9,8 @@
     - [3. Configure appsettings.json](#3-configure-appsettingsjson)
   - [Authentication flow](#authentication-flow)
 - [Development](#development)
+  - [Build](#build)
+  - [Run](#run)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
 
@@ -105,6 +107,22 @@ sequenceDiagram
 ```
 
 ## Development
+
+### Build
+
+Build this project from the repository root:
+
+```shell
+dotnet build src/Examples.Web.Authentication.Basic/
+```
+
+### Run
+
+Run this project from the repository root:
+
+```shell
+dotnet run --project src/Examples.Web.Authentication.Basic/ -lp https
+```
 
 ### How the project was initialized
 

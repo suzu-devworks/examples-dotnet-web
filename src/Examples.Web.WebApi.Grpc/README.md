@@ -295,7 +295,7 @@ public class UserValidator : AbstractValidator<User>
 Build this project from the repository root:
 
 ```shell
-dotnet build src/Examples.Web.WebApi.Grpc/Examples.Web.WebApi.Grpc.csproj
+dotnet build src/Examples.Web.WebApi.Grpc/
 ```
 
 ### Run
@@ -303,7 +303,7 @@ dotnet build src/Examples.Web.WebApi.Grpc/Examples.Web.WebApi.Grpc.csproj
 Run this project from the repository root:
 
 ```shell
-dotnet run --project src/Examples.Web.WebApi.Grpc/Examples.Web.WebApi.Grpc.csproj
+dotnet run --project src/Examples.Web.WebApi.Grpc/ -lp https
 ```
 
 ### How the project was initialized
