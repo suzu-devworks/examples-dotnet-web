@@ -73,6 +73,9 @@ builder.Services.AddAuthentication(options =>
     //         return Task.CompletedTask;
     //     }
     // };
+
+    // .NET 9 feature
+    options.PushedAuthorizationBehavior = PushedAuthorizationBehavior.Require;
 });
 
 var requireAuthPolicy = new AuthorizationPolicyBuilder()
