@@ -5,8 +5,8 @@
 - [Microsoft.AspNetCore.Authentication.Cookies](#microsoftaspnetcoreauthenticationcookies)
   - [Cookie Policy Middleware](#cookie-policy-middleware)
   - [Setup this project](#setup-this-project)
-    - [1. Register services (Program.cs)](#1-register-services-programcs)
-    - [2. Middleware pipeline (Program.cs)](#2-middleware-pipeline-programcs)
+    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
+    - [2. Setup middleware pipeline (Program.cs)](#2-setup-middleware-pipeline-programcs)
     - [3. Configure appsettings.json](#3-configure-appsettingsjson)
       - [Expiration settings](#expiration-settings)
   - [Authentication flow](#authentication-flow)
@@ -35,7 +35,7 @@ This means all cookies are forced to at least `SameSite=Strict`.
 
 ### Setup this project
 
-#### 1. Register services (Program.cs)
+#### 1. Set up authentication (Program.cs)
 
 Add the following to `Program.cs`:
 
@@ -58,7 +58,7 @@ It registers the following services internally:
 > `InMemoryUserRepository` is for demo purposes only.
 > **Do not use it in production.** Replace with your own implementation.
 
-#### 2. Middleware pipeline (Program.cs)
+#### 2. Setup middleware pipeline (Program.cs)
 
 The authentication and authorization middleware must be placed after routing:
 
@@ -196,4 +196,4 @@ dotnet list package --outdated
 
 ## References
 
-- [Use cookie authentication without ASP.NET Core Identity](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/cookie)
+- [Use cookie authentication without ASP.NET Core Identity | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/cookie)
