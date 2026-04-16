@@ -15,14 +15,23 @@ builder.Services.AddAuthentication(options =>
 .AddCookie()
 .AddOpenIdConnect(options =>
 {
-    var oidcConfig = builder.Configuration.GetSection("OpenIDConnectSettings");
+    builder.Configuration.GetSection("OpenIDConnectSettings").Bind(options);
 
-    options.Authority = oidcConfig["Authority"];
-    options.ClientId = oidcConfig["ClientId"];
-    options.ClientSecret = oidcConfig["ClientSecret"];
+    // Replace the above code with the following
+    // var oidcConfig = builder.Configuration.GetSection("OpenIDConnectSettings");
+    // options.Authority = oidcConfig["Authority"];
+    // options.ClientId = oidcConfig["ClientId"];
+    // options.ClientSecret = oidcConfig["ClientSecret"];
 
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.ResponseType = OpenIdConnectResponseType.Code;
+
+    // It is recommended to add it explicitly.
+    options.Scope.Clear();
+    options.Scope.Add("openid");           // required
+    options.Scope.Add("profile");          // default
+    options.Scope.Add("email");            // Email address, email verification flag
+    options.Scope.Add("offline_access");   // Obtain a refresh token to prolong your login status.
 
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = true;
