@@ -38,7 +38,7 @@ builder.Services.AddAuthentication(options =>
 
     options.MapInboundClaims = false;
     options.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
-    options.TokenValidationParameters.RoleClaimType = "roles";
+    options.TokenValidationParameters.RoleClaimType = "https://my-app.example.com/roles";
 
     // > To log a user out of Auth0, you need to redirect the user's browser
     // > to the Auth0 logout endpoint (https://{yourDomain}/v2/logout).

@@ -6,3 +6,42 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<ul class="d-flex flex-column gap-1 mt-1">
+    <li><strong>Login Name</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.Identity?.Name)</span>
+    </li>
+    <li><strong>Authentication Type</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.Identity?.AuthenticationType)</span>
+    </li>
+    <li><strong>Remote IP Address</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.HttpContext.Connection.RemoteIpAddress)</span>
+    </li>
+    <li><strong>Host</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.HttpContext.Request.Host)</span>
+    </li>
+    <li><strong>Scheme</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.HttpContext.Request.Scheme)</span>
+    </li>
+    <li><strong>PathBase</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.HttpContext.Request.PathBase)</span>
+    </li>
+    <li><strong>Path</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.HttpContext.Request.Path)</span>
+    </li>
+
+</ul>
+
+<p>Roles</p>
+
+<ul class="d-flex flex-column gap-1 mt-1">
+    <li><strong>Is In Role(admin)</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.IsInRole("admin"))</span>
+    </li>
+    <li><strong>Is In Role(operator)</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.IsInRole("operator"))</span>
+    </li>
+    <li><strong>Is In Role(developer)</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.IsInRole("developer"))</span>
+    </li>
+</ul>
