@@ -1,4 +1,4 @@
-﻿using Examples.Web.Authentication.Oidc.Authentication;
+using Examples.Web.Authentication.Oidc.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
