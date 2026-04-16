@@ -39,6 +39,41 @@ builder.Services.AddAuthentication(options =>
     options.MapInboundClaims = false;
     options.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
     options.TokenValidationParameters.RoleClaimType = "roles";
+
+    // > To log a user out of Auth0, you need to redirect the user's browser
+    // > to the Auth0 logout endpoint (https://{yourDomain}/v2/logout).
+
+    // It seems that this statement existed in the past, and web code
+    // and generated AI may attempt to add custom code during logout,
+    // but this is no longer mentioned in the current official documentation.
+    // https://auth0.com/docs/authenticate/login/logout
+
+    // Auth0's specifications have changed, and it now works correctly with the standard settings.
+
+    // options.Events = new OpenIdConnectEvents
+    // {
+    //     OnRedirectToIdentityProviderForSignOut = (context) =>
+    //     {
+    //         var logoutUri = $"{options.Authority}/v2/logout?client_id={options.ClientId}";
+
+    //         var postLogoutUri = context.Properties.RedirectUri;
+    //         if (!string.IsNullOrEmpty(postLogoutUri))
+    //         {
+    //             if (postLogoutUri.StartsWith('/'))
+    //             {
+    //                 var request = context.Request;
+    //                 postLogoutUri = $"{request.Scheme}://{request.Host}{request.PathBase}{postLogoutUri}";
+    //             }
+
+    //             logoutUri += $"&returnTo={Uri.EscapeDataString(postLogoutUri)}";
+    //         }
+
+    //         context.Response.Redirect(logoutUri);
+    //         context.HandleResponse();
+
+    //         return Task.CompletedTask;
+    //     }
+    // };
 });
 
 var requireAuthPolicy = new AuthorizationPolicyBuilder()
