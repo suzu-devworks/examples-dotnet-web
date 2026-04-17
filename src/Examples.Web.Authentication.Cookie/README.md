@@ -6,7 +6,7 @@
   - [Cookie Policy Middleware](#cookie-policy-middleware)
   - [Setup this project](#setup-this-project)
     - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
-    - [2. Setup middleware pipeline (Program.cs)](#2-setup-middleware-pipeline-programcs)
+    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
     - [3. Configure appsettings.json](#3-configure-appsettingsjson)
       - [Expiration settings](#expiration-settings)
   - [Authentication flow](#authentication-flow)
