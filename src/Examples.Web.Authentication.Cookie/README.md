@@ -4,13 +4,15 @@
 
 - [Microsoft.AspNetCore.Authentication.Cookies](#microsoftaspnetcoreauthenticationcookies)
   - [Cookie Policy Middleware](#cookie-policy-middleware)
-  - [Setup this project](#setup-this-project)
-    - [1. Register services (Program.cs)](#1-register-services-programcs)
-    - [2. Middleware pipeline (Program.cs)](#2-middleware-pipeline-programcs)
+  - [Set up this project](#set-up-this-project)
+    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
+    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
     - [3. Configure appsettings.json](#3-configure-appsettingsjson)
       - [Expiration settings](#expiration-settings)
   - [Authentication flow](#authentication-flow)
 - [Development](#development)
+  - [Build](#build)
+  - [Run](#run)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
 
@@ -33,9 +35,9 @@ This means all cookies are forced to at least `SameSite=Strict`.
 > `SameSiteMode.Strict` blocks cross-site cookie sends.
 > External sign-in flows such as OAuth2/OpenID Connect generally require `Lax` or `None`.
 
-### Setup this project
+### Set up this project
 
-#### 1. Register services (Program.cs)
+#### 1. Set up authentication (Program.cs)
 
 Add the following to `Program.cs`:
 
@@ -58,7 +60,7 @@ It registers the following services internally:
 > `InMemoryUserRepository` is for demo purposes only.
 > **Do not use it in production.** Replace with your own implementation.
 
-#### 2. Middleware pipeline (Program.cs)
+#### 2. Set up middleware pipeline (Program.cs)
 
 The authentication and authorization middleware must be placed after routing:
 
@@ -173,6 +175,22 @@ sequenceDiagram
 
 ## Development
 
+### Build
+
+Build this project from the repository root:
+
+```shell
+dotnet build src/Examples.Web.Authentication.Cookie/
+```
+
+### Run
+
+Run this project from the repository root:
+
+```shell
+dotnet run --project src/Examples.Web.Authentication.Cookie/ -lp https
+```
+
 ### How the project was initialized
 
 This project was initialized with the following commands:
@@ -196,4 +214,4 @@ dotnet list package --outdated
 
 ## References
 
-- [Use cookie authentication without ASP.NET Core Identity](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/cookie)
+- [Use cookie authentication without ASP.NET Core Identity | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/cookie)

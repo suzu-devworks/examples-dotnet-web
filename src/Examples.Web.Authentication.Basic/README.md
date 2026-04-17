@@ -3,12 +3,14 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [AspNetCore.Authentication.Basic](#aspnetcoreauthenticationbasic)
-  - [Setup this project](#setup-this-project)
-    - [1. Register services (Program.cs)](#1-register-services-programcs)
-    - [2. Middleware pipeline (Program.cs)](#2-middleware-pipeline-programcs)
+  - [Set up this project](#set-up-this-project)
+    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
+    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
     - [3. Configure appsettings.json](#3-configure-appsettingsjson)
   - [Authentication flow](#authentication-flow)
 - [Development](#development)
+  - [Build](#build)
+  - [Run](#run)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
 
@@ -16,11 +18,9 @@
 
 Easy to use and very light weight Microsoft style Basic Scheme Authentication Implementation for ASP.NET Core.
 
-- [AspNetCore.Authentication.Basic ...](https://github.com/mihirdilip/aspnetcore-authentication-basic)
+### Set up this project
 
-### Setup this project
-
-#### 1. Register services (Program.cs)
+#### 1. Set up authentication (Program.cs)
 
 Add the following to `Program.cs`:
 
@@ -40,7 +40,7 @@ It registers the following services internally:
 > `InMemoryUserRepository` and `BasicUserValidationService` are for demo purposes only.
 > **Do not use them in production.** Replace with your own `IUserRepository` implementation.
 
-#### 2. Middleware pipeline (Program.cs)
+#### 2. Set up middleware pipeline (Program.cs)
 
 The authentication and authorization middleware must be placed after routing:
 
@@ -106,6 +106,22 @@ sequenceDiagram
 
 ## Development
 
+### Build
+
+Build this project from the repository root:
+
+```shell
+dotnet build src/Examples.Web.Authentication.Basic/
+```
+
+### Run
+
+Run this project from the repository root:
+
+```shell
+dotnet run --project src/Examples.Web.Authentication.Basic/ -lp https
+```
+
 ### How the project was initialized
 
 This project was initialized with the following commands:
@@ -132,4 +148,4 @@ dotnet list package --outdated
 
 - [RFC 7235 - HTTP Authentication](https://datatracker.ietf.org/doc/html/rfc7235)
 - [RFC 7617 - The 'Basic' HTTP Authentication Scheme](https://tex2e.github.io/rfc-translater/html/rfc7617.html)
-- [AspNetCore.Authentication.Basic (GitHub)](https://github.com/mihirdilip/aspnetcore-authentication-basic)
+- [mihirdilip/aspnetcore-authentication-basic - GitHub](https://github.com/mihirdilip/aspnetcore-authentication-basic)

@@ -1,0 +1,16 @@
+<ul class="navbar-nav gap-2">
+    @if (Context.User.Identity!.IsAuthenticated)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Logout">Logout</a>
+        </li>
+
+        <span class="nav-link text-dark">Hi @Context.User.Identity.Name</span>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Login</a>
+        </li>
+    }
+</ul>

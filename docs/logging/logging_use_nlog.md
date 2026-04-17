@@ -6,7 +6,7 @@
 - [Add dependency](#add-dependency)
 - [Loading Nlog Configuration](#loading-nlog-configuration)
 - [Prioritization of configuration files](#prioritization-of-configuration-files)
-- [Setup `Program.cs`](#setup-programcs)
+- [Set up `Program.cs`](#set-up-programcs)
 - [References](#references)
 
 ## Overview
@@ -47,13 +47,13 @@ The order should be:
 
 The settings should already be integrated, so you should only need to write the differences (hopefully).
 
-## Setup `Program.cs`
+## Set up `Program.cs`
 
 For now, this format is the norm.
 
 ```cs
 // Early init of NLog to allow startup and exception logging, before host is built
-var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+var logger = NLog.LogManager.Set up().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 try
 {
@@ -61,7 +61,7 @@ try
 
     // Add services to the container.
 
-    //# Setup NLog for Dependency injection
+    //# Set up NLog for Dependency injection
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 

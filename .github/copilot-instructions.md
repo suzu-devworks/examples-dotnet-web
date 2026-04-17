@@ -17,6 +17,7 @@
 
 - Think and reason in English.
 - Write code, comments, and documentation in English.
+- Links to references are available in both Japanese and English.
 - Respond to the user in Japanese in chat.
 - Use concise and clear English in code/comments because this is a learning repository.
 - If this file is modified, show a Japanese translation in chat.

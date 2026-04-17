@@ -50,7 +50,7 @@ I'm currently experimenting with both session storage and local storage to prese
 Build this project from the repository root:
 
 ```shell
-dotnet build src/Examples.Web.Blazor.WebApp/Examples.Web.Blazor.WebApp.csproj
+dotnet build src/Examples.Web.Blazor.WebApp/
 ```
 
 ### Run
@@ -58,7 +58,7 @@ dotnet build src/Examples.Web.Blazor.WebApp/Examples.Web.Blazor.WebApp.csproj
 Run this project from the repository root:
 
 ```shell
-dotnet run --project src/Examples.Web.Blazor.WebApp/Examples.Web.Blazor.WebApp.csproj -lp https
+dotnet run --project src/Examples.Web.Blazor.WebApp/ -lp https
 ```
 
 ### How the project was initialized

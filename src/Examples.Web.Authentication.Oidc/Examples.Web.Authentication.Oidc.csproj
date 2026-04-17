@@ -4,7 +4,7 @@
     <TargetFramework>$(LatestFramework)</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>2108ab99-bf57-48da-ab6e-980a31607305</UserSecretsId>
+    <UserSecretsId>7b9cb646-532f-4bd7-99fb-81beb5b1c89d</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -12,10 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Examples.Web.Infrastructure.Assets\Examples.Web.Infrastructure.Assets.csproj" />
     <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
-    <ProjectReference Include="..\fixtures\Examples.Web.HostingStartup1\Examples.Web.HostingStartup1.csproj" />
-    <ProjectReference Include="..\fixtures\Examples.Web.HostingStartup2\Examples.Web.HostingStartup2.csproj" />
   </ItemGroup>
 
 </Project>
