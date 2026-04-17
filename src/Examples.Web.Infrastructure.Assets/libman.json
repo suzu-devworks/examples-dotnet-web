@@ -1,0 +1,40 @@
+{
+  "version": "3.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "bootstrap@5.3.8",
+      "destination": "wwwroot/bootstrap/",
+      "files": [
+        "LICENSE",
+        "dist/css/*",
+        "dist/js/*"
+      ]
+    },
+    {
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/jquery",
+      "files": [
+        "LICENSE.txt",
+        "dist/*"
+      ]
+    },
+    {
+      "library": "jquery-validation@1.22.1",
+      "destination": "wwwroot/jquery-validation",
+      "files": [
+        "LICENSE.md",
+        "dist/jquery.validate.*",
+        "dist/additional-methods.*"
+      ]
+    },
+    {
+      "library": "jquery-validation-unobtrusive@4.0.0",
+      "destination": "wwwroot/jquery-validation-unobtrusive/",
+      "files": [
+        "LICENSE.txt",
+        "dist/jquery.validate.unobtrusive.*"
+      ]
+    }
+  ]
+}

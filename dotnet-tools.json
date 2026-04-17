@@ -15,6 +15,13 @@
         "dotnet-ef"
       ],
       "rollForward": false
+    },
+    "microsoft.web.librarymanager.cli": {
+      "version": "3.0.71",
+      "commands": [
+        "libman"
+      ],
+      "rollForward": false
     }
   }
 }
