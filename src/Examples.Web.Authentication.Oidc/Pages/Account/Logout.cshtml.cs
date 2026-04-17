@@ -10,7 +10,7 @@ namespace Examples.Web.Authentication.Oidc.Pages.Account;
 [Authorize]
 public class LogoutModel : PageModel
 {
-    public IActionResult OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
         return SignOut(new AuthenticationProperties
         {

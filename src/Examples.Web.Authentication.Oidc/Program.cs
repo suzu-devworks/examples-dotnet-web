@@ -14,13 +14,10 @@ builder.Services.AddAuthentication(options =>
 .AddCookie()
 .AddOpenIdConnect(options =>
 {
-    builder.Configuration.GetSection("OpenIDConnectSettings").Bind(options);
-
-    // Replace the above code with the following
-    // var oidcConfig = builder.Configuration.GetSection("OpenIDConnectSettings");
-    // options.Authority = oidcConfig["Authority"];
-    // options.ClientId = oidcConfig["ClientId"];
-    // options.ClientSecret = oidcConfig["ClientSecret"];
+    var oidcConfig = builder.Configuration.GetSection("OpenIDConnectSettings");
+    options.Authority = oidcConfig["Authority"];
+    options.ClientId = oidcConfig["ClientId"];
+    options.ClientSecret = oidcConfig["ClientSecret"];
 
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.ResponseType = OpenIdConnectResponseType.Code;

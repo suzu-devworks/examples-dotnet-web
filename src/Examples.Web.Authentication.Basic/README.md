@@ -130,4 +130,4 @@ dotnet list package --outdated
 
 - [RFC 7235 - HTTP Authentication](https://datatracker.ietf.org/doc/html/rfc7235)
 - [RFC 7617 - The 'Basic' HTTP Authentication Scheme](https://tex2e.github.io/rfc-translater/html/rfc7617.html)
-- [mihirdilip/aspnetcore-authentication-basic - github.com)](https://github.com/mihirdilip/aspnetcore-authentication-basic)
+- [mihirdilip/aspnetcore-authentication-basic - GitHub](https://github.com/mihirdilip/aspnetcore-authentication-basic)

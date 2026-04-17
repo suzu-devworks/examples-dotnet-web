@@ -52,7 +52,7 @@ sequenceDiagram
 
 ## Authorization
 
--[Introduction to authorization in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authorization/introduction)
+- [Introduction to authorization in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authorization/introduction)
 
 ### Authorization flow
 
