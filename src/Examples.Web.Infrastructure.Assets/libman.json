@@ -12,7 +12,7 @@
       ]
     },
     {
-      "library": "jquery@3.7.1",
+      "library": "jquery@4.0.0",
       "destination": "wwwroot/jquery",
       "files": [
         "LICENSE.txt",
