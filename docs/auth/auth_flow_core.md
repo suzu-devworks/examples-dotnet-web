@@ -90,7 +90,7 @@ sequenceDiagram
 
     AZM->>PE: AuthorizeAsync(policy, authenticateResult!, context, resource);
     PE->>AZS: AuthorizeAsync(context.User, resource, policy)
-    AZS->>IAuthorizationHandlerProvider: GetHandlerAsync(context, scheme)
+    AZS->>IAuthorizationHandlerProvider: GetHandlersAsync(authContext)
     IAuthorizationHandlerProvider-->>AZS: IEnumerable<IAuthorizationHandler>
     AZS->>AZH: HandleAsync(authContext)
 
