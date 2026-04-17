@@ -36,6 +36,21 @@
         class="font-monospace small bg-light border rounded px-1">@(Model.HttpContext.Request.Path)</span>
     </li>
 </ul>
+
+<p>Roles</p>
+
+<ul class="d-flex flex-column gap-1 mt-1">
+    <li><strong>Is In Role(Administrator)</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.IsInRole("Administrator"))</span>
+    </li>
+    <li><strong>Is In Role(Operator)</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.IsInRole("Operator"))</span>
+    </li>
+    <li><strong>Is In Role(Developer)</strong> : <span
+        class="font-monospace small bg-light border rounded px-1">@(Model.User?.IsInRole("Developer"))</span>
+    </li>
+</ul>
+
 <div>
     <form method="post" asp-page-handler="UpdateAccount">
         <button type="submit" class="btn btn-warning">Update this Account</button>
