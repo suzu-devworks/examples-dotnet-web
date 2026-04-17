@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Examples.Web.Infrastructure.Assets\Examples.Web.Infrastructure.Assets.csproj" />
     <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\Examples.Web.Infrastructure.Swagger\Examples.Web.Infrastructure.Swagger.csproj" />
   </ItemGroup>

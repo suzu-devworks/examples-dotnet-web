@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Examples.Web.Infrastructure.Assets\Examples.Web.Infrastructure.Assets.csproj" />
     <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\fixtures\Examples.Web.HostingStartup1\Examples.Web.HostingStartup1.csproj" />
     <ProjectReference Include="..\fixtures\Examples.Web.HostingStartup2\Examples.Web.HostingStartup2.csproj" />
