@@ -3,18 +3,18 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [Microsoft.AspNetCore.Authentication.OpenIdConnect](#microsoftaspnetcoreauthenticationopenidconnect)
-  - [Setup OIDC Authentication Server (Identity Provider)](#setup-oidc-authentication-server-identity-provider)
+  - [Set up OIDC Authentication Server (Identity Provider)](#set-up-oidc-authentication-server-identity-provider)
     - [Case of Microsoft Entra ID](#case-of-microsoft-entra-id)
     - [Case of Auth0](#case-of-auth0)
-  - [Setup this project](#setup-this-project)
+  - [Set up this project](#set-up-this-project)
     - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
-    - [2. Setup middleware pipeline (Program.cs)](#2-setup-middleware-pipeline-programcs)
-    - [3. Setup Authorization (Program.cs)](#3-setup-authorization-programcs)
+    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
+    - [3. Set up Authorization (Program.cs)](#3-set-up-authorization-programcs)
     - [4. Create `Logout.cshtml`](#4-create-logoutcshtml)
     - [5. Create `SignedOut.cshtml`](#5-create-signedoutcshtml)
     - [6. (Optional) Create `Login.cshtml`](#6-optional-create-logincshtml)
     - [7. Create `_LoginPartial.cshtml`](#7-create-_loginpartialcshtml)
-  - [Setup secrets](#setup-secrets)
+  - [Set up secrets](#set-up-secrets)
 - [Development](#development)
   - [Build](#build)
   - [Run](#run)
@@ -25,7 +25,7 @@
 
 Contains types that enable support for OpenIdConnect based authentication.
 
-### Setup OIDC Authentication Server (Identity Provider)
+### Set up OIDC Authentication Server (Identity Provider)
 
 There are several options for OIDC authentication servers (Identity Providers) that can be used without the hassle of environment setup. Here are some examples:
 
@@ -73,7 +73,7 @@ I gave up because it required entering my credit card number.
 
 - **To use Pushed Authorization Requests (PAR)**: *Settings* > *Advanced* > *Settings* > *Allow Pushed Authorization Requests (PAR)*
 
-### Setup this project
+### Set up this project
 
 #### 1. Set up authentication (Program.cs)
 
@@ -107,7 +107,7 @@ builder.Services.AddAuthentication(options =>
 
 If you are using a role, please match the name of the claim you added in Auth0 with `options.TokenValidationParameters.RoleClaimType`.
 
-#### 2. Setup middleware pipeline (Program.cs)
+#### 2. Set up middleware pipeline (Program.cs)
 
 The authentication and authorization middleware must be placed after routing:
 
@@ -118,7 +118,7 @@ app.UseAuthentication();   // Authentication middleware (required)
 app.UseAuthorization();    // Authorization middleware
 ```
 
-#### 3. Setup Authorization (Program.cs)
+#### 3. Set up Authorization (Program.cs)
 
 A better approach is to force authorization for the whole app and opt out for unsecure pages:
 
@@ -235,7 +235,7 @@ public class LoginModel : PageModel
 </ul>
 ```
 
-### Setup secrets
+### Set up secrets
 
 Set the value you noted down in Auth0:
 

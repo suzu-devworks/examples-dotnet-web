@@ -3,9 +3,9 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [AspNetCore.Authentication.Basic](#aspnetcoreauthenticationbasic)
-  - [Setup this project](#setup-this-project)
-    - [1. Setup authentication (Program.cs)](#1-setup-authentication-programcs)
-    - [2. Setup middleware pipeline (Program.cs)](#2-setup-middleware-pipeline-programcs)
+  - [Set up this project](#set-up-this-project)
+    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
+    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
     - [3. Configure appsettings.json](#3-configure-appsettingsjson)
   - [Authentication flow](#authentication-flow)
 - [Development](#development)
@@ -18,9 +18,9 @@
 
 Easy to use and very light weight Microsoft style Basic Scheme Authentication Implementation for ASP.NET Core.
 
-### Setup this project
+### Set up this project
 
-#### 1. Setup authentication (Program.cs)
+#### 1. Set up authentication (Program.cs)
 
 Add the following to `Program.cs`:
 
@@ -40,7 +40,7 @@ It registers the following services internally:
 > `InMemoryUserRepository` and `BasicUserValidationService` are for demo purposes only.
 > **Do not use them in production.** Replace with your own `IUserRepository` implementation.
 
-#### 2. Setup middleware pipeline (Program.cs)
+#### 2. Set up middleware pipeline (Program.cs)
 
 The authentication and authorization middleware must be placed after routing:
 
