@@ -1,0 +1,6 @@
+@Examples.Web.Authentication.JwtBearer_HostAddress = http://localhost:5192
+
+GET {{Examples.Web.Authentication.JwtBearer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
