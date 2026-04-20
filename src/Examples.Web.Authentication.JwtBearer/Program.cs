@@ -1,15 +1,82 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    // Add Bearer security scheme to the document (enables the "Authorize" button in SwaggerUI).
+    // Also add lock icon to all operations that are protected by the fallback policy.
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        var scheme = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            In = ParameterLocation.Header,
+            Scheme = "bearer",
+            BearerFormat = "Json Web Token",
+            Description = "Enter JWT token (e.g. 'eyJhbG...')"
+        };
+
+        document.Components ??= new OpenApiComponents();
+        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+        document.Components.SecuritySchemes.Add("Bearer", scheme);
+
+        // Apply it as a requirement for all operations
+        foreach (var operation in document.Paths.Values.SelectMany(path => path.Operations ?? []))
+        {
+            operation.Value.Security ??= [];
+            operation.Value.Security.Add(new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+            });
+        }
+
+        return Task.CompletedTask;
+    });
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(jwtOptions =>
+    {
+        jwtOptions.Authority = "https://{--your-authority--}";
+        jwtOptions.Audience = "https://{--your-audience--}";
+    })
+    .AddJwtBearer("some-scheme", jwtOptions =>
+    {
+        jwtOptions.MetadataAddress = builder.Configuration["Api:MetadataAddress"]!;
+        // Optional if the MetadataAddress is specified
+        jwtOptions.Authority = builder.Configuration["Api:Authority"];
+        jwtOptions.Audience = builder.Configuration["Api:Audience"];
+        jwtOptions.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidAudiences = builder.Configuration.GetSection("Api:ValidAudiences").Get<string[]>(),
+            ValidIssuers = builder.Configuration.GetSection("Api:ValidIssuers").Get<string[]>()
+        };
+
+        jwtOptions.MapInboundClaims = false;
+    });
+
+var requireAuthPolicy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+
+builder.Services.AddAuthorizationBuilder()
+    .SetFallbackPolicy(requireAuthPolicy);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.MapOpenApi().AllowAnonymous();
 
     app.UseSwaggerUI(options =>
     {
@@ -19,6 +86,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
 
 var summaries = new[]
 {

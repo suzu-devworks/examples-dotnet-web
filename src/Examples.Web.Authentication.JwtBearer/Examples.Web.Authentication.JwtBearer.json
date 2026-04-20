@@ -25,7 +25,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     }
   },
@@ -66,6 +71,14 @@
             "format": "int32"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter JWT token (e.g. 'eyJhbG...')",
+        "scheme": "bearer",
+        "bearerFormat": "Json Web Token"
       }
     }
   },
