@@ -48,7 +48,8 @@
     "web.config": "xml"
   },
   "markdownlint.config": {
-    "MD024": false
+    "MD024": false,
+    "MD060": false
   },
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
