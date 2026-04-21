@@ -38,6 +38,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
 
         jwtOptions.MapInboundClaims = false;
+    })
+    .AddJwtBearer("auth0", jwtOptions =>
+    {
+        jwtOptions.Authority = builder.Configuration["Authentication:Schemes:Auth0:Authority"];
+        jwtOptions.Audience = builder.Configuration["Authentication:Schemes:Auth0:Audience"];
+        jwtOptions.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = System.Security.Claims.ClaimTypes.NameIdentifier,
+            RoleClaimType = "https://my-app.example.com/roles",
+        };
     });
 
 var requireAuthPolicy = new AuthorizationPolicyBuilder()
@@ -85,6 +95,10 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapGet("/hello-auth0", [Authorize(AuthenticationSchemes = "auth0")] (HttpContext context) =>
+ $"Hello from Auth0 protected endpoint! is authenticated: {context.User.Identity?.IsAuthenticated}")
+    .WithName("Auth0ProtectedEndpoint");
 
 app.Run();
 

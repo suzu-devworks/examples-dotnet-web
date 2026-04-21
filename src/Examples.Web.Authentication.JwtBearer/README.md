@@ -14,6 +14,11 @@
     - [Update Program.cs](#update-programcs)
     - [Create a token](#create-a-token)
     - [Call the API](#call-the-api)
+  - [2. JWT Bearer authentication with Auth0](#2-jwt-bearer-authentication-with-auth0)
+    - [Set up Auth0](#set-up-auth0)
+    - [Update Program.cs](#update-programcs-1)
+    - [Create a token](#create-a-token-1)
+    - [Call the API](#call-the-api-1)
 - [Development](#development)
   - [Build](#build)
   - [Run](#run)
@@ -189,6 +194,50 @@ curl -sk -H "Authorization: Bearer <token>" https://localhost:7053/weatherforeca
 ```
 
 Or paste the token into the **Authorize** dialog on the Scalar API Reference page (`/scalar/v1`).
+
+### 2. JWT Bearer authentication with Auth0
+
+#### Set up Auth0
+
+1. Open the Auth0 Dashboard and go to [Applications] > [APIs] > click [Create API]
+2. Fill in the API details:
+   - Name: any descriptive name (e.g. `My ASP.NET Core API`)
+   - Identifier (Audience): a unique URI for the API (e.g. `https://examples-dotnet.com`)
+   - Signing Algorithm: leave the default RS256 (RSA-SHA256)
+3. Save the settings
+4. Note the `Authority` and `Audience` values shown in the Quickstart tab
+
+#### Update Program.cs
+
+Call `AddJwtBearer()`
+
+```cs
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(jwtOptions =>
+    {
+        jwtOptions.Authority = builder.Configuration["Authentication:Schemes:Auth0:Authority"];
+        jwtOptions.Audience = builder.Configuration["Authentication:Schemes:Auth0:Audience"];
+        jwtOptions.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = System.Security.Claims.ClaimTypes.NameIdentifier,
+            RoleClaimType = "https://my-app.example.com/roles",
+        };
+    });
+```
+
+The scheme name `auth0` is used to distinguish it from other schemes registered in this project.
+
+#### Create a token
+
+1. Open the Auth0 Dashboard and go to [Applications] > [APIs].
+2. Select the API you created (e.g. `My ASP.NET Core API`).
+3. Click the [Test] tab and copy the `access_token` value shown in the Response section or the curl example.
+
+#### Call the API
+
+```shell
+curl -sk -H "Authorization: Bearer <token>" https://localhost:7053/hello-auth0 | jq .
+```
 
 ## Development
 

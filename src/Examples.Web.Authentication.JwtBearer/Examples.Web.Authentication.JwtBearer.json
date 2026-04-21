@@ -38,6 +38,37 @@
           }
         ]
       }
+    },
+    "/hello-auth0": {
+      "get": {
+        "tags": [
+          "Examples.Web.Authentication.JwtBearer"
+        ],
+        "operationId": "Auth0ProtectedEndpoint",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
     }
   },
   "components": {
