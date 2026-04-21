@@ -8,6 +8,7 @@
     <Project Path="src/Examples.Web.Blazor.WebApp/Examples.Web.Blazor.WebApp.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Assets/Examples.Web.Infrastructure.Assets.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.GrpcClient/Examples.Web.Infrastructure.GrpcClient.csproj" />
+    <Project Path="src/Examples.Web.Infrastructure.OpenApi/Examples.Web.Infrastructure.OpenApi.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Swagger/Examples.Web.Infrastructure.Swagger.csproj" />
     <Project Path="src/Examples.Web.Infrastructure.Tests/Examples.Web.Infrastructure.Tests.csproj" />
     <Project Path="src/Examples.Web.Infrastructure/Examples.Web.Infrastructure.csproj" />

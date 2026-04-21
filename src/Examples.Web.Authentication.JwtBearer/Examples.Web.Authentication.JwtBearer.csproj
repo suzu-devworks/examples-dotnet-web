@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\Examples.Web.Infrastructure.OpenApi\Examples.Web.Infrastructure.OpenApi.csproj" />
   </ItemGroup>
 
 </Project>

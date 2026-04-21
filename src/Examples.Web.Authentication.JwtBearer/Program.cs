@@ -1,7 +1,7 @@
+using Examples.Web.Infrastructure.OpenApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,34 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi(options =>
 {
     // Add Bearer security scheme to the document (enables the "Authorize" button in SwaggerUI).
-    // Also add lock icon to all operations that are protected by the fallback policy.
-    options.AddDocumentTransformer((document, context, cancellationToken) =>
-    {
-        var scheme = new OpenApiSecurityScheme
-        {
-            Type = SecuritySchemeType.Http,
-            In = ParameterLocation.Header,
-            Scheme = "bearer",
-            BearerFormat = "Json Web Token",
-            Description = "Enter JWT token (e.g. 'eyJhbG...')"
-        };
-
-        document.Components ??= new OpenApiComponents();
-        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
-        document.Components.SecuritySchemes.Add("Bearer", scheme);
-
-        // Apply it as a requirement for all operations
-        foreach (var operation in document.Paths.Values.SelectMany(path => path.Operations ?? []))
-        {
-            operation.Value.Security ??= [];
-            operation.Value.Security.Add(new OpenApiSecurityRequirement
-            {
-                [new OpenApiSecuritySchemeReference("Bearer", document)] = []
-            });
-        }
-
-        return Task.CompletedTask;
-    });
+    options.AddDocumentTransformer<SecurityRequirementDocumentTransformer>();
+    // Add a security requirement for the Bearer scheme to all operations.
+    options.AddOperationTransformer<SecurityRequirementOperationTransformer>();
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

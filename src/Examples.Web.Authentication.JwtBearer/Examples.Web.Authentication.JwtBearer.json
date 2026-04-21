@@ -24,6 +24,12 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         },
         "security": [
@@ -76,9 +82,9 @@
     "securitySchemes": {
       "Bearer": {
         "type": "http",
-        "description": "Enter JWT token (e.g. 'eyJhbG...')",
-        "scheme": "bearer",
-        "bearerFormat": "Json Web Token"
+        "description": "Enter JWT token (e.g 'eyJhbG... ')",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
