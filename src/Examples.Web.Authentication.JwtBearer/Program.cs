@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         jwtOptions.MapInboundClaims = false;
     })
-    .AddJwtBearer("auth0", jwtOptions =>
+    .AddJwtBearer("Auth0", jwtOptions =>
     {
         jwtOptions.Authority = builder.Configuration["Authentication:Schemes:Auth0:Authority"];
         jwtOptions.Audience = builder.Configuration["Authentication:Schemes:Auth0:Audience"];
@@ -49,6 +49,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             RoleClaimType = "https://my-app.example.com/roles",
         };
     });
+
+builder.Services.ConfigureAll<JwtBearerOptions>(options =>
+{
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = context =>
+        {
+            // You can add custom claims transformation or additional validation here if needed
+            context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()
+                .CreateLogger("JwtBearerEvents")
+                .LogInformation("Token validated successfully for {User}", context.HttpContext.User.Identity?.Name);
+            return Task.CompletedTask;
+        },
+        OnAuthenticationFailed = context =>
+        {
+            // Log the exception or handle it as needed
+            context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()
+                .CreateLogger("JwtBearerEvents")
+                .LogError(context.Exception, "Authentication failed");
+            return Task.CompletedTask;
+        }
+    };
+});
 
 var requireAuthPolicy = new AuthorizationPolicyBuilder()
     .RequireAuthenticatedUser()
@@ -96,8 +119,8 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
-app.MapGet("/hello-auth0", [Authorize(AuthenticationSchemes = "auth0")] (HttpContext context) =>
- $"Hello from Auth0 protected endpoint! is authenticated: {context.User.Identity?.IsAuthenticated}")
+app.MapGet("/hello-auth0", [Authorize(AuthenticationSchemes = "Auth0")] (HttpContext context) =>
+    $"Hello from Auth0 protected endpoint! is authenticated: {context.User.Identity?.IsAuthenticated}")
     .WithName("Auth0ProtectedEndpoint");
 
 app.Run();

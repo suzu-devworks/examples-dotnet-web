@@ -17,6 +17,7 @@
   - [2. JWT Bearer authentication with Auth0](#2-jwt-bearer-authentication-with-auth0)
     - [Set up Auth0](#set-up-auth0)
     - [Update Program.cs](#update-programcs-1)
+    - [Set in user-secrets](#set-in-user-secrets)
     - [Create a token](#create-a-token-1)
     - [Call the API](#call-the-api-1)
 - [Development](#development)
@@ -225,7 +226,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 ```
 
-The scheme name `auth0` is used to distinguish it from other schemes registered in this project.
+The scheme name `Auth0` is used to distinguish it from other schemes registered in this project.
+
+#### Set in user-secrets
+
+```shell
+dotnet user-secrets set "Authentication:Schemes:Auth0:Authority" "{Set Authority from Auth0}"
+dotnet user-secrets set "Authentication:Schemes:Auth0:Audience" "{Set Audience from Auth0}"
+```
 
 #### Create a token
 
