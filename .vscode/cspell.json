@@ -11,7 +11,8 @@
     ".prettier*",
     "dotnet-tools.json",
     "*.csproj",
-    "*.slnx"
+    "*.slnx",
+    "launchSettings.json"
   ],
   "words": [
     "Antiforgery",

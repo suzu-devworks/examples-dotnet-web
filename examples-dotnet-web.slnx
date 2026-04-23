@@ -17,6 +17,7 @@
     <Project Path="src/Examples.Web.WebApp/Examples.Web.WebApp.csproj" />
   </Folder>
   <Folder Name="/src/fixtures/">
+    <Project Path="src/fixtures/Examples.Web.Generator.JwtToken/Examples.Web.Generator.JwtToken.csproj" />
     <Project Path="src/fixtures/Examples.Web.HostingStartup1/Examples.Web.HostingStartup1.csproj" />
     <Project Path="src/fixtures/Examples.Web.HostingStartup2/Examples.Web.HostingStartup2.csproj" />
   </Folder>
