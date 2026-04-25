@@ -9,10 +9,18 @@ namespace Examples.Web.Generator.JwtToken.Services;
 /// A standard implementation of the IConsoleService interface that interacts with the console using System.Console.
 /// </summary>
 /// <remarks>
-/// To account for redirects, everything except the token should be output to standard error.
+/// To account for redirects, output data (token, JWKS JSON) is written to standard output,
+/// and all other messages (status, errors, etc.) are written to standard error.
 /// </remarks>
 public class StandardConsoleService : IConsoleService
 {
+    private static readonly IAnsiConsole ErrorConsole = AnsiConsole.Create(new AnsiConsoleSettings
+    {
+        Ansi = AnsiSupport.Detect,
+        ColorSystem = ColorSystemSupport.Detect,
+        Out = new AnsiConsoleOutput(Console.Error),
+    });
+
     public string PromptPassword(string message, bool showAsterisk = true)
     {
         Console.Error.Write($"{Yellow(message)}");
@@ -107,7 +115,7 @@ public class StandardConsoleService : IConsoleService
             table.AddRow(claim.Key, Markup.Escape(value?.ToString() ?? "null"));
         }
 
-        AnsiConsole.Write(table);
+        ErrorConsole.Write(table);
     }
 
     public void WriteJson(string message, string jsonString)

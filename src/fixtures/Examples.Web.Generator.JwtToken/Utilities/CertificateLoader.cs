@@ -20,7 +20,7 @@ public static class CertificateLoader
     public static async Task<SigningCredentials> LoadSigningCredentialsAsync(string path, Func<string> passwordProvider,
         CancellationToken cancellationToken = default)
     {
-        using var certificate = await LoadCertificateFromFileAsync(path, passwordProvider, cancellationToken);
+        using var certificate = await LoadPkcs12FromFileAsync(path, passwordProvider, cancellationToken);
         return GetSigningCredentials(certificate);
     }
 

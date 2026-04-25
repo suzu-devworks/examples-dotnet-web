@@ -24,16 +24,13 @@ public class JwtService
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        SigningCredentials credentials2 = new(credentials.Key,
-            credentials.Key is ECDsaSecurityKey ? SecurityAlgorithms.EcdsaSha256 : SecurityAlgorithms.RsaSha256);
-
         var descriptor = new SecurityTokenDescriptor
         {
             Issuer = source.Issuer,
             Audience = source.Audience,
             Subject = new ClaimsIdentity(source.GetClaims()),
             Expires = _timeProvider.GetUtcNow().AddMinutes(source.ExpirationMinutes).DateTime,
-            SigningCredentials = credentials2
+            SigningCredentials = credentials
         };
 
         var token = _handler.CreateToken(descriptor);

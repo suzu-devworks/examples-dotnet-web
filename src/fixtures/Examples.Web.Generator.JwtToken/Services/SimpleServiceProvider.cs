@@ -40,9 +40,12 @@ public class SimpleServiceProvider : IServiceProvider, IDisposable, IAsyncDispos
     {
         if (_disposed) { return; }
 
-        foreach (var service in _services.Values.OfType<IDisposable>())
+        if (disposing)
         {
-            service.Dispose();
+            foreach (var service in _services.Values.OfType<IDisposable>())
+            {
+                service.Dispose();
+            }
         }
 
         _disposed = true;
