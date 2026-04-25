@@ -38,6 +38,12 @@ public static class JwksCommand
         };
         command.Options.Add(kidOption);
 
+        var withX5cOption = new Option<bool>("--with-x5c")
+        {
+            Description = "Include X.509 certificate chain (x5c) and thumbprint (x5t) in the JWK output.",
+        };
+        command.Options.Add(withX5cOption);
+
         command.SetAction(async parseResult =>
         {
             var console = serviceProvider.GetRequiredService<IConsoleService>();
@@ -45,7 +51,8 @@ public static class JwksCommand
             Parameters parameters = new(
                 parseResult.GetValue(pubOption)!,
                 parseResult.GetValue(passwordOption),
-                parseResult.GetValue(kidOption)
+                parseResult.GetValue(kidOption),
+                parseResult.GetValue(withX5cOption)
             );
 
             await new Handler(console).Handle(parameters);
@@ -55,7 +62,8 @@ public static class JwksCommand
     private record Parameters(
       FileInfo Pub,
       string? Password,
-      string? KeyId);
+      string? KeyId,
+      bool WithX5c);
 
     private static readonly JsonSerializerOptions DefaultJsonOptions
         = new(JsonSerializerDefaults.Web);
@@ -68,13 +76,30 @@ public static class JwksCommand
         {
             try
             {
-                // Load the verification public key from the certificate
-                var credentials = await CertificateLoader.LoadPublicSigningCredentialsAsync(parameters.Pub.FullName,
+                // Load the certificate once for both public key extraction and optional x5c generation
+                using var certificate = await CertificateLoader.LoadCertificateFromFileAsync(parameters.Pub.FullName,
                     () => parameters.Password
                         ?? console.PromptPassword("Enter Password for PFX file (invisible): ", showAsterisk: false));
 
-                // Convert the SecurityKey to a JsonWebKey
-                JsonWebKey jwk = JsonWebKeyConverter.ConvertFromSecurityKey(credentials.Key);
+                var credentials = CertificateLoader.GetPublicSigningCredentials(certificate);
+
+                // Convert the SecurityKey to a JsonWebKey (includes public key parameters)
+                var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(credentials.Key);
+
+                if (parameters.WithX5c)
+                {
+                    var x509Key = new X509SecurityKey(certificate) { KeyId = certificate.Thumbprint };
+
+                    // ConvertFromX509SecurityKey includes x5c/x5t but lacks public key parameters;
+                    // copy only the certificate-related fields into the main JWK.
+                    var x509Jwk = JsonWebKeyConverter.ConvertFromX509SecurityKey(x509Key);
+                    foreach (var chain in x509Jwk.X5c)
+                    {
+                        jwk.X5c.Add(chain);
+                    }
+                    jwk.X5t = x509Jwk.X5t;
+                    jwk.X5tS256 = x509Jwk.X5tS256;
+                }
 
                 // Set the Key ID (kid) in the JWK. If not provided, use the certificate thumbprint.
                 jwk.Kid = parameters.KeyId ?? jwk.Kid;

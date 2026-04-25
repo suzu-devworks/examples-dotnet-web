@@ -115,7 +115,13 @@ public static class CertificateLoader
         }
     }
 
-    private static SigningCredentials GetPublicSigningCredentials(X509Certificate2 certificate)
+    /// <summary>
+    /// Extracts signing credentials with the public key from the provided certificate.
+    /// </summary>
+    /// <param name="certificate"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static SigningCredentials GetPublicSigningCredentials(X509Certificate2 certificate)
     {
         using var ecdsa = certificate.GetECDsaPublicKey();
         if (ecdsa is not null)

@@ -17,7 +17,7 @@
     },
     "jwks": {
       "commandName": "Project",
-      "commandLineArgs": "jwks -f /workspaces/examples-dotnet-web/assets/example.signer.crt",
+      "commandLineArgs": "jwks -f /workspaces/examples-dotnet-web/assets/example.signer.crt --with-x5c",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }
