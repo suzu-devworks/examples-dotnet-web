@@ -1,3 +1,4 @@
+using Examples.Web.Authentication.JwtBearer.Authentication.Oidc;
 using Examples.Web.Infrastructure.OpenApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -48,30 +49,44 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             NameClaimType = System.Security.Claims.ClaimTypes.NameIdentifier,
             RoleClaimType = "https://my-app.example.com/roles",
         };
+    })
+    .AddJwtBearer("FakeOidc")
+    ;
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.Configure<JwtBearerOptions>("FakeOidc", options =>
+    {
+        // This is important: Pass SSL verification in internal communications.
+        options.BackchannelHttpHandler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
     });
 
-builder.Services.ConfigureAll<JwtBearerOptions>(options =>
-{
-    options.Events = new JwtBearerEvents
+    builder.Services.ConfigureAll<JwtBearerOptions>(options =>
     {
-        OnTokenValidated = context =>
+        options.Events = new JwtBearerEvents
         {
-            // You can add custom claims transformation or additional validation here if needed
-            context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()
-                .CreateLogger("JwtBearerEvents")
-                .LogInformation("Token validated successfully for {User}", context.HttpContext.User.Identity?.Name);
-            return Task.CompletedTask;
-        },
-        OnAuthenticationFailed = context =>
-        {
-            // Log the exception or handle it as needed
-            context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()
-                .CreateLogger("JwtBearerEvents")
-                .LogError(context.Exception, "Authentication failed");
-            return Task.CompletedTask;
-        }
-    };
-});
+            OnTokenValidated = context =>
+            {
+                // You can add custom claims transformation or additional validation here if needed
+                context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()
+                    .CreateLogger("JwtBearerEvents")
+                    .LogInformation("Token validated successfully for {User}", context.HttpContext.User.Identity?.Name);
+                return Task.CompletedTask;
+            },
+            OnAuthenticationFailed = context =>
+            {
+                // Log the exception or handle it as needed
+                context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()
+                    .CreateLogger("JwtBearerEvents")
+                    .LogError(context.Exception, "Authentication failed");
+                return Task.CompletedTask;
+            }
+        };
+    });
+}
 
 var requireAuthPolicy = new AuthorizationPolicyBuilder()
     .RequireAuthenticatedUser()
@@ -120,8 +135,22 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast");
 
 app.MapGet("/hello-auth0", [Authorize(AuthenticationSchemes = "Auth0")] (HttpContext context) =>
-    $"Hello from Auth0 protected endpoint! is authenticated: {context.User.Identity?.IsAuthenticated}")
-    .WithName("Auth0ProtectedEndpoint");
+    Results.Ok(new
+    {
+        Message = $"Hello from Auth0 protected endpoint!",
+        context.User.Identity?.IsAuthenticated
+    }))
+    .WithName("Auth0 Protected Endpoint");
+
+app.MapGet("/hello-fake-oidc", [Authorize(AuthenticationSchemes = "FakeOidc")] (HttpContext context) =>
+    Results.Ok(new
+    {
+        Message = $"Hello from FakeOidc protected endpoint!",
+        context.User.Identity?.IsAuthenticated
+    }))
+    .WithName("FakeOidc Protected Endpoint");
+
+app.MapWellKnownEndpoints();
 
 app.Run();
 

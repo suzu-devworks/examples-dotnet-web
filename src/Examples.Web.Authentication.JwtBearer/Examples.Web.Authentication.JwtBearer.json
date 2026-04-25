@@ -44,17 +44,34 @@
         "tags": [
           "Examples.Web.Authentication.JwtBearer"
         ],
-        "operationId": "Auth0ProtectedEndpoint",
+        "operationId": "Auth0 Protected Endpoint",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/hello-fake-oidc": {
+      "get": {
+        "tags": [
+          "Examples.Web.Authentication.JwtBearer"
+        ],
+        "operationId": "FakeOidc Protected Endpoint",
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
