@@ -24,13 +24,16 @@ public class JwtService
     {
         cancellationToken.ThrowIfCancellationRequested();
 
+        SigningCredentials credentials2 = new(credentials.Key,
+            credentials.Key is ECDsaSecurityKey ? SecurityAlgorithms.EcdsaSha256 : SecurityAlgorithms.RsaSha256);
+
         var descriptor = new SecurityTokenDescriptor
         {
             Issuer = source.Issuer,
             Audience = source.Audience,
             Subject = new ClaimsIdentity(source.GetClaims()),
             Expires = _timeProvider.GetUtcNow().AddMinutes(source.ExpirationMinutes).DateTime,
-            SigningCredentials = credentials
+            SigningCredentials = credentials2
         };
 
         var token = _handler.CreateToken(descriptor);
@@ -48,7 +51,7 @@ public class JwtService
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the token validation result.</returns>
     public async Task<TokenValidationResult> VerifyTokenAsync(string token, SecurityKey publicKey, string issuer, string audience,
-    CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 

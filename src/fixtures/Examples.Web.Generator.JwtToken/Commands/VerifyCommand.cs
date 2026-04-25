@@ -84,12 +84,12 @@ public static class VerifyCommand
             try
             {
                 // Load the verification public key from the certificate
-                var publicKey = await CertificateLoader.LoadPublicKeyAsync(parameters.Pub.FullName,
+                var credentials = await CertificateLoader.LoadPublicSigningCredentialsAsync(parameters.Pub.FullName,
                     () => parameters.Password
                         ?? console.PromptPassword("Enter Password for PFX file (invisible): ", showAsterisk: false));
 
                 // Verify the token
-                TokenValidationResult result = await jwt.VerifyTokenAsync(parameters.Token, publicKey, parameters.Issuer, parameters.Audience);
+                TokenValidationResult result = await jwt.VerifyTokenAsync(parameters.Token, credentials.Key, parameters.Issuer, parameters.Audience);
 
                 if (result.IsValid)
                 {

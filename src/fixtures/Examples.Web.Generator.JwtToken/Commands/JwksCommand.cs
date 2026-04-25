@@ -69,16 +69,16 @@ public static class JwksCommand
             try
             {
                 // Load the verification public key from the certificate
-                var certificate = await CertificateLoader.LoadX509Certificate2Async(parameters.Pub.FullName,
+                var credentials = await CertificateLoader.LoadPublicSigningCredentialsAsync(parameters.Pub.FullName,
                     () => parameters.Password
                         ?? console.PromptPassword("Enter Password for PFX file (invisible): ", showAsterisk: false));
 
                 // Convert the SecurityKey to a JsonWebKey
-                var key = new X509SecurityKey(certificate, parameters.KeyId ?? certificate.Thumbprint);
-                var jwk = JsonWebKeyConverter.ConvertFromX509SecurityKey(key);
+                JsonWebKey jwk = JsonWebKeyConverter.ConvertFromSecurityKey(credentials.Key);
 
                 // Set the Key ID (kid) in the JWK. If not provided, use the certificate thumbprint.
-                jwk.Kid = parameters.KeyId ?? certificate.Thumbprint;
+                jwk.Kid = parameters.KeyId ?? jwk.Kid;
+                jwk.Alg = credentials.Algorithm;
                 jwk.Use = "sig";
 
                 // Create a JWKS object containing the JWK

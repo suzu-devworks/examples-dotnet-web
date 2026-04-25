@@ -17,19 +17,32 @@ public static class CertificateLoader
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the signing credentials.</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public static Task<SigningCredentials> LoadSigningCredentialsAsync(string path, Func<string> passwordProvider,
+    public static async Task<SigningCredentials> LoadSigningCredentialsAsync(string path, Func<string> passwordProvider,
         CancellationToken cancellationToken = default)
     {
-        return Task.Run(() => LoadSigningCredentials(path, passwordProvider), cancellationToken);
+        using var certificate = await LoadCertificateFromFileAsync(path, passwordProvider, cancellationToken);
+        return GetSigningCredentials(certificate);
     }
 
-    private static SigningCredentials LoadSigningCredentials(string path, Func<string> passwordProvider)
+    /// <summary>
+    /// Loads a PKCS#12 (PFX/P12) certificate from a file asynchronously, using the provided password.
+    /// </summary>
+    /// <param name="path">The path to the certificate file.</param>
+    /// <param name="passwordProvider">A function that provides the password for the certificate file.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the loaded certificate.</returns>
+    public static Task<X509Certificate2> LoadPkcs12FromFileAsync(string path, Func<string> passwordProvider,
+        CancellationToken cancellationToken = default)
     {
-        // Load certificate
-        var password = passwordProvider();
-        using var certificate = X509CertificateLoader.LoadPkcs12FromFile(
-                        path, password, X509KeyStorageFlags.EphemeralKeySet);
+        return Task.Run(() =>
+        {
+            var password = passwordProvider();
+            return X509CertificateLoader.LoadPkcs12FromFile(path, password, X509KeyStorageFlags.EphemeralKeySet);
+        }, cancellationToken);
+    }
 
+    private static SigningCredentials GetSigningCredentials(X509Certificate2 certificate)
+    {
         // Identify the key type and create credentials.
         using var ecdsa = certificate.GetECDsaPrivateKey();
         if (ecdsa is not null)
@@ -57,38 +70,19 @@ public static class CertificateLoader
     }
 
     /// <summary>
-    /// Loads the public key from a certificate file (supports .cer, .crt, .pem, and .pfx formats) for JWT token verification. Supports both RSA and ECDSA keys.
+    /// Loads signing credentials (public key only) from a certificate file (supports .cer, .crt, .pem, and .pfx formats) for JWT token verification. Supports both RSA and ECDSA keys.
     /// </summary>
     /// <param name="path">The path to the certificate file.</param>
     /// <param name="passwordProvider">A function that provides the password for the certificate file.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the public key.</returns>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the signing credentials with the public key and algorithm.</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public static async Task<SecurityKey> LoadPublicKeyAsync(string path, Func<string> passwordProvider,
+    public static async Task<SigningCredentials> LoadPublicSigningCredentialsAsync(string path, Func<string> passwordProvider,
         CancellationToken cancellationToken = default)
     {
-        // Load certificate and extract public key
-        using var certificate = await LoadX509Certificate2Async(path, passwordProvider, cancellationToken);
-
-        using var ecdsa = certificate.GetECDsaPublicKey();
-        if (ecdsa is not null)
-        {
-            return new ECDsaSecurityKey(ECDsa.Create(ecdsa.ExportParameters(false)))
-            {
-                KeyId = certificate.Thumbprint
-            };
-        }
-
-        using var rsa = certificate.GetRSAPublicKey();
-        if (rsa is not null)
-        {
-            return new RsaSecurityKey(RSA.Create(rsa.ExportParameters(false)))
-            {
-                KeyId = certificate.Thumbprint
-            };
-        }
-
-        throw new InvalidOperationException("The public key could not be found.");
+        // Load certificate and extract public key as signing credentials
+        using var certificate = await LoadCertificateFromFileAsync(path, passwordProvider, cancellationToken);
+        return GetPublicSigningCredentials(certificate);
     }
 
     /// <summary>
@@ -99,7 +93,7 @@ public static class CertificateLoader
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the loaded certificate.</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public static async Task<X509Certificate2> LoadX509Certificate2Async(string path, Func<string> passwordProvider,
+    public static async Task<X509Certificate2> LoadCertificateFromFileAsync(string path, Func<string> passwordProvider,
         CancellationToken cancellationToken = default)
     {
         // Determine the certificate type based on the file content
@@ -120,4 +114,30 @@ public static class CertificateLoader
             throw new InvalidOperationException("Unsupported certificate format. Please provide a .cer, .crt, or .pem file.");
         }
     }
+
+    private static SigningCredentials GetPublicSigningCredentials(X509Certificate2 certificate)
+    {
+        using var ecdsa = certificate.GetECDsaPublicKey();
+        if (ecdsa is not null)
+        {
+            var key = new ECDsaSecurityKey(ECDsa.Create(ecdsa.ExportParameters(false)))
+            {
+                KeyId = certificate.Thumbprint
+            };
+            return new SigningCredentials(key, SecurityAlgorithms.EcdsaSha256);
+        }
+
+        using var rsa = certificate.GetRSAPublicKey();
+        if (rsa is not null)
+        {
+            var key = new RsaSecurityKey(RSA.Create(rsa.ExportParameters(false)))
+            {
+                KeyId = certificate.Thumbprint
+            };
+            return new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
+        }
+
+        throw new InvalidOperationException("The public key could not be found.");
+    }
+
 }
