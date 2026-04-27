@@ -1,0 +1,2 @@
+# Ignore the build output and other generated files
+jwks*.json

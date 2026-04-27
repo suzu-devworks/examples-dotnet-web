@@ -2,6 +2,11 @@
 
 ## Table of Contents <!-- omit in toc -->
 
+- [Overview](#overview)
+- [How to use](#how-to-use)
+- [Development](#development)
+  - [How the project was initialized](#how-the-project-was-initialized)
+
 ## Overview
 
 This project is for sharing front-end static assets, such as JavaScript files, across projects.
@@ -37,7 +42,6 @@ dotnet new sln -o .
 dotnet new razorclasslib -o src/Examples.Web.Infrastructure.Assets
 dotnet sln add src/Examples.Web.Infrastructure.Assets/
 cd src/Examples.Web.Infrastructure.Assets
-cd ../../
 
 # Check outdated packages
 dotnet list package --outdated

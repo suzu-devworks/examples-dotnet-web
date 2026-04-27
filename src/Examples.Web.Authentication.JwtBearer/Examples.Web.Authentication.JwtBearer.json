@@ -1,0 +1,168 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Examples.Web.Authentication.JwtBearer | v1",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/weatherforecast": {
+      "get": {
+        "tags": [
+          "Examples.Web.Authentication.JwtBearer"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/<Program>FE2929E31BBB3AAC3EB72BB365378E63BBBE2C77CAD8AF7E85E78ECA2CAFBFD0E__WeatherForecast"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/hello-auth0": {
+      "get": {
+        "tags": [
+          "Examples.Web.Authentication.JwtBearer"
+        ],
+        "operationId": "Auth0 Protected Endpoint",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/hello-fake-oidc": {
+      "get": {
+        "tags": [
+          "Examples.Web.Authentication.JwtBearer"
+        ],
+        "operationId": "FakeOidc Protected Endpoint",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/hello-revocable-jwt": {
+      "get": {
+        "tags": [
+          "Examples.Web.Authentication.JwtBearer"
+        ],
+        "operationId": "RevocableJwt Protected Endpoint",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "<Program>FE2929E31BBB3AAC3EB72BB365378E63BBBE2C77CAD8AF7E85E78ECA2CAFBFD0E__WeatherForecast": {
+        "required": [
+          "date",
+          "temperatureC",
+          "summary"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "summary": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "temperatureF": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter JWT token (e.g 'eyJhbG... ')",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Examples.Web.Authentication.JwtBearer"
+    }
+  ]
+}
