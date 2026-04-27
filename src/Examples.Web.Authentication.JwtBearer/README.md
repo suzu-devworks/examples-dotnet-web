@@ -11,20 +11,25 @@
   - [Authentication flows](#authentication-flows)
 - [Scenarios](#scenarios)
   - [1. Local testing with `dotnet user-jwts`](#1-local-testing-with-dotnet-user-jwts)
-    - [1.1. Setup Authorization](#11-setup-authorization)
+    - [1.1. Set up Authorization](#11-set-up-authorization)
     - [1.2. Create a token](#12-create-a-token)
     - [1.3. Call the API](#13-call-the-api)
   - [2. JWT Bearer authentication with Auth0](#2-jwt-bearer-authentication-with-auth0)
     - [2.1. Set up Auth0](#21-set-up-auth0)
-    - [2.2 Setup Authorization](#22-setup-authorization)
+    - [2.2. Set up Authorization](#22-set-up-authorization)
     - [2.3. Set in user-secrets](#23-set-in-user-secrets)
     - [2.4. Create a token](#24-create-a-token)
     - [2.5. Call the API](#25-call-the-api)
   - [3. Simulating OIDC JWT authentication with a custom JWKS endpoint](#3-simulating-oidc-jwt-authentication-with-a-custom-jwks-endpoint)
     - [3.1. Create JWKS](#31-create-jwks)
     - [3.2. Configure the Discovery Document](#32-configure-the-discovery-document)
-    - [3.3. Setup Authorization](#33-setup-authorization)
+    - [3.3. Set up Authorization](#33-set-up-authorization)
     - [3.4. Generate an access token](#34-generate-an-access-token)
+  - [4. Custom AuthenticationHandler - Blacklist JWT Handler](#4-custom-authenticationhandler---blacklist-jwt-handler)
+    - [4.1. Implement `AuthenticationHandler<TOptions>`](#41-implement-authenticationhandlertoptions)
+    - [4.2. Set up Authentication](#42-set-up-authentication)
+    - [4.3. Create a token](#43-create-a-token)
+    - [4.4. Register a token in the blacklist](#44-register-a-token-in-the-blacklist)
 - [Development](#development)
   - [Build](#build)
   - [Run](#run)
@@ -176,7 +181,7 @@ sequenceDiagram
 It writes the signing key and issuer into user-secrets under `Authentication:Schemes:Bearer:SigningKeys:*`.
 `AddJwtBearer()` with no arguments reads these keys automatically in Development.
 
-#### 1.1. Setup Authorization
+#### 1.1. Set up Authorization
 
 Call `AddJwtBearer()` with no options for the default Bearer scheme:
 
@@ -215,7 +220,7 @@ Or paste the token into the **Authorize** dialog on the Scalar API Reference pag
 3. Save the settings
 4. Note the `Authority` and `Audience` values shown in the Quickstart tab
 
-#### 2.2 Setup Authorization
+#### 2.2. Set up Authorization
 
 Call `AddJwtBearer()`
 
@@ -285,17 +290,12 @@ app.MapWellKnownEndpoints();
 app.Run();
 ```
 
-#### 3.3. Setup Authorization
+#### 3.3. Set up Authorization
 
 Modify `Program.cs`:
 
 ```cs
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(jwtOptions =>
-    {
-        jwtOptions.Authority = "https://{--your-authority--}";
-        jwtOptions.Audience = "https://{--your-audience--}";
-    })
     .AddJwtBearer("FakeOidc")
     ;
 ```
@@ -340,6 +340,89 @@ dotnet run --no-launch-profile --project src/fixtures/Examples.Web.Generator.Jwt
 
 Use the generated token to call the API.
 You can inspect the token contents at [JSON Web Tokens - jwt.io](https://www.jwt.io/).
+
+### 4. Custom AuthenticationHandler - Blacklist JWT Handler
+
+#### 4.1. Implement `AuthenticationHandler<TOptions>`
+
+First, create a class derived from `AuthenticationSchemeOptions`. In this case, no additional implementation is needed.
+
+```cs
+public class RevocableJwtOptions : AuthenticationSchemeOptions
+{
+}
+```
+
+Next, create the corresponding authentication handler.
+
+```cs
+public class RevocableJwtHandler(
+    IOptionsMonitor<RevocableJwtOptions> options,
+    ILoggerFactory logger,
+    UrlEncoder encoder,
+    IConfiguration configuration,
+    ITokenBlacklistService blacklistService
+) : AuthenticationHandler<RevocableJwtOptions>(options, logger, encoder)
+{
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+    {
+        //...
+    }
+}
+```
+
+The core logic is in `HandleAuthenticateAsync()`.
+This simplified implementation reads the `Authorization` header from the request to extract the Bearer token.
+It first validates the token's signature and expiry using `JsonWebTokenHandler`, then checks whether the token is on the blacklist.
+
+The tokens validated by `JsonWebTokenHandler` are also generated with `dotnet user-jwts`.
+
+See the source code for full details.
+
+#### 4.2. Set up Authentication
+
+An extension method is provided for registration.
+
+Modify `Program.cs`:
+
+```cs
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddRevocableJwtBearer("RevocableJwt")
+    ;
+
+builder.Services.Configure<JwtBlacklistOptions>(
+    builder.Configuration.GetSection("Authentication:JwtBlacklistOptions"));
+```
+
+#### 4.3. Create a token
+
+Generate a token using `dotnet user-jwts`:
+
+```shell
+dotnet user-jwts create
+```
+
+Verify that the signing key was also generated:
+
+```shell
+dotnet user-secrets list 
+```
+
+#### 4.4. Register a token in the blacklist
+
+The token blacklist is managed simply via `appsettings.json` (or `appsettings.Development.json`).
+To verify that authentication fails for a revoked token, add its `jti` claim value to the list shown below while the application is running.
+
+```json
+"Authentication": {
+    "JwtBlacklistOptions": {
+      "RevokedJtiList": [
+        "example-revoked-jti-1",
+        "example-revoked-jti-2"
+      ]
+    }
+  }
+```
 
 ## Development
 
