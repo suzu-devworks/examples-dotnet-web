@@ -1,0 +1,29 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Default": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "workingDirectory": ".",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "sign": {
+      "commandName": "Project",
+      "commandLineArgs": "sign -f ../../../assets/example.signer.p12",
+      "workingDirectory": ".",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "jwks": {
+      "commandName": "Project",
+      "commandLineArgs": "jwks -f ../../../assets/example.signer.crt --with-x5c",
+      "workingDirectory": ".",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

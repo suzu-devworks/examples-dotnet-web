@@ -17,7 +17,7 @@
 
 - Think and reason in English.
 - Write code, comments, and documentation in English.
-- Links to references are available in both Japanese and English.
+- Links to references are available in both Japanese and English. Do not change the locale segment (e.g. `ja-jp`) in reference URLs unless explicitly asked.
 - Respond to the user in Japanese in chat.
 - Use concise and clear English in code/comments because this is a learning repository.
 - If this file is modified, show a Japanese translation in chat.

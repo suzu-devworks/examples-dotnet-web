@@ -367,3 +367,5 @@ MigrationBackup/
 *.key
 *.pfx
 .devcontainer/.keys
+.password
+assets/
