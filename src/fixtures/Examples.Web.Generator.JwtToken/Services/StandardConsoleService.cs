@@ -42,12 +42,12 @@ public class StandardConsoleService : IConsoleService
                 {
                     password.Remove(password.Length - 1, 1);
                     // Move the cursor back one step, erase with a blank space, and then move it back one step again.
-                    if (showAsterisk) { Console.Write("\b \b"); }
+                    if (showAsterisk) { Console.Error.Write("\b \b"); }
                 }
                 else if (!char.IsControl(key.KeyChar))
                 {
                     password.Append(key.KeyChar);
-                    if (showAsterisk) { Console.Write("*"); }
+                    if (showAsterisk) { Console.Error.Write("*"); }
                 }
             }
             Console.Error.WriteLine();
@@ -112,7 +112,7 @@ public class StandardConsoleService : IConsoleService
             var value = claim.Value is IList<object> list
                 ? $"[ {string.Join(", ", list.Select(item => item.ToString()))} ]"
                 : claim.Value;
-            table.AddRow(claim.Key, Markup.Escape(value?.ToString() ?? "null"));
+            table.AddRow(Markup.Escape(claim.Key), Markup.Escape(value?.ToString() ?? "null"));
         }
 
         ErrorConsole.Write(table);
