@@ -269,7 +269,7 @@ curl -sk -H "Authorization: Bearer <token>" https://localhost:7053/hello-auth0 |
 The tool details are not covered here.
 
 ```shell
-dotnet run --no-launch-profile --project src/fixtures/Examples.Web.Generator.JwtToken/ -- jwks -f assets/example.signer.crt  --with-x5c > src/Examples.Web.Authentication.JwtBearer/jwks.json
+dotnet run --no-launch-profile --project src/fixtures/Examples.Web.Generator.JwtToken/ -- jwks -f assets/example.signer.crt > src/Examples.Web.Authentication.JwtBearer/jwks.json
 ```
 
 #### 3.2. Configure the Discovery Document

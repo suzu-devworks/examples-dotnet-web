@@ -4,20 +4,23 @@
     "Default": {
       "commandName": "Project",
       "commandLineArgs": "",
+      "workingDirectory": ".",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }
     },
     "sign": {
       "commandName": "Project",
-      "commandLineArgs": "sign -f /workspaces/examples-dotnet-web/assets/example.signer.p12",
+      "commandLineArgs": "sign -f ../../../assets/example.signer.p12",
+      "workingDirectory": ".",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }
     },
     "jwks": {
       "commandName": "Project",
-      "commandLineArgs": "jwks -f /workspaces/examples-dotnet-web/assets/example.signer.crt --with-x5c",
+      "commandLineArgs": "jwks -f ../../../assets/example.signer.crt --with-x5c",
+      "workingDirectory": ".",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }
