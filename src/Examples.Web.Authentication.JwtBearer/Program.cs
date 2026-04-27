@@ -54,7 +54,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     })
     .AddJwtBearer("FakeOidc")
     .AddRevocableJwtBearer("RevocableJwt")
-    ;
+    .AddPolicyScheme("Aggregate", "Aggregate Policy", options =>
+    {
+        options.ForwardDefaultSelector = context =>
+        {
+            // Logic to select the appropriate scheme based on the request
+            if (context.Request.Path.StartsWithSegments("/hello-fake-oidc"))
+            {
+                return "FakeOidc";
+            }
+
+            if (context.Request.Path.StartsWithSegments("/hello-revocable-jwt"))
+            {
+                return "RevocableJwt";
+            }
+
+            return JwtBearerDefaults.AuthenticationScheme; // Default scheme
+        };
+    });
 
 if (builder.Environment.IsDevelopment())
 {
@@ -148,7 +165,7 @@ app.MapGet("/hello-auth0", [Authorize(AuthenticationSchemes = "Auth0")] (HttpCon
     }))
     .WithName("Auth0 Protected Endpoint");
 
-app.MapGet("/hello-fake-oidc", [Authorize(AuthenticationSchemes = "FakeOidc")] (HttpContext context) =>
+app.MapGet("/hello-fake-oidc", [Authorize(AuthenticationSchemes = "Aggregate")] (HttpContext context) =>
     Results.Ok(new
     {
         Message = $"Hello from FakeOidc protected endpoint!",
@@ -156,7 +173,7 @@ app.MapGet("/hello-fake-oidc", [Authorize(AuthenticationSchemes = "FakeOidc")] (
     }))
     .WithName("FakeOidc Protected Endpoint");
 
-app.MapGet("/hello-revocable-jwt", [Authorize(AuthenticationSchemes = "RevocableJwt")] (HttpContext context) =>
+app.MapGet("/hello-revocable-jwt", [Authorize(AuthenticationSchemes = "Aggregate")] (HttpContext context) =>
     Results.Ok(new
     {
         Message = $"Hello from RevocableJwt protected endpoint!",
