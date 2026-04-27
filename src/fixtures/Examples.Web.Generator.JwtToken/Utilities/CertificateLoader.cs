@@ -111,7 +111,7 @@ public static class CertificateLoader
         }
         else
         {
-            throw new InvalidOperationException("Unsupported certificate format. Please provide a .cer, .crt, or .pem file.");
+            throw new InvalidOperationException("Unsupported certificate format. Please provide a .cer, .crt, .pem, .pfx, or .p12 file.");
         }
     }
 

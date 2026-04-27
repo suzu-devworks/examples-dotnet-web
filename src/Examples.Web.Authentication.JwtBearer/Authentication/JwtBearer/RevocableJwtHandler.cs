@@ -65,7 +65,7 @@ public class RevocableJwtHandler(
             var result = await _handler.ValidateTokenAsync(token, validations);
             if (!result.IsValid)
             {
-                _customErrorMessage = $"Token validation failed: {result.Exception?.Message}";
+                _customErrorMessage = $"Token validation failed.";
                 return AuthenticateResult.Fail(_customErrorMessage);
             }
 
