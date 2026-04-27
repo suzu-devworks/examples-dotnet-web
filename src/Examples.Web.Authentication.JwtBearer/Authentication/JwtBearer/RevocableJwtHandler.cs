@@ -24,12 +24,25 @@ public class RevocableJwtHandler(
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Headers.TryGetValue("Authorization", out var authHeader))
+        string authorization = Request.Headers.Authorization.ToString();
+
+        // If no authorization header found, nothing to process further
+        if (string.IsNullOrEmpty(authorization))
         {
             return AuthenticateResult.NoResult();
         }
 
-        var token = authHeader.ToString().Replace("Bearer ", "");
+        if (!authorization.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+        {
+            return AuthenticateResult.NoResult();
+        }
+
+        var token = authorization.Substring("Bearer ".Length).Trim();
+
+        if (string.IsNullOrEmpty(token))
+        {
+            return AuthenticateResult.NoResult();
+        }
 
         try
         {
