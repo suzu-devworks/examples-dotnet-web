@@ -14,34 +14,17 @@ public sealed class SecurityRequirementOperationTransformer(string referenceId =
     public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
     {
         // Access ApiDescription here via context.Description.
-        var endpointMetadata = context.Description.ActionDescriptor.EndpointMetadata;
-        var hasAllowAnonymous = endpointMetadata.OfType<IAllowAnonymous>().Any();
+        var hasAllowAnonymous = context.Description.ActionDescriptor.EndpointMetadata.OfType<IAllowAnonymous>().Any();
         if (hasAllowAnonymous)
         {
             return Task.CompletedTask;
         }
 
-        var schemeNames = endpointMetadata
-            .OfType<IAuthorizeData>()
-            .SelectMany(static authorizeData =>
-                (authorizeData.AuthenticationSchemes ?? string.Empty)
-                    .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
-            .Distinct(StringComparer.Ordinal)
-            .ToArray();
-
-        if (schemeNames.Length == 0)
-        {
-            schemeNames = [referenceId];
-        }
-
         operation.Security ??= [];
-        foreach (var schemeName in schemeNames)
+        operation.Security.Add(new OpenApiSecurityRequirement
         {
-            operation.Security.Add(new OpenApiSecurityRequirement
-            {
-                [new OpenApiSecuritySchemeReference(schemeName, context.Document)] = []
-            });
-        }
+            [new OpenApiSecuritySchemeReference(referenceId, context.Document)] = []
+        });
 
         operation.Responses ??= [];
         operation.Responses.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
