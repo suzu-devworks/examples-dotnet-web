@@ -65,7 +65,16 @@ public static class VerifyCommand
                  parseResult.GetValue(issOption)!
             );
 
-            await new Handler(console, jwt).Handle(parameters);
+            try
+            {
+                await new Handler(console, jwt).Handle(parameters);
+            }
+            catch (Exception ex)
+            {
+                console.WriteException(ex);
+                return 1;
+            }
+
             return 0;
         });
     }
@@ -81,30 +90,23 @@ public static class VerifyCommand
     {
         public async Task Handle(Parameters parameters)
         {
-            try
+            // Load the verification public key from the certificate
+            var credentials = await CertificateLoader.LoadPublicSigningCredentialsAsync(parameters.Pub.FullName,
+                () => parameters.Password
+                    ?? console.PromptPassword("Enter Password for PFX file (invisible): ", showAsterisk: false));
+
+            // Verify the token
+            TokenValidationResult result = await jwt.VerifyTokenAsync(parameters.Token, credentials.Key, parameters.Issuer, parameters.Audience);
+
+            if (result.IsValid)
             {
-                // Load the verification public key from the certificate
-                var credentials = await CertificateLoader.LoadPublicSigningCredentialsAsync(parameters.Pub.FullName,
-                    () => parameters.Password
-                        ?? console.PromptPassword("Enter Password for PFX file (invisible): ", showAsterisk: false));
-
-                // Verify the token
-                TokenValidationResult result = await jwt.VerifyTokenAsync(parameters.Token, credentials.Key, parameters.Issuer, parameters.Audience);
-
-                if (result.IsValid)
-                {
-                    console.WriteMessage("✓ Token is valid!", ConsoleColor.Green);
-                    console.WriteLine();
-                    console.WriteClaims("Token Claims", result);
-                }
-                else
-                {
-                    console.WriteMessage($"✗ Token is invalid: {result.Exception.Message}", ConsoleColor.Red);
-                }
+                console.WriteMessage("✓ Token is valid!", ConsoleColor.Green);
+                console.WriteLine();
+                console.WriteClaims("Token Claims", result);
             }
-            catch (Exception ex)
+            else
             {
-                console.WriteException(ex);
+                console.WriteMessage($"✗ Token is invalid: {result.Exception.Message}", ConsoleColor.Red);
             }
         }
     }

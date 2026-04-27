@@ -79,7 +79,16 @@ public static class SignCommand
                 parseResult.GetValue(roleOption) ?? []
             );
 
-            await new Handler(console, jwt).Handle(parameters);
+            try
+            {
+                await new Handler(console, jwt).Handle(parameters);
+            }
+            catch (Exception ex)
+            {
+                console.WriteException(ex);
+                return 1;
+            }
+
             return 0;
         });
     }
@@ -97,28 +106,21 @@ public static class SignCommand
     {
         public async Task Handle(Parameters parameters)
         {
-            try
-            {
-                // Load the signing credentials from the certificate
-                var credentials = await CertificateLoader.LoadSigningCredentialsAsync(parameters.Pfx.FullName,
-                    () => parameters.Password
-                        ?? console.PromptPassword("Enter Password for PFX file (invisible): ", showAsterisk: false));
+            // Load the signing credentials from the certificate
+            var credentials = await CertificateLoader.LoadSigningCredentialsAsync(parameters.Pfx.FullName,
+                () => parameters.Password
+                    ?? console.PromptPassword("Enter Password for PFX file (invisible): ", showAsterisk: false));
 
-                // Creating a JWT token
-                var token = await jwt.CreateTokenAsync(
-                    credentials,
-                    parameters
-                );
+            // Creating a JWT token
+            var token = await jwt.CreateTokenAsync(
+                credentials,
+                parameters
+            );
 
-                // Displaying the result
-                console.WriteSuccess("Token generated successfully.");
-                console.WriteMessage($"Algorithm: {credentials.Algorithm}", ConsoleColor.Yellow);
-                console.WriteToken("Generated JWT", token);
-            }
-            catch (Exception ex)
-            {
-                console.WriteException(ex);
-            }
+            // Displaying the result
+            console.WriteSuccess("Token generated successfully.");
+            console.WriteMessage($"Algorithm: {credentials.Algorithm}", ConsoleColor.Yellow);
+            console.WriteToken("Generated JWT", token);
         }
     }
 }
