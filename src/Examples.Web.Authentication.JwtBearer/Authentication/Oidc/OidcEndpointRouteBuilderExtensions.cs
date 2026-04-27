@@ -1,4 +1,4 @@
-namespace Examples.Web.Authentication.JwtBearer.Authentication.Oidc;
+namespace Examples.Web.Authentication.Oidc;
 
 public static class OidcEndpointRouteBuilderExtensions
 {

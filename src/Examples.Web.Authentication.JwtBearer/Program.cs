@@ -1,4 +1,6 @@
-using Examples.Web.Authentication.JwtBearer.Authentication.Oidc;
+using Examples.Web.Authentication;
+using Examples.Web.Authentication.JwtBearer;
+using Examples.Web.Authentication.Oidc;
 using Examples.Web.Infrastructure.OpenApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -51,6 +53,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     })
     .AddJwtBearer("FakeOidc")
+    .AddRevocableJwtBearer("RevocableJwt")
     ;
 
 if (builder.Environment.IsDevelopment())
@@ -94,6 +97,9 @@ var requireAuthPolicy = new AuthorizationPolicyBuilder()
 
 builder.Services.AddAuthorizationBuilder()
     .SetFallbackPolicy(requireAuthPolicy);
+
+builder.Services.Configure<JwtBlacklistOptions>(
+    builder.Configuration.GetSection("Authentication:JwtBlacklistOptions"));
 
 var app = builder.Build();
 
@@ -149,6 +155,14 @@ app.MapGet("/hello-fake-oidc", [Authorize(AuthenticationSchemes = "FakeOidc")] (
         context.User.Identity?.IsAuthenticated
     }))
     .WithName("FakeOidc Protected Endpoint");
+
+app.MapGet("/hello-revocable-jwt", [Authorize(AuthenticationSchemes = "RevocableJwt")] (HttpContext context) =>
+    Results.Ok(new
+    {
+        Message = $"Hello from RevocableJwt protected endpoint!",
+        context.User.Identity?.IsAuthenticated
+    }))
+    .WithName("RevocableJwt Protected Endpoint");
 
 app.MapWellKnownEndpoints();
 
