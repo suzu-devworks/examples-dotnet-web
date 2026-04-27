@@ -30,6 +30,7 @@
     - [4.2. Set up Authentication](#42-set-up-authentication)
     - [4.3. Create a token](#43-create-a-token)
     - [4.4. Register a token in the blacklist](#44-register-a-token-in-the-blacklist)
+  - [5. Automatically select multiple authentication schemes](#5-automatically-select-multiple-authentication-schemes)
 - [Development](#development)
   - [Build](#build)
   - [Run](#run)
@@ -422,6 +423,22 @@ To verify that authentication fails for a revoked token, add its `jti` claim val
       ]
     }
   }
+```
+
+### 5. Automatically select multiple authentication schemes
+
+By using `ForwardDefaultSelector`, you can automatically select multiple authentication schemes.
+
+```cs
+.AddPolicyScheme("Aggregate", "Aggregate Policy", options =>
+    {
+        options.ForwardDefaultSelector = context =>
+        {
+            // Logic to select the appropriate scheme based on the request
+
+            return JwtBearerDefaults.AuthenticationScheme; // Default scheme
+        };
+    });
 ```
 
 ## Development
