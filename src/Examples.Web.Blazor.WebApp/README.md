@@ -73,6 +73,7 @@ dotnet new sln -o .
 dotnet new blazor -o src/Examples.Web.Blazor.WebApp
 dotnet sln add src/Examples.Web.Blazor.WebApp/
 cd src/Examples.Web.Blazor.WebApp
+dotnet add reference ../Examples.Web.Infrastructure.Assets/
 
 dotnet user-secrets init
 cd ../../

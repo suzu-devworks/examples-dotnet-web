@@ -276,6 +276,7 @@ dotnet new webapp -o src/Examples.Web.Authentication.Oidc
 dotnet sln add src/Examples.Web.Authentication.Oidc/
 cd src/Examples.Web.Authentication.Oidc
 dotnet add reference ../Examples.Web.Infrastructure/
+dotnet add reference ../Examples.Web.Infrastructure.Assets/
 dotnet add package Microsoft.AspNetCore.Authentication.OpenIdConnect
 
 dotnet user-secrets init
