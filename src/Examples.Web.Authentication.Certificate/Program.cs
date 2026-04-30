@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using Examples.Web.Authentication;
+using Examples.Web.Infrastructure.Containers;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Authorization;
 
@@ -90,7 +91,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddSingleton<ICertificateValidationService,
     Examples.Web.Authentication.Services.CertificateValidationService>();
 
+//# Add Forwarded Headers options.
+builder.Services.AddContainerForwardedHeaders();
+
 var app = builder.Build();
+
+//# Enable Forwarded Headers Middleware.
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -18,6 +18,14 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "proxy": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://+:7021;",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }
