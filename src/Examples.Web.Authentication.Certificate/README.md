@@ -6,7 +6,7 @@
   - [Set up this project](#set-up-this-project)
     - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
     - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
-    - [3. Set up Kestrel TLS handshake (appsettings.json)](#3-set-up-kestrel-tls-handshake-appsettingsjson)
+    - [3. Set up Kestrel TLS handshake](#3-set-up-kestrel-tls-handshake)
     - [4. Set up authorization](#4-set-up-authorization)
   - [Authentication flows](#authentication-flows)
 - [Scenarios](#scenarios)
@@ -49,7 +49,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 ```
 
-#### 3. Set up Kestrel TLS handshake (appsettings.json)
+#### 3. Set up Kestrel TLS handshake
+
+Edit `Program.cs`:
+
+```cs
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.ConfigureHttpsDefaults(options =>
+        options.ClientCertificateMode = ClientCertificateMode.RequireCertificate);
+});
+```
+
+Or edit `appsettings.json`:
 
 ```json
 {
@@ -88,7 +102,7 @@ The default certificate authentication handler is configured to refer to the OS'
 Register all intermediate certificates if necessary.
 
 ```shell
-sudo assets/example.ca-root.crt /usr/local/share/ca-certificates/
+sudo cp ./assets/example.ca-root.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 ```
 
@@ -202,3 +216,4 @@ dotnet list package --outdated
 ## References
 
 - [Configure certificate authentication in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/certauth)
+- [Configure client certificates in appsettings.json](https://learn.microsoft.com/ja-jp/aspnet/core/fundamentals/servers/kestrel/endpoints#configure-client-certificates-in-appsettingsjson)

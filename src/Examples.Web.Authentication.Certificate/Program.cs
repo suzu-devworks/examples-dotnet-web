@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var certCollection = CertificateLoader.LoadCertificate(
+var certCollection = CertificateLoader.LoadCertificates(
     builder.Configuration["Authentication:Certificate:CustomTrustStore"]);
 
 builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
