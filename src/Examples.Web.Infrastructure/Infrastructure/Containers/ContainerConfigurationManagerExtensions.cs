@@ -12,16 +12,16 @@ namespace Examples.Web.Infrastructure.Containers;
 public static class ContainerConfigurationManagerExtensions
 {
     /// <summary>
-    /// Adds configuration providers to read secrets from a specified directory (defaulting to /run/secrets) and environment variables.
+    /// Adds a configuration provider to read secrets from a specified directory (defaulting to /run/secrets).
+    /// This preserves the existing configuration provider precedence.
     /// </summary>
-    /// <param name="configuration">The configuration builder to add the providers to.</param>
+    /// <param name="configuration">The configuration builder to add the provider to.</param>
     /// <param name="directoryPath">The directory path to read secrets from.</param>
     /// <returns>The updated configuration builder.</returns>
     public static IConfigurationBuilder AddContainerSecrets(this IConfigurationBuilder configuration,
         string directoryPath = "/run/secrets")
     {
-        return configuration.AddKeyPerFile(directoryPath: directoryPath, optional: true)
-            .AddEnvironmentVariables();
+        return configuration.AddKeyPerFile(directoryPath: directoryPath, optional: true);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public static class ContainerConfigurationManagerExtensions
     {
         if (configuration is not IConfigurationManager configurationManager)
         {
-            throw new InvalidOperationException("Configuration must be of type IConfiguration to read Kestrel certificate password from file.");
+            throw new InvalidOperationException("Configuration must be of type IConfigurationManager to read Kestrel certificate password from file.");
         }
 
         var value = configurationManager.GetSection("Kestrel:Certificates:Default:Password:FILE").Value;

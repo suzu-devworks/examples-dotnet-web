@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # spell-checker: disable
 echo "Generating OpenSSL files..."
 openssl version
@@ -40,4 +40,4 @@ fi
 
 echo ""
 echo "OpenSSL files generated."
-ls -l ${DEST_DIR}/*
+ls -l ${DEST_DIR}/*.{crt,key,pfx}

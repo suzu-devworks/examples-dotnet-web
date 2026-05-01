@@ -1,5 +1,6 @@
 using Examples.Web.Authentication.Basic;
 using Examples.Web.Infrastructure.Containers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //# Add a configuration provider to read secrets from /run/secrets.
