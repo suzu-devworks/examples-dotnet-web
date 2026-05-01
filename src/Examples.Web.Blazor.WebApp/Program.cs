@@ -1,12 +1,22 @@
 using Examples.Web.Blazor.WebApp.Components;
+using Examples.Web.Infrastructure.Containers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//# Add a configuration provider to read secrets from /run/secrets.
+builder.Configuration.AddContainerSecrets();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+//# Add Forwarded Headers options.
+builder.Services.AddProxyForwardedHeaders();
+
 var app = builder.Build();
+
+//# Enable Forwarded Headers Middleware.
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,6 +1,7 @@
 using Examples.Web.Authentication;
 using Examples.Web.Authentication.JwtBearer;
 using Examples.Web.Authentication.Oidc;
+using Examples.Web.Infrastructure.Containers;
 using Examples.Web.Infrastructure.OpenApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//# Add a configuration provider to read secrets from /run/secrets.
+builder.Configuration.AddContainerSecrets();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -118,7 +122,13 @@ builder.Services.AddAuthorizationBuilder()
 builder.Services.Configure<JwtBlacklistOptions>(
     builder.Configuration.GetSection("Authentication:JwtBlacklistOptions"));
 
+//# Add Forwarded Headers options.
+builder.Services.AddProxyForwardedHeaders();
+
 var app = builder.Build();
+
+//# Enable Forwarded Headers Middleware.
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

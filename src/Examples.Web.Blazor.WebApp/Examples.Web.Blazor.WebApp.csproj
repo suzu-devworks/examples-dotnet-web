@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.Web.Infrastructure.Assets\Examples.Web.Infrastructure.Assets.csproj" />
+    <ProjectReference Include="..\Examples.Web.Infrastructure\Examples.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

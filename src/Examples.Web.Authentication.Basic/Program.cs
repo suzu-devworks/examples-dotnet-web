@@ -2,6 +2,9 @@ using Examples.Web.Authentication.Basic;
 using Examples.Web.Infrastructure.Containers;
 var builder = WebApplication.CreateBuilder(args);
 
+//# Add a configuration provider to read secrets from /run/secrets.
+builder.Configuration.AddContainerSecrets();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
@@ -12,7 +15,7 @@ builder.Services.AddAuthentication(defaultScheme: BasicDefaults.AuthenticationSc
 builder.Services.AddControllers();
 
 //# Add Forwarded Headers options.
-builder.Services.AddContainerForwardedHeaders();
+builder.Services.AddProxyForwardedHeaders();
 
 var app = builder.Build();
 

@@ -7,9 +7,10 @@ services:
     networks:
       - interconnect
     tty: true
+    secrets:
+      - Kestrel__Certificates__Default__Password
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${KESTREL_CERT_PASSWORD}
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/etc/ssl/local/localhost.pfx
     volumes:
       # Forwards the local Docker socket to the container.
@@ -17,9 +18,13 @@ services:
       # Update this to wherever you want VS Code to mount the folder of your project
       - ../../:/workspaces:cached
       # Use SSL server certificate
-      - ./web/ssl:/etc/ssl/local:ro
+      - ./ssl:/etc/ssl/local:ro
       # Use Data Protection keys
       - ./.keys:/home/vscode/.aspnet/DataProtection-Keys:rw
+
+secrets:
+  Kestrel__Certificates__Default__Password:
+    file: ./ssl/.password
 
 networks:
   interconnect:
