@@ -1,5 +1,3 @@
-#if NET10_0_OR_GREATER
-
 using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -29,13 +27,18 @@ public static class ProxyServiceCollectionExtensions
         services.Configure<ForwardedHeadersOptions>(options =>
         {
             options.KnownProxies.Clear();
+
+#if NET10_0_OR_GREATER
             options.KnownIPNetworks.Clear();
             options.KnownIPNetworks.Add(trustedProxyNetwork.Value);
+#else
+            options.KnownNetworks.Clear();
+            options.KnownNetworks.Add(new Microsoft.AspNetCore.HttpOverrides.IPNetwork(
+                trustedProxyNetwork.Value.BaseAddress, trustedProxyNetwork.Value.PrefixLength));
+#endif
 
             options.ForwardedHeaders =
                 ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedPrefix;
         });
     }
 }
-
-#endif
