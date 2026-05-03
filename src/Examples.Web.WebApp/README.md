@@ -102,6 +102,7 @@ dotnet new webapp -o src/Examples.Web.WebApp
 dotnet sln add src/Examples.Web.WebApp/
 cd src/Examples.Web.WebApp
 dotnet add reference ../Examples.Web.Infrastructure
+dotnet add reference ../Examples.Web.Infrastructure.Assets/
 dotnet add reference ../fixtures/Examples.Web.HostingStartup1
 dotnet add reference ../fixtures/Examples.Web.HostingStartup2
 

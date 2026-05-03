@@ -10,7 +10,7 @@ services:
     volumes:
       - ./web/nginx.conf.d:/etc/nginx/conf.d:ro
       - ./web/public:/var/www/html:ro
-      - ./web/ssl:/etc/ssl/local:ro
+      - ./ssl:/etc/ssl/local:ro
     healthcheck:
       test: [ "CMD", "curl", "-k", "-f", "https://localhost/healthz" ]
       interval: 30s
