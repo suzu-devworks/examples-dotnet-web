@@ -13,7 +13,7 @@ public static class ContainerConfigurationManagerExtensions
 {
     /// <summary>
     /// Adds a configuration provider to read secrets from a specified directory (defaulting to /run/secrets).
-    /// This preserves the existing configuration provider precedence.
+    /// The provider is appended to the builder, so its values can override existing configuration values for the same keys.
     /// </summary>
     /// <param name="configuration">The configuration builder to add the provider to.</param>
     /// <param name="directoryPath">The directory path to read secrets from.</param>
