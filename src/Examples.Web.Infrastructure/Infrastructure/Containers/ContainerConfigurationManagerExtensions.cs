@@ -50,7 +50,8 @@ public static class ContainerConfigurationManagerExtensions
             throw new FileNotFoundException($"Kestrel certificate password file not found at path: {passwordFilePath}");
         }
 
-        configurationManager["Kestrel:Certificates:Default:Password"] = File.ReadAllText(passwordFilePath);
+        var password = File.ReadAllText(passwordFilePath).TrimEnd('\r', '\n');
+        configurationManager["Kestrel:Certificates:Default:Password"] = password;
         Debug.WriteLine("[ContainerConfigurationManagerExtensions] Set: Kestrel:Certificates:Default:Password from file.");
         return configuration;
     }
