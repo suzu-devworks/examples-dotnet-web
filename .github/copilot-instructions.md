@@ -1,126 +1,66 @@
 # GitHub Copilot Instructions
 
-## Repository Purpose
+## Scope
 
-- This repository is a personal workspace for learning and experimenting with ASP.NET web development.
-- The samples prioritize clarity, reproducibility, and educational value over production-level complexity.
+This file defines only how GitHub Copilot should work in this repository.
+Project facts, architecture, conventions, and validation details are maintained in Serena memories.
 
-## Role
+## Serena References (Source of Truth for What/Why)
 
-- Act as a coding assistant for a learning-oriented ASP.NET monorepo, with full awareness of repository context.
-- Keep changes small, accurate, and easy to review.
-- Preserve existing project conventions unless the user explicitly asks for a policy change.
+- `.serena/memories/project_overview.md`
+- `.serena/memories/style_and_conventions.md`
+- `.serena/memories/suggested_commands.md`
+- `.serena/memories/task_completion.md`
 
-## Constraints
+## How to Work
 
-### Language Constraints (MUST)
+### Language and Communication
 
 - Think and reason in English.
-- Write code, comments, and documentation in English.
-- Links to references are available in both Japanese and English. Do not change the locale segment (e.g. `ja-jp`) in reference URLs unless explicitly asked.
+- Write code, comments, and documentation in concise English.
 - Respond to the user in Japanese in chat.
-- Use concise and clear English in code/comments because this is a learning repository.
-- If this file is modified, show a Japanese translation in chat.
+- Use Japanese for all user-facing explanations, including reviews, summaries, and progress reports.
+- Do not change locale segments in reference URLs (for example `ja-jp`) unless explicitly requested.
 
-### Working Constraints (SHOULD)
+### Change Strategy
 
-- Keep diffs focused and avoid broad style-only refactors.
-- Prefer simple implementations when they satisfy the learning goal.
-- When answering, briefly explain rationale and include source URLs when relevant.
-
-### Commit Conventions (SHOULD)
-
-- Follow [Conventional Commits](https://www.conventionalcommits.org/).
-- Format: `<type>(<scope>): <subject>`
-- Main types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-
-## Tech Stack
-
-- Language: C#
-- Platform: .NET / ASP.NET Core
-- Web frameworks: Minimal API, MVC, Razor Pages, Identity, gRPC
-- Primary topics: authentication (Basic/Cookie/Identity/OAuth), API design, middleware, routing, localization, Swagger/OpenAPI, logging
-- Primary tools: .NET CLI, xUnit v3, Microsoft Testing Platform, NLog, Swagger/Swashbuckle, Dev Containers, GitHub Actions
-- Test runner: Microsoft.Testing.Platform (configured in `global.json`)
-
-## Coding
-
-### Coding Style
-
-- Respect `.editorconfig` and existing style.
-- Use modern C# features available for the targeted framework.
-- For public/internal reusable APIs, add XML documentation comments where useful.
-- Avoid introducing warnings; warnings are treated as errors.
-
-### ASP.NET Pipeline and Configuration
-
-- Preserve middleware ordering in `Program.cs`; order changes can alter behavior.
-- Prefer configuration binding (`builder.Configuration.GetSection(...).Bind(...)`) over hardcoded values.
-- Keep environment-specific behavior (`Development` vs non-development) explicit.
-- Reuse shared infrastructure extensions from `Examples.Web.Infrastructure` when available.
-
-### gRPC and Protobuf Conventions
-
-- Preserve repository-required gRPC/proto build properties and import behavior.
-- Keep proto sharing patterns between server and client projects intact.
-- When changing gRPC-related tool/runtime versions, verify project compatibility notes and run full build/test validation.
-
-### Testing Style and Naming
-
-- Test code should emphasize learning patterns and behavioral verification.
-- Prefer descriptive test names (for example `When_Condition_Then_ExpectedResult`).
-- Keep tests deterministic and minimize dependence on machine-specific settings.
-
-## Project Structure and Execution Context
-
-This repository uses a monorepo structure where multiple learning projects are grouped into one solution.
-
-```console
-src/
-    Examples.Web.Authentication.Basic/         # Basic auth sample
-    Examples.Web.Authentication.Cookie/        # Cookie auth sample
-    Examples.Web.Authentication.Identity/      # ASP.NET Core Identity + external providers
-    Examples.Web.Infrastructure/               # Shared infrastructure extensions
-    Examples.Web.Infrastructure.GrpcClient/    # Shared gRPC client infrastructure
-    Examples.Web.Infrastructure.Swagger/       # Shared Swagger/OpenAPI extensions
-    Examples.Web.Infrastructure.Tests/         # Infrastructure-focused test project
-    Examples.Web.WebApi/                       # REST API sample
-    Examples.Web.WebApi.Grpc/                  # gRPC + JSON transcoding sample
-    Examples.Web.WebApp/                       # Razor Pages/MVC web app sample
-    fixtures/                                  # Supporting fixture projects
-```
-
-- Shared build settings are centralized in `src/Directory.Build.props`.
-- `LatestFramework` is currently `net10.0`, and shared libraries may multi-target LTS frameworks.
-- Primary validation flow at repository root:
-  1. `dotnet tool restore`
-  2. `dotnet restore`
-  3. `dotnet build`
-  4. `dotnet test`
-
-## Configuration and Secrets
-
-- Authentication samples may require external provider settings (for example Google/Microsoft/GitHub OAuth).
-- Never commit real secrets, credentials, API keys, or machine-specific values.
-- Use placeholders in tracked files and document where secrets should be injected (for example user-secrets or environment variables).
-- Keep `appsettings.*.json` safe and reproducible for local learning scenarios.
-
-## Dependencies and Package Sources
-
-- Respect package source configuration in `nuget.config` and keep restore behavior reproducible across local and CI environments.
-- If restore fails for private feeds, use environment-injected credentials following existing CI conventions.
-- Preserve tool-manifest-based workflows and run `dotnet tool restore` before restore/build/test.
-
-## Dev Container Assumptions
-
-- Development is expected to work in a dev container with .NET SDK preinstalled.
-- Prefer commands and workflows that run from repository root in a clean container.
-- When changing environment-dependent behavior, preserve usability in the default container setup.
-
-## Operational Notes
-
-- If requirements are unclear, state assumptions explicitly and proceed with minimal, reversible changes.
+- Keep diffs focused, minimal, and easy to review.
+- Avoid broad style-only refactors unless explicitly requested.
+- Prefer simple, reversible implementations.
+- Preserve existing conventions unless the user asks to change policy.
 - Ask for confirmation before destructive or high-impact changes.
-- In responses, include: what changed, why, how it was verified, and remaining risks.
-- If verification was not run, clearly state why.
-- Prefer official documentation as evidence and provide primary source URLs when applicable.
+
+### Validation and Reporting
+
+- Use the Serena task completion checklist and suggested command flow for verification.
+- For Markdown files related to GitHub Copilot or Serena, run markdownlint and keep formatting clean.
+- If verification is skipped, clearly state why.
+- In responses, include what changed, why, how it was verified, and remaining risks.
+- Prefer official documentation when citing evidence and include primary source URLs when relevant.
+
+### Commit Messages
+
+- Follow Conventional Commits: `<type>(<scope>): <subject>`.
+- Use `feat` for new features, `fix` for bug fixes, `docs` for documentation changes, `style` for formatting, `refactor` for code changes that neither fix a bug nor add a feature, `test` for adding or updating tests, and `chore` for maintenance tasks.
+- Include a brief description of the change in the subject line.
+- If the change is significant, include a more detailed description in the body of the commit message
+- Avoid using vague commit messages like "Update code" or "Fix bug" without context.
+- If the change is a breaking change, include `BREAKING CHANGE:` in the commit message body and describe the impact and necessary actions for users.
+
+### Serena Usage
+
+- Before starting any coding task, consult Serena memories for project conventions and the task completion checklist.
+
+### Tool Usage Priority
+
+- **Symbol-level operations** (find definition, rename, replace body): prefer Serena MCP tools (`find_symbol`, `rename_symbol`, `replace_symbol_body`, etc.) over manual file edits.
+- **Exploration and context gathering**: use built-in tools (`read_file`, `grep_search`, `file_search`, `semantic_search`) — these are faster and do not modify the workspace.
+- **Terminal commands**: use only when built-in tools are clearly insufficient (e.g., running `dotnet build`, `dotnet test`, or scripts). Prefer targeted commands over broad shell pipelines.
+- **File edits**: use `replace_string_in_file` or `multi_replace_string_in_file` for targeted edits; avoid rewriting entire files unless necessary.
+- **Destructive or irreversible actions** (delete files, force push, drop tables): always ask for user confirmation first.
+
+### Security and Secrets
+
+- Never suggest or generate real credentials, secrets, or machine-specific values in tracked files.
+- Use placeholders, `dotnet user-secrets`, or environment variables for sensitive configuration.
+- Flag any existing secrets found in files and recommend remediation before proceeding.

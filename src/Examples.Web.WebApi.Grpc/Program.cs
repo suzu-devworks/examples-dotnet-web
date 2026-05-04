@@ -1,3 +1,4 @@
+using Examples.Web.Infrastructure.Containers;
 using Examples.Web.Infrastructure.GrpcClient;
 using Examples.Web.WebApi.Grpc.Infrastructure;
 using Examples.Web.WebApi.Grpc.Infrastructure.OpenApi;
@@ -6,6 +7,9 @@ using FluentValidation;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//# Add a configuration provider to read secrets from /run/secrets.
+builder.Configuration.AddContainerSecrets();
 
 // Add services to the container.
 builder.Services.AddGrpc(options =>
@@ -24,7 +28,13 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 //# Add custom gRPC client services
 builder.Services.AddGrpcClients(builder.Configuration);
 
+//# Add Forwarded Headers options.
+builder.Services.AddProxyForwardedHeaders();
+
 var app = builder.Build();
+
+//# Enable Forwarded Headers Middleware.
+app.UseForwardedHeaders();
 
 app.UseSwagger();
 if (app.Environment.IsDevelopment())

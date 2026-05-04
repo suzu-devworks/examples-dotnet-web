@@ -11,3 +11,15 @@ This repository is just my personal playground for learning ASP.NET web programm
 The content here might actually be helpful to other developers facing similar issues.
 
 However, please keep in mind that this code is based solely on my own perspective and probably has lots of inaccurate or questionable parts!
+
+## Dev Container Setup
+
+Before starting the devcontainer, prepare the local SSL certificate files used by the container environment.
+
+1. Run the certificate generation script from the repository root.
+
+   ```bash
+   ./.devcontainer/ssl/ssl_cert_generate.sh
+   ```
+
+1. After the certificate files are generated in `.devcontainer/ssl`, start the devcontainer.

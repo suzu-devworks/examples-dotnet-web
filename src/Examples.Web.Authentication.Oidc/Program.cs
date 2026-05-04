@@ -1,10 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
+using Examples.Web.Infrastructure.Containers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//# Add a configuration provider to read secrets from /run/secrets.
+builder.Configuration.AddContainerSecrets();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -85,7 +89,13 @@ builder.Services.AddAuthorizationBuilder()
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+//# Add Forwarded Headers options.
+builder.Services.AddProxyForwardedHeaders();
+
 var app = builder.Build();
+
+//# Enable Forwarded Headers Middleware.
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -353,6 +353,7 @@ MigrationBackup/
 ## Visual Studio Code
 ##
 .vscode/*
+!.vscode/mcp.json
 !.vscode/cspell.json
 !.vscode/settings.json
 !.vscode/tasks.json

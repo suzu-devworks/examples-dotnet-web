@@ -204,6 +204,7 @@ dotnet new webapp -o src/Examples.Web.Authentication.Cookie
 dotnet sln add src/Examples.Web.Authentication.Cookie/
 cd src/Examples.Web.Authentication.Cookie
 dotnet add reference ../Examples.Web.Infrastructure/
+dotnet add reference ../Examples.Web.Infrastructure.Assets/
 
 dotnet user-secrets init
 cd ../../
