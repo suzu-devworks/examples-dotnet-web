@@ -19,7 +19,7 @@ Before starting the devcontainer, prepare the local SSL certificate files used b
 1. Run the certificate generation script from the repository root.
 
    ```bash
-   ./.devcontainer/ssl/ssl_cert_generate.sh
+   ./.devcontainer/ssl/ssl-cert-generate.sh
    ```
 
 1. After the certificate files are generated in `.devcontainer/ssl`, start the devcontainer.

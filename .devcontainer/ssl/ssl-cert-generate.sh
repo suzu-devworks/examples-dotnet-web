@@ -10,7 +10,6 @@ mkdir -p "$DEST_DIR"
 echo "Output to: ${DEST_DIR}"
 
 CONF_FILE=${BASE_DIR}/ssl.conf
-
 echo "Using OpenSSL config: ${CONF_FILE}"
 
 DAYS=30
