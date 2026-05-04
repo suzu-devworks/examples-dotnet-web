@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//# Add a configuration provider to read secrets from /run/secrets.
+builder.Configuration.AddContainerSecrets();
+
 var certCollection = CertificateLoader.LoadCertificates(
     builder.Configuration["Authentication:Certificate:CustomTrustStore"]);
 
@@ -15,7 +18,6 @@ builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServe
     options.ConfigureHttpsDefaults(httpsOptions =>
     {
         // This checks whether the CA is "trusted" during connection and is necessary to complete the TLS handshake.
-
         httpsOptions.ClientCertificateMode =
             Microsoft.AspNetCore.Server.Kestrel.Https.ClientCertificateMode.RequireCertificate;
 
@@ -38,7 +40,6 @@ builder.Services.AddAuthentication(
     {
         // The certificate is retrieved from the established connection and
         // recognized as an ASP.NET Core user (ClaimsPrincipal).
-
         options.ChainTrustValidationMode = X509ChainTrustMode.CustomRootTrust;
         options.CustomTrustStore.AddRange(certCollection);
         options.RevocationMode = X509RevocationMode.NoCheck;
@@ -92,7 +93,7 @@ builder.Services.AddSingleton<ICertificateValidationService,
     Examples.Web.Authentication.Services.CertificateValidationService>();
 
 //# Add Forwarded Headers options.
-builder.Services.AddContainerForwardedHeaders();
+builder.Services.AddProxyForwardedHeaders();
 
 var app = builder.Build();
 

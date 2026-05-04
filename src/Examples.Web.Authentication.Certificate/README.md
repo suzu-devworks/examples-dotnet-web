@@ -102,8 +102,16 @@ The default certificate authentication handler is configured to refer to the OS'
 Register all intermediate certificates if necessary.
 
 ```shell
-sudo cp ./assets/example.ca-root.crt /usr/local/share/ca-certificates/
+sudo cp ./assets/example.ca.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
+```
+
+If you create your own certificate, it will be rejected unless you do not perform a revocation check.
+
+```cs
+builder.Services.AddAuthentication(
+        CertificateAuthenticationDefaults.AuthenticationScheme)
+    .AddCertificate(options => options.RevocationMode = X509RevocationMode.NoCheck);
 ```
 
 ### 2. When managing CA certificates in a custom store
