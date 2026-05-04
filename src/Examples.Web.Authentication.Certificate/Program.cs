@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//# Add a configuration provider to read secrets from /run/secrets.
-builder.Configuration.AddContainerSecrets();
+//# Add a configuration provider to read secrets from /run/secrets and Kestrel certificate password file.
+builder.Configuration.AddContainerSecrets().AddKestrelCertPasswordFile();
 
 var certCollection = CertificateLoader.LoadCertificates(
     builder.Configuration["Authentication:Certificate:CustomTrustStore"]);
