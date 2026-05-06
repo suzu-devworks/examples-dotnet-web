@@ -86,6 +86,24 @@ builder.Services.AddAuthorizationBuilder()
     .RequireAuthenticatedUser()
     .Build());
 
+builder.Services.AddCertificateForwarding(options =>
+{
+    options.CertificateHeader = "X-Client-Cert";
+
+    options.HeaderConverter = (headerValue) =>
+    {
+        X509Certificate2? clientCertificate = null;
+
+        if (!string.IsNullOrWhiteSpace(headerValue))
+        {
+            clientCertificate = X509Certificate2.CreateFromPem(
+                System.Net.WebUtility.UrlDecode(headerValue));
+        }
+
+        return clientCertificate!;
+    };
+});
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
@@ -99,6 +117,9 @@ var app = builder.Build();
 
 //# Enable Forwarded Headers Middleware.
 app.UseForwardedHeaders();
+
+//# Enable Certificate Forwarding Middleware to forward the client certificate from Nginx to ASP.NET Core.
+app.UseCertificateForwarding();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

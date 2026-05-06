@@ -22,6 +22,8 @@ chmod 600 "${PASSWORD_FILE}"
 wc -c < "${PASSWORD_FILE}" | awk '{print "Password length: " $1}'
 echo ""
 
+# Backend mTLS certificates for development environment
+
 # Generate a self-signed mTLS CA certificate for internal use
 openssl ecparam -genkey -name prime256v1 -noout -out "$DEST_DIR/internal-ca.key"
 openssl req -new -x509 -config $CONF_FILE -key "$DEST_DIR/internal-ca.key" -sha256 -days ${DAYS} -out "$DEST_DIR/internal-ca.crt" -subj="/CN=internal mTLS CA"
@@ -49,6 +51,25 @@ openssl x509 -req -in ${DEST_DIR}/internal-dev.csr \
     -out ${DEST_DIR}/internal-dev.crt -days ${DAYS}
 openssl pkcs12 -export -in ${DEST_DIR}/internal-dev.crt -inkey ${DEST_DIR}/internal-dev.key \
     -out ${DEST_DIR}/internal-dev.pfx -passout file:${PASSWORD_FILE}
+
+# Frontend mTLS certificates for external use
+
+# Generate a self-signed mTLS CA certificate for external use
+openssl ecparam -genkey -name prime256v1 -noout -out "$DEST_DIR/external-ca.key"
+openssl req -new -x509 -config $CONF_FILE -key "$DEST_DIR/external-ca.key" -sha256 -days ${DAYS} -out "$DEST_DIR/external-ca.crt" -subj="/CN=external mTLS CA"
+
+# Generate a client certificate for mTLS authentication on the web server
+openssl ecparam -genkey -name prime256v1 -noout -out ${DEST_DIR}/external-client.key
+openssl req -new -config ${CONF_FILE} -batch \
+    -subj "/CN=external-client" \
+    -key ${DEST_DIR}/external-client.key \
+    -out ${DEST_DIR}/external-client.csr
+openssl x509 -req -in ${DEST_DIR}/external-client.csr \
+    -CA ${DEST_DIR}/external-ca.crt -CAkey ${DEST_DIR}/external-ca.key -CAcreateserial \
+    -extfile ${CONF_FILE} -extensions v3_client \
+    -out ${DEST_DIR}/external-client.crt -days ${DAYS}
+openssl pkcs12 -export -in ${DEST_DIR}/external-client.crt -inkey ${DEST_DIR}/external-client.key \
+    -out ${DEST_DIR}/external-client.pfx -passout file:${PASSWORD_FILE}
 
 echo "mTLS certificates generated successfully."
 
