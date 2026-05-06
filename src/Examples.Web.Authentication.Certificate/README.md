@@ -15,6 +15,10 @@
     - [2.1. Set up Authentication](#21-set-up-authentication)
     - [2.2. Configure custom store PATH](#22-configure-custom-store-path)
     - [2.3. Set up Kestrel TLS handshake](#23-set-up-kestrel-tls-handshake)
+  - [3. When using mTLS to secure communication between containers](#3-when-using-mtls-to-secure-communication-between-containers)
+    - [3.1. Create a certificate for mTLS using the shell](#31-create-a-certificate-for-mtls-using-the-shell)
+    - [3.2. Server-side configuration](#32-server-side-configuration)
+    - [3.3. Proxy-side configuration](#33-proxy-side-configuration)
 - [Development](#development)
   - [Build](#build)
   - [Run](#run)
@@ -179,6 +183,56 @@ builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServe
     });
 });
 ```
+
+### 3. When using mTLS to secure communication between containers
+
+Configure a simple backend mTLS:
+
+```mermaid
+graph LR
+    client[Browser/Client]
+    nginx["Nginx<br/>(Reverse Proxy)"]
+    kestrel["Kestrel<br/>(ASP.NET Core)"]
+
+    %% Client to Nginx (Standard TLS)
+    client -- "1. HTTPS Request" --> nginx
+    nginx -. "TLS (Server Auth)" .-> client
+
+    %% Nginx to Kestrel (mTLS)
+    nginx -- "2. HTTPS Request (with Client Cert)" --> kestrel
+
+    %% mTLS Details 
+    kestrel -- "A. Server Certificate Presentation" --> nginx
+    nginx -- "B. Client Certificate Presentation" --> kestrel
+```
+
+#### 3.1. Create a certificate for mTLS using the shell
+
+For simplicity, we will assume that the server certificate verified by the client and the client certificate verified by the server were issued by the same CA.
+
+```text
+─[Root CA]
+  ├─ issue ─> [web:nginx] (clientAuth)
+  └─ issue ─> [dev:kestrel] (serverAuth)
+```
+
+```shell
+./.devcontainer/ssl/mtls/mtls-cert-generate.sh
+```
+
+It is mounted to `/etc/ssl/local` inside the container.
+
+#### 3.2. Server-side configuration
+
+Change the ASP.NET server certificate and start the application.
+
+Since certificate authentication is already configured, clarifying who verifies what will only require configuring the certificate itself.
+
+#### 3.3. Proxy-side configuration
+
+Please refer to the following for nginx configuration:
+
+- [003-secure-dev-proxy.conf](../../.devcontainer/web/nginx.conf.d/locations.d/003-secure-dev-proxy.conf)
 
 ## Development
 
