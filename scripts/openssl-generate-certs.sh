@@ -11,7 +11,7 @@ echo "Output To: ${DEST_DIR}"
 
 CONF_FILE=${FILE_DIR}/openssl.cnf
 
-DAYS=3
+DAYS=30
 echo "Certificate valid for ${DAYS} days"
 
 # Generate a random password file

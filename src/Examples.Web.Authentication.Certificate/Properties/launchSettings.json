@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5026",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7021;http://localhost:5026",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "proxy": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://+:7001;",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_Kestrel__Certificates__Default__Path": "/etc/ssl/local/mtls/internal-dev.pfx",
+        "ASPNETCORE_Kestrel__Certificates__Default__Password__File": "/etc/ssl/local/mtls/.password",
+        "ALLOWED_SAFE_PATHS": "/etc/ssl/local/mtls/",
+        "Authentication:Certificate:CustomTrustStore": "/etc/ssl/local/mtls/"
+      }
+    }
+  }
+}

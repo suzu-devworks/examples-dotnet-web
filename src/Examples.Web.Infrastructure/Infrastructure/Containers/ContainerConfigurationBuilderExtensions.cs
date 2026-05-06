@@ -51,7 +51,7 @@ public static class ContainerConfigurationBuilderExtensions
     /// <exception cref="FileNotFoundException">Thrown if the specified certificate password file does not exist.</exception>
     public static IConfigurationManager AddKestrelCertPasswordFile(this IConfigurationManager configuration)
     {
-        var value = configuration.GetSection("Kestrel:Certificates:Default:Password:FILE").Value;
+        var value = configuration.GetSection("Kestrel:Certificates:Default:Password:File").Value;
         if (string.IsNullOrEmpty(value))
         {
             return configuration;

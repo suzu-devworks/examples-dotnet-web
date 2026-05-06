@@ -364,9 +364,10 @@ MigrationBackup/
 .mono/
 .DS_Store
 .env*
+.password
 *.crt
 *.key
 *.pfx
+*.srl
 .devcontainer/.keys
-.password
 assets/
