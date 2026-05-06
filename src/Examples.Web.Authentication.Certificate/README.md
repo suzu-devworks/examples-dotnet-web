@@ -19,6 +19,10 @@
     - [3.1. Create a certificate for mTLS using the shell](#31-create-a-certificate-for-mtls-using-the-shell)
     - [3.2. Server-side configuration](#32-server-side-configuration)
     - [3.3. Proxy-side configuration](#33-proxy-side-configuration)
+  - [4. When obtaining a client certificate authenticated by a proxy](#4-when-obtaining-a-client-certificate-authenticated-by-a-proxy)
+    - [4.1.  Create a certificate for mTLS using the shell](#41--create-a-certificate-for-mtls-using-the-shell)
+    - [4.2. Server-side configuration](#42-server-side-configuration)
+    - [4.3. Proxy-side configuration](#43-proxy-side-configuration)
 - [Development](#development)
   - [Build](#build)
   - [Run](#run)
@@ -186,7 +190,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServe
 
 ### 3. When using mTLS to secure communication between containers
 
-Configure a simple backend mTLS:
+Configuring a secure web proxy behind the scenes means that even internal communications must verify each other's authenticity every time. In other words, it's a "zero trust" configuration.
 
 ```mermaid
 graph LR
@@ -211,9 +215,9 @@ graph LR
 For simplicity, we will assume that the server certificate verified by the client and the client certificate verified by the server were issued by the same CA.
 
 ```text
-─[Root CA]
-  ├─ issue ─> [web:nginx] (clientAuth)
-  └─ issue ─> [dev:kestrel] (serverAuth)
+─ internal-ca (CA)
+  ├─ issue ─> internal-web[nginx] (clientAuth)
+  └─ issue ─> internal-dev[kestrel] (serverAuth)
 ```
 
 ```shell
@@ -232,7 +236,80 @@ Since certificate authentication is already configured, clarifying who verifies 
 
 Please refer to the following for nginx configuration:
 
-- [003-secure-dev-proxy.conf](../../.devcontainer/web/nginx.conf.d/locations.d/003-secure-dev-proxy.conf)
+- [003-backend-mtls-proxy.conf](../../.devcontainer/web/nginx.conf.d/locations.d/003-backend-mtls-proxy.conf)
+
+### 4. When obtaining a client certificate authenticated by a proxy
+
+Client certificates authenticated by the proxy can be obtained using the proxy's custom header.
+
+```mermaid
+graph LR
+    client[Browser/Client]
+    nginx["Nginx<br/>(Reverse Proxy)"]
+    kestrel["Kestrel<br/>(ASP.NET Core)"]
+
+    %% Client to Nginx (Standard TLS)
+    client -- "1. HTTPS Request (with Client Cert)" --> nginx
+    client -- "B. Client Certificate Presentation" --> nginx
+    nginx -. "TLS (Server Auth)" .-> client
+
+    %% Nginx to Kestrel
+    nginx -- "2. HTTP or HTTPS Request" --> kestrel
+    nginx -- "B. Client Certificate Forwarding (X-Client-Cert)" --> kestrel
+```
+
+For certificate transfers alone, it seems that either HTTP or HTTPS is acceptable between Proxy and Kestrel.
+
+#### 4.1.  Create a certificate for mTLS using the shell
+
+The certificates we receive from customers are issued by a different Certificate Authority (CA) than server certificates or certificates used internally.
+
+```text
+- external-ca (CA)
+  └─ issue ─> external-client (clientAuth)
+```
+
+#### 4.2. Server-side configuration
+
+Configure the restoration of the transferred client certificate in `Program.cs`:
+
+```cs
+builder.Services.AddCertificateForwarding(options =>
+{
+    options.CertificateHeader = "X-Client-Cert";
+
+    options.HeaderConverter = (headerValue) =>
+    {
+        X509Certificate2? clientCertificate = null;
+
+        if (!string.IsNullOrWhiteSpace(headerValue))
+        {
+            clientCertificate = X509Certificate2.CreateFromPem(
+                System.Net.WebUtility.UrlDecode(headerValue));
+        }
+
+        return clientCertificate!;
+    };
+});
+```
+
+Middleware must run before UseAuthentication:
+
+```cs
+//# Enable Certificate Forwarding Middleware to forward the client certificate from Nginx to ASP.NET Core.
+app.UseCertificateForwarding();
+
+app.UseAuthentication();
+app.UseAuthorization();
+```
+
+#### 4.3. Proxy-side configuration
+
+Please refer to the following for nginx configuration:
+
+- [004-frontend-mtls-proxy.conf](../../.devcontainer/web/nginx.conf.d/locations.d/004-frontend-mtls-proxy.conf)
+
+This configuration includes not only the frontend mTLS settings but also the zero-trust backend mTLS.
 
 ## Development
 
