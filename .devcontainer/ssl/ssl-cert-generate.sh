@@ -31,11 +31,11 @@ openssl req -new -x509 -config ${CONF_FILE} -batch \
 openssl pkcs12 -export -in ${DEST_DIR}/localhost.crt -inkey ${DEST_DIR}/localhost.key \
     -out ${DEST_DIR}/localhost.pfx -passout file:${PASSWORD_FILE}
 
-echo "SSL certificate generated successfully."
-
 if [ $? -eq 0 ]; then
     rm -f ${DEST_DIR}/*.csr
 fi
+
+echo "SSL certificate generated successfully."
 
 echo ""
 echo "OpenSSL files generated."

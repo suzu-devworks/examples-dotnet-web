@@ -135,7 +135,7 @@ Furthermore, enabling revocation checks (CRL, OCSP) resulted in failure.
 Configure the options within `AddCertificate`:
 
 ```cs
-var certCollection = CertificateLoader.LoadCertificate(
+var certCollection = CertificateLoader.LoadCertificates(
     builder.Configuration["Authentication:Certificate:CustomTrustStore"]);
 
 builder.Services.AddAuthentication(

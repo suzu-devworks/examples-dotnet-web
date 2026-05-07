@@ -71,11 +71,11 @@ openssl x509 -req -in ${DEST_DIR}/external-client.csr \
 openssl pkcs12 -export -in ${DEST_DIR}/external-client.crt -inkey ${DEST_DIR}/external-client.key \
     -out ${DEST_DIR}/external-client.pfx -passout file:${PASSWORD_FILE}
 
-echo "mTLS certificates generated successfully."
-
 if [ $? -eq 0 ]; then
     rm -f ${DEST_DIR}/*.csr
 fi
+
+echo "mTLS certificates generated successfully."
 
 echo ""
 echo "OpenSSL files generated."
