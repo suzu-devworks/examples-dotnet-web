@@ -6,23 +6,21 @@
   - [Set up this project](#set-up-this-project)
     - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
     - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
-    - [3. Set up Kestrel TLS handshake](#3-set-up-kestrel-tls-handshake)
-    - [4. Set up authorization](#4-set-up-authorization)
-  - [Authentication flows](#authentication-flows)
+    - [3. Set up authorization](#3-set-up-authorization)
+    - [4. Set up Kestrel TLS handshake](#4-set-up-kestrel-tls-handshake)
 - [Scenarios](#scenarios)
   - [1. When importing a CA certificate into the OS](#1-when-importing-a-ca-certificate-into-the-os)
   - [2. When managing CA certificates in a custom store](#2-when-managing-ca-certificates-in-a-custom-store)
-    - [2.1. Set up Authentication](#21-set-up-authentication)
-    - [2.2. Configure custom store PATH](#22-configure-custom-store-path)
-    - [2.3. Set up Kestrel TLS handshake](#23-set-up-kestrel-tls-handshake)
-  - [3. When using mTLS to secure communication between containers](#3-when-using-mtls-to-secure-communication-between-containers)
+    - [2.1. Configure Authentication](#21-configure-authentication)
+    - [2.2. Configure custom store path](#22-configure-custom-store-path)
+    - [2.3. Configure Kestrel custom trust store](#23-configure-kestrel-custom-trust-store)
     - [3.1. Create a certificate for mTLS using the shell](#31-create-a-certificate-for-mtls-using-the-shell)
-    - [3.2. Server-side configuration](#32-server-side-configuration)
-    - [3.3. Proxy-side configuration](#33-proxy-side-configuration)
+    - [3.2. Kestrel mTLS setup](#32-kestrel-mtls-setup)
+    - [3.3. Nginx mTLS proxy setup](#33-nginx-mtls-proxy-setup)
   - [4. When obtaining a client certificate authenticated by a proxy](#4-when-obtaining-a-client-certificate-authenticated-by-a-proxy)
-    - [4.1.  Create a certificate for mTLS using the shell](#41--create-a-certificate-for-mtls-using-the-shell)
-    - [4.2. Server-side configuration](#42-server-side-configuration)
-    - [4.3. Proxy-side configuration](#43-proxy-side-configuration)
+    - [4.1. Create a certificate for client authentication via proxy](#41-create-a-certificate-for-client-authentication-via-proxy)
+    - [4.2. Certificate forwarding (ASP.NET Core)](#42-certificate-forwarding-aspnet-core)
+    - [4.3. Certificate forwarding (Nginx)](#43-certificate-forwarding-nginx)
 - [Development](#development)
   - [Build](#build)
   - [Run](#run)
@@ -44,53 +42,40 @@ To restrict access to only authenticated users on a page-by-page basis, use app-
 Add the following to `Program.cs`:
 
 ```cs
+var customTrustStorePath = builder.Configuration["Authentication:Certificate:CustomTrustStore"];
+var customTrustStore = string.IsNullOrEmpty(customTrustStorePath) ? null
+    : CertificateLoader.LoadCertificates(customTrustStorePath);
+
 builder.Services.AddAuthentication(
         CertificateAuthenticationDefaults.AuthenticationScheme)
-    .AddCertificate();
+    .AddCertificate(options =>
+    {
+        options.RevocationMode = X509RevocationMode.NoCheck;
+
+        if (customTrustStore is not null)
+        {
+            options.ChainTrustValidationMode = X509ChainTrustMode.CustomRootTrust;
+            options.CustomTrustStore.AddRange(customTrustStore);
+        }
+    });
 ```
 
 #### 2. Set up middleware pipeline (Program.cs)
 
 ```cs
+app.UseCertificateForwarding();
+
+app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 ```
 
-#### 3. Set up Kestrel TLS handshake
-
-Edit `Program.cs`:
-
-```cs
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.Configure<KestrelServerOptions>(options =>
-{
-    options.ConfigureHttpsDefaults(options =>
-        options.ClientCertificateMode = ClientCertificateMode.RequireCertificate);
-});
-```
-
-Or edit `appsettings.json`:
-
-```json
-{
-  "Kestrel": {
-    "Endpoints": {
-      "Https": {
-        "Url": "https://+:7021",
-        "ClientCertificateMode": "RequireCertificate"
-      }
-    }
-  },
-}
-```
-
-#### 4. Set up authorization
+#### 3. Set up authorization
 
 Page-level authentication is done using AuthorizeAttribute, just like other authentication methods.
 
-However, since certificate authentication requires TLS when accessing the site, it seems like it wouldn't make a difference if everything was done on a page-by-page basis.
+In this sample, a fallback policy is applied so all pages require authenticated users by default.
 
 ```cs
 builder.Services.AddAuthorizationBuilder()
@@ -99,7 +84,39 @@ builder.Services.AddAuthorizationBuilder()
     .Build());
 ```
 
-### Authentication flows
+#### 4. Set up Kestrel TLS handshake
+
+Set up `ClientCertificateMode` to require a client certificate during the TLS handshake.
+
+Edit `Program.cs`:
+
+```cs
+builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
+{
+    options.ConfigureHttpsDefaults(httpsOptions =>
+    {
+        httpsOptions.ClientCertificateMode =
+            Microsoft.AspNetCore.Server.Kestrel.Https.ClientCertificateMode.RequireCertificate;
+    });
+});
+```
+
+You can also set up `ClientCertificateMode` in `appsettings.json`:
+
+```json
+{
+  "Kestrel": {
+      "Endpoints": {
+          "Https": {
+              "Url": "https://+:7021",
+              "ClientCertificateMode": "RequireCertificate"
+          }
+      }
+  }
+}
+```
+
+For advanced TLS settings with custom trust store, see scenario 2.3.
 
 ## Scenarios
 
@@ -130,7 +147,7 @@ The official documentation suggested it could be done with `ChainTrustValidation
 
 Furthermore, enabling revocation checks (CRL, OCSP) resulted in failure.
 
-#### 2.1. Set up Authentication
+#### 2.1. Configure Authentication
 
 Configure the options within `AddCertificate`:
 
@@ -148,7 +165,7 @@ builder.Services.AddAuthentication(
     });
 ```
 
-#### 2.2. Configure custom store PATH
+#### 2.2. Configure custom store path
 
 This is specified in appsettings.json:
 
@@ -162,18 +179,15 @@ This is specified in appsettings.json:
 }
 ```
 
-#### 2.3. Set up Kestrel TLS handshake
+#### 2.3. Configure Kestrel custom trust store
 
-This setting doesn't seem possible in `appsettings.json`, so it requires directly modifying `Program.cs`:
+Configure `OnAuthenticate` in `Program.cs` to apply a custom certificate chain policy with the custom trust store for the TLS handshake.
 
-```cs
+Use the `certCollection` loaded from the configuration path (see section 2.1):
 builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
 {
     options.ConfigureHttpsDefaults(httpsOptions =>
     {
-        httpsOptions.ClientCertificateMode =
-            Microsoft.AspNetCore.Server.Kestrel.Https.ClientCertificateMode.RequireCertificate;
-
         httpsOptions.OnAuthenticate = (context, sslOptions) =>
         {
             sslOptions.CertificateChainPolicy = new X509ChainPolicy
@@ -186,11 +200,16 @@ builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServe
         };
     });
 });
+
 ```
+
+`ClientCertificateMode` can be configured in section 4 (`Program.cs` or `appsettings.json`).
 
 ### 3. When using mTLS to secure communication between containers
 
 Configuring a secure web proxy behind the scenes means that even internal communications must verify each other's authenticity every time. In other words, it's a "zero trust" configuration.
+
+In this scenario, both Nginx and Kestrel exchange certificates during the TLS handshake (mutual mTLS).
 
 ```mermaid
 graph LR
@@ -226,21 +245,23 @@ For simplicity, we will assume that the server certificate verified by the clien
 
 It is mounted to `/etc/ssl/local` inside the container.
 
-#### 3.2. Server-side configuration
+#### 3.2. Kestrel mTLS setup
 
 Change the ASP.NET server certificate and start the application.
 
 Since certificate authentication is already configured, clarifying who verifies what will only require configuring the certificate itself.
 
-#### 3.3. Proxy-side configuration
+#### 3.3. Nginx mTLS proxy setup
 
-Please refer to the following for nginx configuration:
+See the following nginx configuration:
 
 - [003-backend-mtls-proxy.conf](../../.devcontainer/web/nginx.conf.d/locations.d/003-backend-mtls-proxy.conf)
 
 ### 4. When obtaining a client certificate authenticated by a proxy
 
 Client certificates authenticated by the proxy can be obtained using the proxy's custom header.
+
+In this scenario, the client presents the certificate to Nginx, and Nginx forwards it to Kestrel via a custom header (X-Client-Cert). Kestrel does not perform the TLS handshake with the client, but receives and validates the forwarded certificate.
 
 ```mermaid
 graph LR
@@ -254,13 +275,13 @@ graph LR
     nginx -. "TLS (Server Auth)" .-> client
 
     %% Nginx to Kestrel
-    nginx -- "2. HTTP or HTTPS Request" --> kestrel
+    nginx -- "2. HTTP Request" --> kestrel
     nginx -- "B. Client Certificate Forwarding (X-Client-Cert)" --> kestrel
 ```
 
-For certificate transfers alone, it seems that either HTTP or HTTPS is acceptable between Proxy and Kestrel.
+For certificate forwarding alone, either HTTP or HTTPS can be used between Proxy and Kestrel.
 
-#### 4.1.  Create a certificate for mTLS using the shell
+#### 4.1. Create a certificate for client authentication via proxy
 
 The certificates we receive from customers are issued by a different Certificate Authority (CA) than server certificates or certificates used internally.
 
@@ -269,9 +290,9 @@ The certificates we receive from customers are issued by a different Certificate
   └─ issue ─> external-client (clientAuth)
 ```
 
-#### 4.2. Server-side configuration
+#### 4.2. Certificate forwarding (ASP.NET Core)
 
-Configure the restoration of the transferred client certificate in `Program.cs`:
+Configure client certificate restoration from the forwarded header in `Program.cs`:
 
 ```cs
 builder.Services.AddCertificateForwarding(options =>
@@ -280,15 +301,20 @@ builder.Services.AddCertificateForwarding(options =>
 
     options.HeaderConverter = (headerValue) =>
     {
-        X509Certificate2? clientCertificate = null;
-
-        if (!string.IsNullOrWhiteSpace(headerValue))
+        if (string.IsNullOrWhiteSpace(headerValue))
         {
-            clientCertificate = X509Certificate2.CreateFromPem(
-                System.Net.WebUtility.UrlDecode(headerValue));
+            return null!;
         }
 
-        return clientCertificate!;
+        var clientCertificate = X509Certificate2.CreateFromPem(
+            System.Net.WebUtility.UrlDecode(headerValue));
+
+        if (clientCertificate is null)
+        {
+            return null!;
+        }
+
+        return clientCertificate;
     };
 });
 ```
@@ -303,13 +329,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 ```
 
-#### 4.3. Proxy-side configuration
+#### 4.3. Certificate forwarding (Nginx)
 
-Please refer to the following for nginx configuration:
+See the following nginx configuration:
 
-- [004-frontend-mtls-proxy.conf](../../.devcontainer/web/nginx.conf.d/locations.d/004-frontend-mtls-proxy.conf)
-
-This configuration includes not only the frontend mTLS settings but also the zero-trust backend mTLS.
+- [server-001-client-cert-auth.conf](../../.devcontainer/web/nginx.conf.d/server-001-client-cert-auth.conf)
 
 ## Development
 
