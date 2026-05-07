@@ -3,10 +3,10 @@
 ## Primary Workflow (run from repository root)
 
 ```bash
-dotnet tool restore       # Restore .NET tools
-dotnet restore            # Restore NuGet packages
-dotnet build              # Build all projects
-dotnet test               # Run all tests
+dotnet tool restore                     # Restore .NET tools
+dotnet restore examples-dotnet-web.slnx # Restore NuGet packages
+dotnet build examples-dotnet-web.slnx   # Build all projects
+dotnet test examples-dotnet-web.slnx    # Run all tests
 ```
 
 ## Individual Project
@@ -31,5 +31,5 @@ dotnet msbuild -t:RemoveDirectories   # Remove bin/ and obj/
 ## Certificate setup (Dev Container)
 
 ```bash
-./.devcontainer/ssl/ssl_cert_generate.sh
+./.devcontainer/ssl/ssl-cert-generate.sh
 ```
