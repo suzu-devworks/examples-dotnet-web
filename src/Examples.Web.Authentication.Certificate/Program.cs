@@ -92,15 +92,23 @@ builder.Services.AddCertificateForwarding(options =>
 
     options.HeaderConverter = (headerValue) =>
     {
-        X509Certificate2? clientCertificate = null;
+        // Framework's delegate signature doesn't allow null,
+        // but the middleware expects null if no cert is found.
 
-        if (!string.IsNullOrWhiteSpace(headerValue))
+        if (string.IsNullOrWhiteSpace(headerValue))
         {
-            clientCertificate = X509Certificate2.CreateFromPem(
-                System.Net.WebUtility.UrlDecode(headerValue));
+            return null!;
         }
 
-        return clientCertificate!;
+        var clientCertificate = X509Certificate2.CreateFromPem(
+            System.Net.WebUtility.UrlDecode(headerValue));
+
+        if (clientCertificate is null)
+        {
+            return null!;
+        }
+
+        return clientCertificate;
     };
 });
 
