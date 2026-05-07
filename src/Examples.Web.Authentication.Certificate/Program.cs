@@ -10,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 //# Add a configuration provider to read secrets from /run/secrets and Kestrel certificate password file.
 builder.Configuration.AddContainerSecrets().AddKestrelCertPasswordFile();
 
-var certCollection = CertificateLoader.LoadCertificates(
-    builder.Configuration["Authentication:Certificate:CustomTrustStore"]);
+var customTrustStorePath = builder.Configuration["Authentication:Certificate:CustomTrustStore"];
+var customTrustStore = string.IsNullOrEmpty(customTrustStorePath) ? null
+    : CertificateLoader.LoadCertificates(customTrustStorePath);
 
 builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
 {
@@ -21,16 +22,18 @@ builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServe
         httpsOptions.ClientCertificateMode =
             Microsoft.AspNetCore.Server.Kestrel.Https.ClientCertificateMode.RequireCertificate;
 
-        httpsOptions.OnAuthenticate = (context, sslOptions) =>
+        if (customTrustStore is not null)
         {
-            sslOptions.CertificateChainPolicy = new X509ChainPolicy
+            httpsOptions.OnAuthenticate = (context, sslOptions) =>
             {
-                TrustMode = X509ChainTrustMode.CustomRootTrust,
-                RevocationMode = X509RevocationMode.NoCheck
+                sslOptions.CertificateChainPolicy = new X509ChainPolicy
+                {
+                    TrustMode = X509ChainTrustMode.CustomRootTrust,
+                    RevocationMode = X509RevocationMode.NoCheck,
+                };
+                sslOptions.CertificateChainPolicy.CustomTrustStore.AddRange(customTrustStore);
             };
-
-            sslOptions.CertificateChainPolicy.CustomTrustStore.AddRange(certCollection);
-        };
+        }
     });
 });
 
@@ -40,9 +43,14 @@ builder.Services.AddAuthentication(
     {
         // The certificate is retrieved from the established connection and
         // recognized as an ASP.NET Core user (ClaimsPrincipal).
-        options.ChainTrustValidationMode = X509ChainTrustMode.CustomRootTrust;
-        options.CustomTrustStore.AddRange(certCollection);
+
         options.RevocationMode = X509RevocationMode.NoCheck;
+
+        if (customTrustStore is not null)
+        {
+            options.ChainTrustValidationMode = X509ChainTrustMode.CustomRootTrust;
+            options.CustomTrustStore.AddRange(customTrustStore);
+        }
 
         options.Events = new CertificateAuthenticationEvents
         {

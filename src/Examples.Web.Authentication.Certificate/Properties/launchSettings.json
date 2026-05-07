@@ -22,13 +22,22 @@
     "proxy": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "applicationUrl": "https://+:7001;",
+      "applicationUrl": "http://+:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
+        "Authentication:Certificate:CustomTrustStore": "/etc/ssl/local/mtls/"
+      }
+    },
+    "proxy-with-mtls": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://+:7001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Authentication:Certificate:CustomTrustStore": "/etc/ssl/local/mtls/",
         "ASPNETCORE_Kestrel__Certificates__Default__Path": "/etc/ssl/local/mtls/internal-dev.pfx",
         "ASPNETCORE_Kestrel__Certificates__Default__Password__File": "/etc/ssl/local/mtls/.password",
         "ALLOWED_SAFE_PATHS": "/etc/ssl/local/mtls/",
-        "Authentication:Certificate:CustomTrustStore": "/etc/ssl/local/mtls/"
       }
     }
   }

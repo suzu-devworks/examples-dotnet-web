@@ -6,14 +6,11 @@ public static class CertificateLoader
 {
     private static readonly HashSet<string> CertificateExtensions = [".crt", ".cer", ".pem"];
 
-    public static X509Certificate2Collection LoadCertificates(string? customTrustStorePath)
+    public static X509Certificate2Collection LoadCertificates(string customTrustStorePath)
     {
-        var path = Path.Combine(Environment.CurrentDirectory, customTrustStorePath ?? string.Empty);
-        if (string.IsNullOrEmpty(customTrustStorePath))
-        {
-            throw new DirectoryNotFoundException($"The specified path '{customTrustStorePath}' does not exist.");
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(customTrustStorePath, nameof(customTrustStorePath));
 
+        var path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, customTrustStorePath));
         var store = new X509Certificate2Collection();
 
         if (File.Exists(path))
@@ -38,7 +35,6 @@ public static class CertificateLoader
             return store;
         }
 
-        throw new DirectoryNotFoundException($"The specified path '{customTrustStorePath}' does not exist.");
-
+        throw new DirectoryNotFoundException($"The custom trust store path '{path}' does not exist.");
     }
 }
