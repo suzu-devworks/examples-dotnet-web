@@ -5,7 +5,8 @@ services:
       - interconnect
     ports:
       - "8080-8089:80"
-      - "8443-8452:443"
+      - "8444-8453:443"
+      - "8443:8443"
     restart: no
     volumes:
       - ./web/nginx.conf.d:/etc/nginx/conf.d:ro
