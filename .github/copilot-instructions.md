@@ -11,6 +11,7 @@ Project facts, architecture, conventions, and validation details are maintained 
 - `.serena/memories/style_and_conventions.md`
 - `.serena/memories/suggested_commands.md`
 - `.serena/memories/task_completion.md`
+- `.serena/memories/workspace_state.md` for generated session-start workspace facts
 
 ## How to Work
 
@@ -50,6 +51,7 @@ Project facts, architecture, conventions, and validation details are maintained 
 ### Serena Usage
 
 - Before starting any coding task, consult Serena memories for project conventions and the task completion checklist.
+- Use `.serena/memories/workspace_state.md` when current branch, git status, or workspace session facts matter.
 
 ### Tool Usage Priority
 
