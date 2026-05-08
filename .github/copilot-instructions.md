@@ -67,3 +67,16 @@ in the skills listed below.
   entire files unless necessary.
 - **Destructive or irreversible actions** (delete files, force push,
   drop tables): always ask for user confirmation first.
+
+### MCP Usage
+
+- **Microsoft products** (Azure, .NET, Microsoft 365, Power Platform, etc.):
+  always use the `microsoft_docs_search` MCP tool to retrieve the latest
+  official documentation before answering. Do not rely solely on training
+  data. Include the Microsoft Learn document URL(s) consulted in every
+  response.
+- **Library and framework specifications or setup**: always use the
+  Context7 MCP (`mcp_io_github_ups_resolve-library-id` then
+  `mcp_io_github_ups_get-library-docs`) to fetch the latest official
+  documentation. Prioritize information obtained via Context7 over
+  training data, which may be outdated.
