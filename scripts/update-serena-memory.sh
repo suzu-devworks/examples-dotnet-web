@@ -1,4 +1,5 @@
 #!/bin/sh
+# spell-checker: disable
 set -eu
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
