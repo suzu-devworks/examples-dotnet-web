@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Examples.Web.Authentication.Basic/Examples.Web.Authentication.Basic.csproj" />
+    <Project Path="src/Examples.Web.Authentication.Certificate/Examples.Web.Authentication.Certificate.csproj" />
     <Project Path="src/Examples.Web.Authentication.Cookie/Examples.Web.Authentication.Cookie.csproj" />
     <Project Path="src/Examples.Web.Authentication.Identity/Examples.Web.Authentication.Identity.csproj" />
     <Project Path="src/Examples.Web.Authentication.JwtBearer/Examples.Web.Authentication.JwtBearer.csproj" />

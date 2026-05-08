@@ -364,9 +364,13 @@ MigrationBackup/
 .mono/
 .DS_Store
 .env*
+.password
 *.crt
 *.key
 *.pfx
+*.srl
 .devcontainer/.keys
-.password
 assets/
+
+# Generated Serena workspace snapshot
+.serena/memories/workspace_state.md
