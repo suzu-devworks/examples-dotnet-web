@@ -4,11 +4,14 @@
 
 This file defines only how GitHub Copilot should work in this repository.
 Project facts, architecture, conventions, and validation details are maintained
-in the repository context skill.
+in the skills listed below.
 
 ## Repository Context Source
 
 - `.github/skills/repository-context/SKILL.md`
+- `.github/skills/csharp-coding-standards/SKILL.md`
+- `.github/skills/commit-convention/SKILL.md`
+- `.github/skills/security-secrets/SKILL.md`
 
 ## How to Work
 
@@ -32,7 +35,7 @@ in the repository context skill.
 
 ### Validation and Reporting
 
-- Use the repository context skill for verification flow and
+- Use the repository-context skill for verification flow and
   project-specific commands.
 - For Markdown files related to GitHub Copilot or workspace skills,
   run markdownlint and keep formatting clean.
@@ -41,24 +44,9 @@ in the repository context skill.
 - Prefer official documentation when citing evidence and include primary
   source URLs when relevant.
 
-### Commit Messages
-
-- Follow Conventional Commits: `<type>(<scope>): <subject>`.
-- Use `feat` for new features, `fix` for bug fixes, `docs` for
-  documentation changes, `style` for formatting, `refactor` for code
-  changes that neither fix a bug nor add a feature, `test` for adding or
-  updating tests, and `chore` for maintenance tasks.
-- Include a brief description of the change in the subject line.
-- If the change is significant, include a more detailed description in the
-  body of the commit message.
-- Avoid using vague commit messages like "Update code" or "Fix bug" without context.
-- If the change is a breaking change, include `BREAKING CHANGE:` in the
-  commit message body and describe the impact and necessary actions for
-  users.
-
 ### Repository Context Usage
 
-- Before starting any coding task, consult the repository context skill
+- Before starting any coding task, consult the relevant skills
   for project conventions and the task completion checklist.
 - Derive current branch, git status, and live workspace facts from the
   current workspace context instead of cached snapshots.
@@ -79,11 +67,3 @@ in the repository context skill.
   entire files unless necessary.
 - **Destructive or irreversible actions** (delete files, force push,
   drop tables): always ask for user confirmation first.
-
-### Security and Secrets
-
-- Never suggest or generate real credentials, secrets, or machine-
-  specific values in tracked files.
-- Use placeholders, `dotnet user-secrets`, or environment variables for
-  sensitive configuration.
-- Flag any existing secrets found in files and recommend remediation before proceeding.
