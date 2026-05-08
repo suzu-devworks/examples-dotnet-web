@@ -371,6 +371,3 @@ MigrationBackup/
 *.srl
 .devcontainer/.keys
 assets/
-
-# Generated Serena workspace snapshot
-.serena/memories/workspace_state.md
