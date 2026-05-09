@@ -1,17 +1,17 @@
 {
   "version": "0.2",
   "ignorePaths": [
-    ".git",
     ".devcontainer",
-    ".github",
-    ".vscode",
     ".editorconfig",
+    ".git",
     ".gitattributes",
+    ".github",
     ".gitignore",
     ".prettier*",
-    "dotnet-tools.json",
+    ".vscode",
     "*.csproj",
     "*.slnx",
+    "dotnet-tools.json",
     "launchSettings.json"
   ],
   "words": [
