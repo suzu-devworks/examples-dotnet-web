@@ -1,68 +1,86 @@
 # GitHub Copilot Instructions
 
-## Scope
-
-This file defines only how GitHub Copilot should work in this repository.
-Project facts, architecture, conventions, and validation details are maintained in Serena memories.
-
-## Serena References (Source of Truth for What/Why)
-
-- `.serena/memories/project_overview.md`
-- `.serena/memories/style_and_conventions.md`
-- `.serena/memories/suggested_commands.md`
-- `.serena/memories/task_completion.md`
-- `.serena/memories/workspace_state.md` for generated session-start workspace facts
-
-## How to Work
-
-### Language and Communication
+## Language and Communication
 
 - Think and reason in English.
 - Write code, comments, and documentation in concise English.
 - Respond to the user in Japanese in chat.
-- Use Japanese for all user-facing explanations, including reviews, summaries, and progress reports.
-- Do not change locale segments in reference URLs (for example `ja-jp`) unless explicitly requested.
+- Use Japanese for all user-facing explanations, including reviews,
+  summaries, and progress reports.
+- Do not change locale segments in reference URLs
+  (for example `ja-jp`) unless explicitly requested.
 
-### Change Strategy
+---
+
+## Security and Secrets
+
+- Never commit real credentials, secrets, or machine-specific values
+  in tracked files.
+- Use placeholders, `dotnet user-secrets`, or environment variables
+  for sensitive configuration.
+- Flag any existing secrets found in files and recommend remediation
+  before proceeding.
+
+---
+
+## Change Strategy
 
 - Keep diffs focused, minimal, and easy to review.
 - Avoid broad style-only refactors unless explicitly requested.
 - Prefer simple, reversible implementations.
 - Preserve existing conventions unless the user asks to change policy.
 - Ask for confirmation before destructive or high-impact changes.
+- Ask for confirmation before adding/upgrading dependencies.
+- Ask for confirmation before changing public API behavior.
 
-### Validation and Reporting
+## Priority Order
 
-- Use the Serena task completion checklist and suggested command flow for verification.
-- For Markdown files related to GitHub Copilot or Serena, run markdownlint and keep formatting clean.
-- If verification is skipped, clearly state why.
-- In responses, include what changed, why, how it was verified, and remaining risks.
-- Prefer official documentation when citing evidence and include primary source URLs when relevant.
+When instructions conflict, follow this order:
 
-### Commit Messages
+1. System/developer instructions.
+2. This repository instruction file.
+3. User request.
+4. Existing codebase conventions.
 
-- Follow Conventional Commits: `<type>(<scope>): <subject>`.
-- Use `feat` for new features, `fix` for bug fixes, `docs` for documentation changes, `style` for formatting, `refactor` for code changes that neither fix a bug nor add a feature, `test` for adding or updating tests, and `chore` for maintenance tasks.
-- Include a brief description of the change in the subject line.
-- If the change is significant, include a more detailed description in the body of the commit message
-- Avoid using vague commit messages like "Update code" or "Fix bug" without context.
-- If the change is a breaking change, include `BREAKING CHANGE:` in the commit message body and describe the impact and necessary actions for users.
+---
 
-### Serena Usage
+## Tool Usage
 
-- Before starting any coding task, consult Serena memories for project conventions and the task completion checklist.
-- Use `.serena/memories/workspace_state.md` when current branch, git status, or workspace session facts matter.
+- **Symbol-level operations** (find definition, rename, replace body):
+  prefer workspace-native symbol-aware tools over broad manual rewrites.
+- **Exploration and context gathering**: use built-in tools
+  (`read_file`, `grep_search`, `file_search`, `semantic_search`).
+- **Terminal**: use only when built-in tools are insufficient, such as
+  running `dotnet build`, `dotnet test`, or scripts.
+- **File edits**: use `apply_patch` for targeted edits and avoid
+  rewriting entire files unless necessary.
+- **Destructive or irreversible actions** (delete files, force push,
+  drop tables): always ask for user confirmation first.
 
-### Tool Usage Priority
+## MCP Usage
 
-- **Symbol-level operations** (find definition, rename, replace body): prefer Serena MCP tools (`find_symbol`, `rename_symbol`, `replace_symbol_body`, etc.) over manual file edits.
-- **Exploration and context gathering**: use built-in tools (`read_file`, `grep_search`, `file_search`, `semantic_search`) — these are faster and do not modify the workspace.
-- **Terminal commands**: use only when built-in tools are clearly insufficient (e.g., running `dotnet build`, `dotnet test`, or scripts). Prefer targeted commands over broad shell pipelines.
-- **File edits**: use `replace_string_in_file` or `multi_replace_string_in_file` for targeted edits; avoid rewriting entire files unless necessary.
-- **Destructive or irreversible actions** (delete files, force push, drop tables): always ask for user confirmation first.
+- **Microsoft products** (Azure, .NET, Microsoft 365, etc.):
+  use the Microsoft Learn MCP server (`microsoftdocs/mcp`) for the
+  latest official documentation. Include the URL(s) consulted in responses.
+- **Library and framework specifications**: use the Context7 MCP server
+  (`io.github.upstash/context7`) to fetch the latest docs.
+  Resolve the library ID first, then fetch docs.
 
-### Security and Secrets
+---
 
-- Never suggest or generate real credentials, secrets, or machine-specific values in tracked files.
-- Use placeholders, `dotnet user-secrets`, or environment variables for sensitive configuration.
-- Flag any existing secrets found in files and recommend remediation before proceeding.
+## Split References
+
+Read only when needed:
+
+- Before implementation in an unfamiliar area:
+  `.github/copilot/repository-context.md`
+- Before modifying C# code or tests:
+  `.github/copilot/csharp-coding-standards.md`
+- Before final verification or commit preparation:
+  `.github/copilot/validation-and-commit.md`
+
+### Update Rule
+
+- Keep this file minimal and always-on.
+- Move details to split files unless they are required in most tasks.
+- Promote a split rule into this file only if it is repeatedly needed.

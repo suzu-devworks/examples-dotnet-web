@@ -5,7 +5,6 @@
     ".devcontainer",
     ".github",
     ".vscode",
-    ".serena",
     ".editorconfig",
     ".gitattributes",
     ".gitignore",

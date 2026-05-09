@@ -9,7 +9,6 @@
   "service": "dev",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
-  "postAttachCommand": "/bin/sh ./.devcontainer/postAttachCommand.sh",
   "remoteUser": "vscode",
   "customizations": {
     "vscode": {
@@ -28,7 +27,6 @@
   "features": {
     "ghcr.io/devcontainers/features/node:2": {},
     "ghcr.io/devcontainers/features/copilot-cli:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers-extra/features/uv:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   }
 }
