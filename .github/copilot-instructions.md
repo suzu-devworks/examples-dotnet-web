@@ -1,21 +1,6 @@
 # GitHub Copilot Instructions
 
-## Scope
-
-This file defines only how GitHub Copilot should work in this repository.
-Project facts, architecture, conventions, and validation details are maintained
-in the skills listed below.
-
-## Repository Context Source
-
-- `.github/skills/repository-context/SKILL.md`
-- `.github/skills/csharp-coding-standards/SKILL.md`
-- `.github/skills/commit-convention/SKILL.md`
-- `.github/skills/security-secrets/SKILL.md`
-
-## How to Work
-
-### Language and Communication
+## Language and Communication
 
 - Think and reason in English.
 - Write code, comments, and documentation in concise English.
@@ -25,58 +10,77 @@ in the skills listed below.
 - Do not change locale segments in reference URLs
   (for example `ja-jp`) unless explicitly requested.
 
-### Change Strategy
+---
+
+## Security and Secrets
+
+- Never commit real credentials, secrets, or machine-specific values
+  in tracked files.
+- Use placeholders, `dotnet user-secrets`, or environment variables
+  for sensitive configuration.
+- Flag any existing secrets found in files and recommend remediation
+  before proceeding.
+
+---
+
+## Change Strategy
 
 - Keep diffs focused, minimal, and easy to review.
 - Avoid broad style-only refactors unless explicitly requested.
 - Prefer simple, reversible implementations.
 - Preserve existing conventions unless the user asks to change policy.
 - Ask for confirmation before destructive or high-impact changes.
+- Ask for confirmation before adding/upgrading dependencies.
+- Ask for confirmation before changing public API behavior.
 
-### Validation and Reporting
+## Priority Order
 
-- Use the repository-context skill for verification flow and
-  project-specific commands.
-- For Markdown files related to GitHub Copilot or workspace skills,
-  run markdownlint and keep formatting clean.
-- If verification is skipped, clearly state why.
-- In responses, include what changed, why, how it was verified, and remaining risks.
-- Prefer official documentation when citing evidence and include primary
-  source URLs when relevant.
+When instructions conflict, follow this order:
 
-### Repository Context Usage
+1. System/developer instructions.
+2. This repository instruction file.
+3. User request.
+4. Existing codebase conventions.
 
-- Before starting any coding task, consult the relevant skills
-  for project conventions and the task completion checklist.
-- Derive current branch, git status, and live workspace facts from the
-  current workspace context instead of cached snapshots.
+---
 
-### Tool Usage Priority
+## Tool Usage
 
 - **Symbol-level operations** (find definition, rename, replace body):
-  prefer workspace-native symbol-aware tools when available over broad
-  manual rewrites.
+  prefer workspace-native symbol-aware tools over broad manual rewrites.
 - **Exploration and context gathering**: use built-in tools
-  (`read_file`, `grep_search`, `file_search`, `semantic_search`) because
-  they are faster and do not modify the workspace.
-- **Terminal commands**: use only when built-in tools are clearly
-  insufficient, such as running `dotnet build`, `dotnet test`, or
-  scripts. Prefer targeted commands over broad shell pipelines.
-- **File edits**: use `replace_string_in_file` or
-  `multi_replace_string_in_file` for targeted edits and avoid rewriting
-  entire files unless necessary.
+  (`read_file`, `grep_search`, `file_search`, `semantic_search`).
+- **Terminal**: use only when built-in tools are insufficient, such as
+  running `dotnet build`, `dotnet test`, or scripts.
+- **File edits**: use `apply_patch` for targeted edits and avoid
+  rewriting entire files unless necessary.
 - **Destructive or irreversible actions** (delete files, force push,
   drop tables): always ask for user confirmation first.
 
-### MCP Usage
+## MCP Usage
 
-- **Microsoft products** (Azure, .NET, Microsoft 365, Power Platform, etc.):
-  always use the Microsoft Learn MCP server (`microsoftdocs/mcp`) to
-  retrieve the latest official documentation before answering. Do not rely
-  solely on training data. Include the Microsoft Learn document URL(s)
-  consulted in every response.
-- **Library and framework specifications or setup**: always use the
-  Context7 MCP server (`io.github.upstash/context7`) to fetch the latest
-  official documentation. First resolve the library ID, then fetch the
-  library docs. Prioritize information obtained via Context7 over training
-  data, which may be outdated.
+- **Microsoft products** (Azure, .NET, Microsoft 365, etc.):
+  use the Microsoft Learn MCP server (`microsoftdocs/mcp`) for the
+  latest official documentation. Include the URL(s) consulted in responses.
+- **Library and framework specifications**: use the Context7 MCP server
+  (`io.github.upstash/context7`) to fetch the latest docs.
+  Resolve the library ID first, then fetch docs.
+
+---
+
+## Split References
+
+Read only when needed:
+
+- Before implementation in an unfamiliar area:
+  `.github/copilot/guide/repository-context.md`
+- Before modifying C# code or tests:
+  `.github/copilot/guide/csharp-coding-standards.md`
+- Before final verification or commit preparation:
+  `.github/copilot/guide/validation-and-commit.md`
+
+### Update Rule
+
+- Keep this file minimal and always-on.
+- Move details to split files unless they are required in most tasks.
+- Promote a split rule into this file only if it is repeatedly needed.
