@@ -73,11 +73,11 @@ When instructions conflict, follow this order:
 Read only when needed:
 
 - Before implementation in an unfamiliar area:
-  `.github/copilot/guide/repository-context.md`
+  `.github/copilot/repository-context.md`
 - Before modifying C# code or tests:
-  `.github/copilot/guide/csharp-coding-standards.md`
+  `.github/copilot/csharp-coding-standards.md`
 - Before final verification or commit preparation:
-  `.github/copilot/guide/validation-and-commit.md`
+  `.github/copilot/validation-and-commit.md`
 
 ### Update Rule
 
