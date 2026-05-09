@@ -5,7 +5,8 @@ description: "Use when: you need to write a commit message, review commit messag
 
 # Commit Message Convention
 
-Follow [Conventional Commits](https://www.conventionalcommits.org/): `<type>(<scope>): <subject>`.
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+`<type>(<scope>): <subject>`.
 
 ## Types
 
@@ -24,5 +25,3 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/): `<type>(<sc
 - Avoid vague messages like "Update code" or "Fix bug" without context.
 - For breaking changes, add `BREAKING CHANGE:` in the body and describe
   impact and migration steps.
-- Use `chore` instead of `docs` when the change is limited to files under
-  `.github/` (e.g. `.github/**/*.md`).
