@@ -1,7 +1,9 @@
 # Examples.Web.Infrastructure.GrpcClient
 
 A library that provides gRPC client infrastructure for ASP.NET Core applications.
-It auto-generates client stubs from `.proto` files via `Grpc.Tools` and registers them in the DI container with built-in interceptors for logging and unhandled exception handling.
+It auto-generates client stubs from `.proto` files via `Grpc.Tools` and
+registers them in the DI container with built-in interceptors for logging and
+unhandled exception handling.
 
 ## Features
 

@@ -31,7 +31,9 @@
 
 Provides classes to support certificate authentication.
 
-When hosting with Kestrel, a certificate is requested during the handshake, so the certificate selection screen will be displayed almost constantly throughout the site.
+When hosting with Kestrel, a certificate is requested during the handshake, so
+the certificate selection screen will be displayed almost constantly throughout
+the site.
 
 To restrict access to only authenticated users on a page-by-page basis, use app-level authentication.
 
@@ -122,7 +124,10 @@ For advanced TLS settings with custom trust store, see scenario 2.3.
 
 ### 1. When importing a CA certificate into the OS
 
-The default certificate authentication handler is configured to refer to the OS's trusted certificate store, so it works simply by registering the CA certificate that generated the client certificate you want to verify with the OS.
+The default certificate authentication handler is configured to refer to the
+OS's trusted certificate store, so it works simply by registering the CA
+certificate that generated the client certificate you want to verify with the
+OS.
 
 Register all intermediate certificates if necessary.
 
@@ -143,7 +148,9 @@ builder.Services.AddAuthentication(
 
 Using a custom trust store turned out to be much more difficult than I expected.
 
-The official documentation suggested it could be done with `ChainTrustValidationMode` and `CustomTrustStore`, but it was rejected before authentication even began.
+The official documentation suggested it could be done with
+`ChainTrustValidationMode` and `CustomTrustStore`, but it was rejected before
+authentication even began.
 
 Furthermore, enabling revocation checks (CRL, OCSP) resulted in failure.
 
@@ -181,9 +188,12 @@ This is specified in appsettings.json:
 
 #### 2.3. Configure Kestrel custom trust store
 
-Configure `OnAuthenticate` in `Program.cs` to apply a custom certificate chain policy with the custom trust store for the TLS handshake.
+Configure `OnAuthenticate` in `Program.cs` to apply a custom certificate chain
+policy with the custom trust store for the TLS handshake.
 
 Use the `certCollection` loaded from the configuration path (see section 2.1):
+
+```cs
 builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
 {
     options.ConfigureHttpsDefaults(httpsOptions =>
@@ -207,7 +217,9 @@ builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServe
 
 ### 3. When using mTLS to secure communication between containers
 
-Configuring a secure web proxy behind the scenes means that even internal communications must verify each other's authenticity every time. In other words, it's a "zero trust" configuration.
+Configuring a secure web proxy behind the scenes means that even internal
+communications must verify each other's authenticity every time. In other
+words, it's a "zero trust" configuration.
 
 In this scenario, both Nginx and Kestrel exchange certificates during the TLS handshake (mutual mTLS).
 
@@ -231,7 +243,9 @@ graph LR
 
 #### 3.1. Create a certificate for mTLS using the shell
 
-For simplicity, we will assume that the server certificate verified by the client and the client certificate verified by the server were issued by the same CA.
+For simplicity, we will assume that the server certificate verified by the
+client and the client certificate verified by the server were issued by the same
+CA.
 
 ```text
 ─ internal-ca (CA)
@@ -249,7 +263,8 @@ It is mounted to `/etc/ssl/local` inside the container.
 
 Change the ASP.NET server certificate and start the application.
 
-Since certificate authentication is already configured, clarifying who verifies what will only require configuring the certificate itself.
+Since certificate authentication is already configured, clarifying who verifies
+what will only require configuring the certificate itself.
 
 #### 3.3. Nginx mTLS proxy setup
 
@@ -261,7 +276,10 @@ See the following nginx configuration:
 
 Client certificates authenticated by the proxy can be obtained using the proxy's custom header.
 
-In this scenario, the client presents the certificate to Nginx, and Nginx forwards it to Kestrel via a custom header (X-Client-Cert). Kestrel does not perform the TLS handshake with the client, but receives and validates the forwarded certificate.
+In this scenario, the client presents the certificate to Nginx, and Nginx
+forwards it to Kestrel via a custom header (X-Client-Cert). Kestrel does not
+perform the TLS handshake with the client, but receives and validates the
+forwarded certificate.
 
 ```mermaid
 graph LR
@@ -283,7 +301,8 @@ For certificate forwarding alone, either HTTP or HTTPS can be used between Proxy
 
 #### 4.1. Create a certificate for client authentication via proxy
 
-The certificates we receive from customers are issued by a different Certificate Authority (CA) than server certificates or certificates used internally.
+The certificates we receive from customers are issued by a different Certificate
+Authority (CA) than server certificates or certificates used internally.
 
 ```text
 - external-ca (CA)

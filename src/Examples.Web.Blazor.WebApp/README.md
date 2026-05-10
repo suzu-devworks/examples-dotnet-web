@@ -23,7 +23,9 @@ This project is intended for experimenting with and learning the features of ASP
 
 - [ASP.NET Core Blazor JavaScript interoperability (JS interop)](https://learn.microsoft.com/ja-jp/aspnet/core/blazor/javascript-interoperability/)
 
-I'm experimenting with calling JavaScript from .NET using [`Interop.razor`](./Components/Pages/Interop.razor). Right now, I'm only using `console.log`, but I plan to use it for other purposes in the future.
+I'm experimenting with calling JavaScript from .NET using
+[`Interop.razor`](./Components/Pages/Interop.razor). Right now, I'm only using
+`console.log`, but I plan to use it for other purposes in the future.
 
 Also, I'm trying to use the [`Chart.js`](https://www.chartjs.org/) library from .NET by following the guidance on [`Weather.razor`](./Components/Pages/Weather.razor).
 
@@ -31,7 +33,10 @@ Also, I'm trying to use the [`Chart.js`](https://www.chartjs.org/) library from 
 
 - [Modify a component](https://dotnet.microsoft.com/ja-jp/learn/aspnet/blazor-tutorial/modify)
 
-Instead of adding parameters to [`Counter.razor`](./Components/Pages/Counter.razor), I tried extracting part of it into a separate component and testing that approach. However, be careful, because using a component with the same name as the page will cause an error.
+Instead of adding parameters to
+[`Counter.razor`](./Components/Pages/Counter.razor), I tried extracting part of
+it into a separate component and testing that approach. However, be careful,
+because using a component with the same name as the page will cause an error.
 
 ### State
 

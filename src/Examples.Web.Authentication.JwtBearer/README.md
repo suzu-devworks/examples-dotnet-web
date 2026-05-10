@@ -275,7 +275,9 @@ dotnet run --no-launch-profile --project src/fixtures/Examples.Web.Generator.Jwt
 #### 3.2. Configure the Discovery Document
 
 Configure the OIDC endpoint that `JwtBearerHandler` accesses by default.
-Specifically, the Discovery Document (`.well-known/openid-configuration`) is fetched first, and then the `jwks_uri` URL from that document is used to retrieve the JWKS. Serve both locally.
+Specifically, the Discovery Document (`.well-known/openid-configuration`) is
+fetched first, and then the `jwks_uri` URL from that document is used to
+retrieve the JWKS. Serve both locally.
 
 Modify `Program.cs`:
 
@@ -314,7 +316,9 @@ Prefer configuring via `appsettings.json` (or `appsettings.Development.json`) ra
 Also, using `ValidIssuer` instead of `Authority` prevented the Discovery Document from being fetched.
 
 > [!WARNING]
-> ASP.NET development uses a self-signed certificate, so the above request will fail with a certificate error. You must allow the self-signed certificate during development.
+> ASP.NET development uses a self-signed certificate, so the above request will
+> fail with a certificate error. You must allow the self-signed certificate
+> during development.
 
 ```cs
 if (builder.Environment.IsDevelopment())
@@ -374,7 +378,8 @@ public class RevocableJwtHandler(
 
 The core logic is in `HandleAuthenticateAsync()`.
 This simplified implementation reads the `Authorization` header from the request to extract the Bearer token.
-It first validates the token's signature and expiry using `JsonWebTokenHandler`, then checks whether the token is on the blacklist.
+It first validates the token's signature and expiry using
+`JsonWebTokenHandler`, then checks whether the token is on the blacklist.
 
 The tokens validated by `JsonWebTokenHandler` are also generated with `dotnet user-jwts`.
 
@@ -412,7 +417,8 @@ dotnet user-secrets list
 #### 4.4. Register a token in the blacklist
 
 The token blacklist is managed simply via `appsettings.json` (or `appsettings.Development.json`).
-To verify that authentication fails for a revoked token, add its `jti` claim value to the list shown below while the application is running.
+To verify that authentication fails for a revoked token, add its `jti` claim
+value to the list shown below while the application is running.
 
 ```json
 "Authentication": {

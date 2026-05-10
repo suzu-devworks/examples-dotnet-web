@@ -97,7 +97,8 @@ If this section is omitted, the defaults configured in `AddCustomCookie` are use
 
 ##### Expiration settings
 
-Cookie expiration behavior is controlled by both `CookieAuthenticationOptions` and `AuthenticationProperties` at sign-in time.
+Cookie expiration behavior is controlled by both `CookieAuthenticationOptions`
+and `AuthenticationProperties` at sign-in time.
 
 - Default option (`AddCustomCookie`): `ExpireTimeSpan = 00:20:00`
 - Runtime override (`Login.cshtml.cs`): `AuthenticationProperties.ExpiresUtc = UtcNow + 10 minutes`
