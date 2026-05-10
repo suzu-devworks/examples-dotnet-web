@@ -1,18 +1,19 @@
 {
   "version": "0.2",
   "ignorePaths": [
-    ".git",
     ".devcontainer",
-    ".github",
-    ".vscode",
     ".editorconfig",
+    ".git",
     ".gitattributes",
+    ".github",
     ".gitignore",
     ".prettier*",
-    "dotnet-tools.json",
+    ".vscode",
     "*.csproj",
     "*.slnx",
-    "launchSettings.json"
+    "dotnet-tools.json",
+    "launchSettings.json",
+    "global.json"
   ],
   "words": [
     "Antiforgery",

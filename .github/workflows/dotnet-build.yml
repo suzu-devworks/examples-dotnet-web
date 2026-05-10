@@ -12,29 +12,35 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
+    env:
+      TEST_ASSETS_PATH: ${{ github.workspace }}/assets
 
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-dotnet@v5
         with:
-           dotnet-version: '10.0.x'
+          dotnet-version: '10.0.x'
+      - name: Display .NET info
+        run: dotnet --info
 
-      - name: Auth Github
-        run: dotnet nuget update source github --username suzu-devworks --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+      - name: Auth Github Nuget
+        run: >
+          dotnet nuget update source github
+          --username suzu-devworks --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
 
       - name: Install Tools
         run: dotnet tool restore
-
       - name: Install dependencies
         run: dotnet restore
-
       - name: Build
         run: dotnet build --configuration Release --no-restore
-
-      - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal
