@@ -2,7 +2,9 @@
 
 ## Purpose
 
-This repository is a personal learning workspace for ASP.NET web development. It covers authentication, API design, middleware, routing, Blazor, gRPC, OpenAPI, and logging.
+This repository is a personal learning workspace for ASP.NET web
+development. It covers authentication, API design, middleware,
+routing, Blazor, gRPC, OpenAPI, and logging.
 
 ## Tech Stack
 

@@ -18,7 +18,9 @@ EnforceCodeStyleInBuild is enabled, so violations fail the build.
 
 - Introduce a parameter class when a method has many parameters.
 - Always suffix async methods returning Task or ValueTask with Async.
-- Always add CancellationToken cancellationToken = default as the last parameter of every public async method returning Task or ValueTask.
+- Always add `CancellationToken cancellationToken = default`
+  as the last parameter of every public async method returning
+  `Task` or `ValueTask`.
 
 ## Test Naming
 
