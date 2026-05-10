@@ -29,8 +29,8 @@
   <ItemGroup>
     <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />
     <PackageReference Include="Google.Protobuf" Version="3.34.1" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />
-    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.76.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.80.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.80.0" />
     <!-- On Apple Silicon, Grpc.Tools will display error code 139 in version 2.69.0 and later
       unless the (https://github.com/grpc/grpc/issues/38538) issue is resolved. -->
     <PackageReference Include="Grpc.Tools" Version="2.68.1">

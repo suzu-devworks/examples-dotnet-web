@@ -41,17 +41,29 @@ When instructions conflict, follow this order:
 
 ## Tool Usage
 
-- **Symbol-level operations** (find definition, rename, replace body): prefer workspace-native symbol-aware tools over broad manual rewrites.
-- **Exploration and context gathering**: use VS Code workspace capabilities for file discovery, text search, and semantic lookup.
+- **Symbol-level operations** (find definition, rename, replace body):
+  prefer workspace-native symbol-aware tools over broad manual rewrites.
+- **Exploration and context gathering**:
+  use VS Code workspace capabilities for file discovery, text search,
+  and semantic lookup.
 - **Terminal**: use only when built-in tools are insufficient, such as running `dotnet build`, `dotnet test`, or scripts.
-- **Model/agent-specific names**: prefer capability-based wording; when explicit names are necessary, use VS Code-native names available in this environment.
-- **File edits**: prefer targeted edits using VS Code editing capabilities, and avoid rewriting entire files unless necessary.
-- **Destructive or irreversible actions** (delete files, force push, drop tables): always ask for user confirmation first.
+- **Model/agent-specific names**: prefer capability-based wording;
+  when explicit names are necessary, use VS Code-native names
+  available in this environment.
+- **File edits**: prefer targeted edits using VS Code editing
+  capabilities, and avoid rewriting entire files unless necessary.
+- **Destructive or irreversible actions** (delete files, force push,
+  drop tables): always ask for user confirmation first.
 
 ## MCP Usage
 
-- **Microsoft products** (Azure, .NET, Microsoft 365, etc.): use official Microsoft Learn documentation retrieval capabilities for the latest guidance; include consulted URL(s) in responses.
-- **Library and framework specifications**: use up-to-date library documentation retrieval capabilities. If server IDs are required by the active environment, use configured VS Code MCP server IDs and resolve the library ID before fetching docs.
+- **Microsoft products** (Azure, .NET, Microsoft 365, etc.):
+  use official Microsoft Learn documentation retrieval capabilities
+  for the latest guidance; include consulted URL(s) in responses.
+- **Library and framework specifications**:
+  use up-to-date library documentation retrieval capabilities.
+  If server IDs are required by the active environment, use configured
+  VS Code MCP server IDs and resolve the library ID before fetching docs.
 
 ---
 
