@@ -48,6 +48,7 @@
     "web.config": "xml"
   },
   "markdownlint.config": {
+    "MD013": false,
     "MD024": false,
     "MD060": false
   },

@@ -2,23 +2,19 @@
 
 ## Purpose
 
-This repository is a personal learning workspace for ASP.NET web development.
-It covers authentication, API design, middleware, routing, Blazor,
-gRPC, OpenAPI, and logging.
+This repository is a personal learning workspace for ASP.NET web development. It covers authentication, API design, middleware, routing, Blazor, gRPC, OpenAPI, and logging.
 
 ## Tech Stack
 
 - Language: C#
 - Platform: .NET 10.0 for apps; shared libraries target net8.0 and net10.0
-- Frameworks: Minimal API, MVC, Razor Pages, Blazor, gRPC,
-  ASP.NET Core Identity
+- Frameworks: Minimal API, MVC, Razor Pages, Blazor, gRPC, ASP.NET Core Identity
 - Test runner: Microsoft.Testing.Platform with xUnit v3
 - Supporting tools: NLog, Swashbuckle, Dev Containers, GitHub Actions
 
 ## Key Configuration
 
-- src/Directory.Build.props enables TreatWarningsAsErrors and
-  EnforceCodeStyleInBuild
+- src/Directory.Build.props enables TreatWarningsAsErrors and EnforceCodeStyleInBuild
 - src/Directory.Build.targets contains shared clean targets
 - global.json configures Microsoft.Testing.Platform
 - nuget.config defines package sources

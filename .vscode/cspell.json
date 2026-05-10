@@ -12,7 +12,8 @@
     "*.csproj",
     "*.slnx",
     "dotnet-tools.json",
-    "launchSettings.json"
+    "launchSettings.json",
+    "global.json"
   ],
   "words": [
     "Antiforgery",

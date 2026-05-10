@@ -4,17 +4,17 @@
 
 - Run dotnet build and ensure zero warnings.
 - Run dotnet test and ensure all tests pass.
-- For Markdown files related to Copilot or workspace settings,
-  run markdownlint and keep formatting clean.
+- For Markdown files related to Copilot or workspace settings, run markdownlint and keep formatting clean.
 - If verification is skipped, state why.
-- In reports, include what changed, why, how it was verified,
-  and remaining risks.
+- In reports, include what changed, why, how it was verified, and remaining risks.
 
 ## Commit Convention
 
 Follow Conventional Commits:
 
+```text
 type(scope): subject
+```
 
 Types:
 
@@ -31,5 +31,4 @@ Rules:
 - Include a brief description in the subject line.
 - Add a body for significant changes.
 - Avoid vague messages without context.
-- For breaking changes, add BREAKING CHANGE: in the body with impact
-  and migration steps.
+- For breaking changes, add BREAKING CHANGE: in the body with impact and migration steps.
