@@ -120,7 +120,9 @@ Returns:
 > It seems they are changing from `Swashbuckle.AspNetCore` to `Microsoft.AspNetCore.OpenApi`.
 > However, at this time, it was not possible to achieve the same behavior with `Microsoft.AspNetCore.OpenApi`.
 
-OpenAPI (Swagger) is a language-agnostic specification for describing REST APIs. gRPC JSON transcoding supports generating OpenAPI from transcoded RESTful APIs.
+OpenAPI (Swagger) is a language-agnostic specification for describing REST
+APIs. gRPC JSON transcoding supports generating OpenAPI from transcoded RESTful
+APIs.
 
 - [gRPC JSON transcoding documentation with Swagger / OpenAPI](https://learn.microsoft.com/ja-jp/aspnet/core/grpc/json-transcoding-openapi)
 
@@ -180,11 +182,16 @@ We'll take a shortcut by using [`Examples.Web.Infrastructure.OpenApi.SwaggerGenO
 
 #### Use HttpBody
 
-Typically, gRPC uses binary serialization (Protobuf) over HTTP/2, making it incompatible with REST's JSON request body. However, to use HttpBody (HTTP request body) for file downloads and similar purposes, gRPC's JSON transcoding feature is primarily used.
+Typically, gRPC uses binary serialization (Protobuf) over HTTP/2, making it
+incompatible with REST's JSON request body. However, to use HttpBody (HTTP
+request body) for file downloads and similar purposes, gRPC's JSON transcoding
+feature is primarily used.
 
 **1. Add a package reference**:
 
-To use `google.api.HttpBody`, you can download the file (<https://github.com/googleapis/googleapis/tree/master/google>), but it's usually included in this package.
+To use `google.api.HttpBody`, you can download the file
+(<https://github.com/googleapis/googleapis/tree/master/google>), but it's
+usually included in this package.
 
 ```shell
 dotnet add package Google.Api.CommonProtos
@@ -198,7 +205,9 @@ However, to enable this, you need to configure it in your project file (*.csproj
   </PropertyGroup>
 ```
 
- This wasn't mentioned in any of the documentation. Looking at the code [here&#x2197;](https://github.com/googleapis/gax-dotnet/blob/main/Google.Api.CommonProtos/build/Google.Api.CommonProtos.targets#L14), it seems that it won't be enabled unless you set the property.
+This wasn't mentioned in any of the documentation. Looking at the code
+[here&#x2197;](https://github.com/googleapis/gax-dotnet/blob/main/Google.Api.CommonProtos/build/Google.Api.CommonProtos.targets#L14),
+it seems that it won't be enabled unless you set the property.
 
 **2. We will implement the API.**:
 
@@ -241,7 +250,9 @@ service Inspector {
   return httpBody;
 ```
 
-There are no problems with `attachments`, but when returning `inline`, some PDF readers seem to automatically use the filename as the end of the URL path even if you set `filename*=`.
+There are no problems with `attachments`, but when returning `inline`, some PDF
+readers seem to automatically use the filename as the end of the URL path even
+if you set `filename*=`.
 
 ### Fluent Validation
 
@@ -272,7 +283,9 @@ dotnet add package FluentValidation.DependencyInjectionExtensions
   var app = builder.Build();
 ```
 
-[`Examples.Web.Infrastructure.Validators.RequestValidationInterceptor`](./Infrastructure/Validators/RequestValidationInterceptor.cs) is an inspector that retrieves and validates registered validators before executing a grpc method.
+[`Examples.Web.Infrastructure.Validators.RequestValidationInterceptor`](./Infrastructure/Validators/RequestValidationInterceptor.cs)
+is an inspector that retrieves and validates registered validators before
+executing a grpc method.
 
 **3. Create validator**:
 

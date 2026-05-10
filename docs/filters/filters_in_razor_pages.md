@@ -12,7 +12,8 @@
 
 ## Razor Page filters
 
-Razor Page filters can execute code before and after the execution of a Razor Page handler, but they cannot be applied to individual page handler methods.
+Razor Page filters can execute code before and after the execution of a Razor
+Page handler, but they cannot be applied to individual page handler methods.
 
 ## Filter pipeline execution order
 
@@ -77,13 +78,17 @@ It has the following characteristics:
 - Run code after the handler method executes.
 - Can be implemented on a page or globally.
 - **Cannot be applied to specific page handler methods.**
-- Can have constructor dependencies populated by Dependency Injection (DI). For more information, see ServiceFilterAttribute and TypeFilterAttribute.
+- Can have constructor dependencies populated by Dependency Injection (DI). For
+    more information, see ServiceFilterAttribute and TypeFilterAttribute.
 
 ## Tips for filtering page handler methods
 
 In the case of Razor Pages, it is not possible to set a filter for each action method.
 
-However, since there is information that can be obtained within the filter, it is possible to pass through the filter depending on the specified conditions.If the request is not for an action method, I think you can just let it pass through.
+However, since there is information that can be obtained within the filter, it
+is possible to pass through the filter depending on the specified conditions.
+If the request is not for an action method, I think you can just let it pass
+through.
 
 ### `IPageFilter`
 
@@ -121,7 +126,9 @@ I wish Linq could be made a little faster...
 
 ### `IResourceFilter`
 
-`IResourceFilter` does not have a HandlerMethodDescriptor, but you can use `HttpContext.Request`. I don't think it can be determined with `ActionDescriptor`.
+`IResourceFilter` does not have a HandlerMethodDescriptor, but you can use
+`HttpContext.Request`. I don't think it can be determined with
+`ActionDescriptor`.
 
 RazorPage's handler method can be retrieved with QueryString.
 

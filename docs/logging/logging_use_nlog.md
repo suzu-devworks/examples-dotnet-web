@@ -30,7 +30,9 @@ You can also specify the node to load from.
 
 When loading from a different file named `nlog.config`, use `LoadConfigurationFromFile()`.
 
-When loading settings from a source other than `appsettings.json`, it is best to first create a Configuration and then use `LoadConfigurationFromSection()`.
+When loading settings from a source other than `appsettings.json`, it is best
+to first create a Configuration and then use
+`LoadConfigurationFromSection()`.
 
 When using an XML string, it seems best to initialize with `LoadConfigurationFromXml()`.
 
@@ -80,7 +82,9 @@ finally
 }
 ```
 
-Considering that the `ILogger` interface will be called by other extension methods and libraries, I think it's a good idea to set up `builder.Host.UseNLog()` as soon as possible.
+Considering that the `ILogger` interface will be called by other extension
+methods and libraries, I think it's a good idea to set up
+`builder.Host.UseNLog()` as soon as possible.
 
 ## References
 

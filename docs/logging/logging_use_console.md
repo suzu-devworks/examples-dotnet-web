@@ -52,7 +52,8 @@ in `appsettings.json`:
 
 ## The log is generated twice
 
-If both console and debug targets are active, logs will be output to the VS Code debug console twice, so you need to disable one of them.
+If both console and debug targets are active, logs will be output to the VS
+Code debug console twice, so you need to disable one of them.
 
 in `appsettings.json`:
 

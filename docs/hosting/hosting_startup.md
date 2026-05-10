@@ -14,7 +14,10 @@
 
 ## Overview
 
-An IHostingStartup (hosting startup) implementation adds enhancements to an app at startup from an external assembly. For example, an external library can use a hosting startup implementation to provide additional configuration providers or services to an app.
+An IHostingStartup (hosting startup) implementation adds enhancements to an app
+at startup from an external assembly. For example, an external library can use
+a hosting startup implementation to provide additional configuration providers or
+services to an app.
 
 ### HostingStartup attribute
 
@@ -49,7 +52,10 @@ Create a hosting startup with either of the following project types:
 
 The class library retains the same characteristics even when referenced as a NuGet package.
 
-The `Console app without an entry point` method is used to create a `HostingStartup` that doesn't require compile-time references, but it requires registration with an unsupported runtime package store, so we won't cover it here. You probably won't need it anyway.
+The `Console app without an entry point` method is used to create a
+`HostingStartup` that doesn't require compile-time references, but it requires
+registration with an unsupported runtime package store, so we won't cover it
+here. You probably won't need it anyway.
 
 ### To find the loaded hosting startup assemblies, enable logging and check your app's logs
 
@@ -81,7 +87,8 @@ With `WebApplicationBuilder`, this section does **not** behave the same way.
 
 - `appsettings.json` is loaded during `WebApplication.CreateBuilder(args)`.
 - After that, settings from `IHostingStartup` are applied to `WebApplicationBuilder.Configuration`.
-- As a result, both `ConfigureAppConfiguration()` and `UseConfiguration()` from `IHostingStartup` can end up overriding `appsettings.json`.
+- As a result, both `ConfigureAppConfiguration()` and `UseConfiguration()` from
+  `IHostingStartup` can end up overriding `appsettings.json`.
 
 In short: the rule above is reliable for `WebHostBuilder`, but not for `WebApplicationBuilder`.
 
@@ -97,7 +104,9 @@ To prevent all hosting startup assemblies from loading, set one of the following
 
 - `ASPNETCORE_PREVENTHOSTINGSTARTUP` environment variable.
 
-To prevent specific hosting startup assemblies from loading, set one of the following to a semicolon-delimited string of hosting startup assemblies to exclude at startup:
+To prevent specific hosting startup assemblies from loading, set one of the
+following to a semicolon-delimited string of hosting startup assemblies to
+exclude at startup:
 
 - Hosting Startup Exclude Assemblies host configuration setting:
 
@@ -111,7 +120,10 @@ To prevent specific hosting startup assemblies from loading, set one of the foll
 
 ### Specify the hosting startup assembly
 
-For either a class library- or console app-supplied hosting startup, specify the hosting startup assembly's name in the `ASPNETCORE_HOSTINGSTARTUPASSEMBLIES` environment variable. The environment variable is a semicolon-delimited list of assemblies.
+For either a class library- or console app-supplied hosting startup, specify
+the hosting startup assembly's name in the
+`ASPNETCORE_HOSTINGSTARTUPASSEMBLIES` environment variable. The environment
+variable is a semicolon-delimited list of assemblies.
 
 A hosting startup assembly can also be set using the Hosting Startup Assemblies host configuration setting:
 

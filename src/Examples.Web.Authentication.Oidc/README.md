@@ -27,7 +27,9 @@ Contains types that enable support for OpenIdConnect based authentication.
 
 ### Set up OIDC Authentication Server (Identity Provider)
 
-There are several options for OIDC authentication servers (Identity Providers) that can be used without the hassle of environment setup. Here are some examples:
+There are several options for OIDC authentication servers (Identity Providers)
+that can be used without the hassle of environment setup. Here are some
+examples:
 
 Using an external cloud service (SaaS):
 
@@ -57,9 +59,11 @@ I gave up because it required entering my credit card number.
 
 **Optional**:
 
-- **If you want to hide the sign-up**: *Authentication* > *Database* > `Username-Password-Authentication` > *settings* > *Disable Sign Ups*
+- **If you want to hide the sign-up**: *Authentication* > *Database* >
+    `Username-Password-Authentication` > *settings* > *Disable Sign Ups*
 
-- **If you want to use the role in your application**: *Actions* > *Triggers* > `Post Login` > *Add Action(Create Custom Action)*
+- **If you want to use the role in your application**: *Actions* > *Triggers* >
+    `Post Login` > *Add Action(Create Custom Action)*
 
 ```js
   const namespace = 'https://my-app.example.com'; // Any identifier (URL format recommended)
@@ -71,7 +75,8 @@ I gave up because it required entering my credit card number.
   }
 ```
 
-- **To use Pushed Authorization Requests (PAR)**: *Settings* > *Advanced* > *Settings* > *Allow Pushed Authorization Requests (PAR)*
+- **To use Pushed Authorization Requests (PAR)**: *Settings* > *Advanced* >
+    *Settings* > *Allow Pushed Authorization Requests (PAR)*
 
 ### Set up this project
 
