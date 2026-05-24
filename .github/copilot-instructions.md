@@ -43,27 +43,23 @@ When instructions conflict, follow this order:
 
 - **Symbol-level operations** (find definition, rename, replace body):
   prefer workspace-native symbol-aware tools over broad manual rewrites.
-- **Exploration and context gathering**:
-  use VS Code workspace capabilities for file discovery, text search,
-  and semantic lookup.
-- **Terminal**: use only when built-in tools are insufficient, such as running `dotnet build`, `dotnet test`, or scripts.
-- **Model/agent-specific names**: prefer capability-based wording;
-  when explicit names are necessary, use VS Code-native names
-  available in this environment.
-- **File edits**: prefer targeted edits using VS Code editing
-  capabilities, and avoid rewriting entire files unless necessary.
-- **Destructive or irreversible actions** (delete files, force push,
-  drop tables): always ask for user confirmation first.
+- **Exploration and context gathering**: use VS Code workspace capabilities for file discovery,
+  text search, and semantic lookup.
+- **Terminal**: use only when built-in tools are insufficient, such as running `dotnet build`,
+  `dotnet test`, or scripts.
+- **Model/agent-specific names**: prefer capability-based wording; when explicit names are
+  necessary, use VS Code-native names available in this environment.
+- **File edits**: prefer targeted edits using VS Code editing capabilities, and avoid rewriting
+  entire files unless necessary.
+- **Destructive or irreversible actions** (delete files, force push, drop tables): always ask
+  for user confirmation first.
 
 ## MCP Usage
 
-- **Microsoft products** (Azure, .NET, Microsoft 365, etc.):
-  use official Microsoft Learn documentation retrieval capabilities
-  for the latest guidance; include consulted URL(s) in responses.
-- **Library and framework specifications**:
-  use up-to-date library documentation retrieval capabilities.
-  If server IDs are required by the active environment, use configured
-  VS Code MCP server IDs and resolve the library ID before fetching docs.
+- **Microsoft products** (Azure, .NET, Microsoft 365, etc.): use the Microsoft Learn MCP server
+  (`microsoftdocs/mcp`) for the latest official documentation. Include the URL(s) consulted in responses.
+- **Library and framework specifications**: use the Context7 MCP server (`io.github.upstash/context7`) to
+  fetch the latest docs. Resolve the library ID first, then fetch docs.
 
 ---
 
@@ -71,12 +67,10 @@ When instructions conflict, follow this order:
 
 Read only when needed:
 
-- Before implementation in an unfamiliar area:
-  [`.github/copilot/repository-context.md`](./copilot/repository-context.md)
-- Before modifying C# code or tests:
-  [`.github/copilot/csharp-coding-standards.md`](./copilot/csharp-coding-standards.md)
-- Before final verification or commit preparation:
-  [`.github/copilot/validation-and-commit.md`](./copilot/validation-and-commit.md)
+- Before implementation in an unfamiliar area: [`.github/copilot/repository-context.md`](./copilot/repository-context.md)
+- Before adding or modifying tests/assets: [`.github/copilot/tests-and-assets.md`](./copilot/tests-and-assets.md)
+- Before modifying C# code or tests: [`.github/copilot/csharp-coding-standards.md`](./copilot/csharp-coding-standards.md)
+- Before final verification or commit preparation: [`.github/copilot/validation-and-commit.md`](./copilot/validation-and-commit.md)
 
 ### Update Rule
 
