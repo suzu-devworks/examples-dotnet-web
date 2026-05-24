@@ -360,14 +360,15 @@ MigrationBackup/
 ##!.vscode/launch.json
 
 ## User Define
-[Tt]emp/
-.mono/
+.agents/
+.devcontainer/.keys
 .DS_Store
 .env*
+.mono/
 .password
+[Tt]emp/
 *.crt
 *.key
 *.pfx
 *.srl
-.devcontainer/.keys
 assets/

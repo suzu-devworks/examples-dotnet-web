@@ -39,6 +39,9 @@
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
   },
+  "chat.tools.terminal.autoApprove": {
+    "npx -y markdownlint-cli": true
+  },
   "dotnet.formatting.organizeImportsOnFormat": true,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
