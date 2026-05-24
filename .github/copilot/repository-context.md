@@ -2,55 +2,54 @@
 
 ## Purpose
 
-This repository is a personal learning workspace for ASP.NET web
-development. It covers authentication, API design, middleware,
-routing, Blazor, gRPC, OpenAPI, and logging.
+This repository is a personal workspace for learning ASP.NET Core features and implementing sample applications.
+It focuses on understanding how web features work through hands-on implementations for authentication,
+Web API, gRPC, Razor/Blazor, OpenAPI/Swagger, hosting behavior, filters, and logging.
 
-## Tech Stack
+## Tech Stack and Setup
 
-- Language: C#
-- Platform: .NET 10.0 for apps; shared libraries target net8.0 and net10.0
-- Frameworks: Minimal API, MVC, Razor Pages, Blazor, gRPC, ASP.NET Core Identity
-- Test runner: Microsoft.Testing.Platform with xUnit v3
-- Supporting tools: NLog, Swashbuckle, Dev Containers, GitHub Actions
+- .NET SDK (projects target `net10.0`, with shared framework settings in `src/Directory.Build.props`)
+- ASP.NET Core and related web stacks (Razor Pages, MVC, Web API, Blazor, gRPC)
+- Shared infrastructure projects under `src/Examples.Web.Infrastructure*`
+- Test project: `src/Examples.Web.Infrastructure.Tests`
+
+See [README](../../README.md) for repository purpose and devcontainer setup notes.
 
 ## Key Configuration
 
-- src/Directory.Build.props enables TreatWarningsAsErrors and EnforceCodeStyleInBuild
-- src/Directory.Build.targets contains shared clean targets
-- global.json configures Microsoft.Testing.Platform
-- nuget.config defines package sources
-- .editorconfig defines formatting and naming rules
+- `src/Directory.Build.props` enables TreatWarningsAsErrors and shared build props.
+- `global.json` configures the .NET SDK and test runner where applicable.
+- `nuget.config` defines package sources.
+- `.editorconfig` defines formatting and naming rules; CI enforces style.
+- Runtime assets used by samples/tests should be loaded from the path provided by the
+  `TEST_ASSETS_PATH` environment variable (CI uses `${{ github.workspace }}/assets`).
 
 ## Project Conventions
 
-- Reuse shared extensions from Examples.Web.Infrastructure when possible.
-- Preserve middleware ordering in Program.cs.
-- Prefer configuration binding over hardcoded values.
-- Keep environment-specific behavior explicit.
-- Projects are placed directly under src/.
-- Default branch: main.
+- Place projects under `src/` with clear naming (`Examples.Web.*`).
+- Keep sample implementations focused and educational over over-engineered abstractions.
+- Reuse shared behaviors through `Examples.Web.Infrastructure*` projects when appropriate.
+- Place design documents, explanations, and other supporting materials under `docs/` in an appropriate subfolder.
+- Keep authentication and hosting samples isolated by project so each scenario can be studied independently.
+- Environment-dependent tests should use runtime checks and skip when prerequisites are missing.
 
-## Commands
+## Build and Test Commands
 
-Run from repository root:
+Common local/CI flow:
 
 ```bash
 dotnet tool restore
 dotnet restore
-dotnet build
-dotnet test
+dotnet build --configuration Release --no-restore
+dotnet test --configuration Release --no-build --verbosity normal
 ```
 
-Run a specific project:
-
-```bash
-cd src/Examples.Web.WebApi
-dotnet run
-```
-
-Clean generated outputs:
+Clean generated outputs with:
 
 ```bash
 dotnet msbuild -t:RemoveDirectories
 ```
+
+## Default branch
+
+Default branch: `main`
