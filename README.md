@@ -10,10 +10,34 @@ This repository is just my personal playground for learning ASP.NET web programm
 
 The content here might actually be helpful to other developers facing similar issues.
 
-However, please keep in mind that this code is based solely on my own
-perspective and probably has lots of inaccurate or questionable parts!
+However, please keep in mind that this code is based solely on my own perspective
+and probably has lots of inaccurate or questionable parts.
 
-## Dev Container Setup
+This repository is provided as-is without warranty; use the sample code at your own risk.
+
+## Technology Stack
+
+- Language: C#
+- Frameworks: .NET (net8.0, net10.0)
+- APIs and protocols: gRPC, OpenAPI/Swagger
+
+## Setup
+
+### Prerequisites
+
+- .NET SDK installed
+- Optional: Visual Studio Code with Remote - Containers extension
+- Optional: Docker for devcontainer usage
+
+### Build
+
+From the repository root:
+
+```bash
+dotnet build
+```
+
+### Dev Container setup
 
 Before starting the devcontainer, prepare the local SSL certificate files used by the container environment.
 
@@ -23,5 +47,4 @@ Before starting the devcontainer, prepare the local SSL certificate files used b
    ./.devcontainer/ssl/ssl-cert-generate.sh
    ```
 
-2. After the certificate files are generated in `.devcontainer/ssl`, start the
-   devcontainer.
+2. After the certificate files are generated in `.devcontainer/ssl`, start the devcontainer.
