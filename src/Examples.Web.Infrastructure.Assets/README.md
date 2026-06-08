@@ -1,13 +1,6 @@
 # Examples.Web.Infrastructure.Assets
 
-## Table of Contents <!-- omit in toc -->
-
-- [Overview](#overview)
-- [How to use](#how-to-use)
-- [Development](#development)
-  - [How the project was initialized](#how-the-project-was-initialized)
-
-## Overview
+## Overview and Purpose
 
 This project is for sharing front-end static assets, such as JavaScript files, across projects.
 

@@ -1,24 +1,6 @@
 # Examples.Web.WebApi.Grpc
 
-## Table of Contents <!-- omit in toc -->
-
-- [Overview](#overview)
-- [Examples](#examples)
-  - [Logging](#logging)
-  - [Routing](#routing)
-    - [Auto gRPC Service registration](#auto-grpc-service-registration)
-  - [gRPC Json Transcoding](#grpc-json-transcoding)
-    - [Use gRPC Json Transcoding](#use-grpc-json-transcoding)
-    - [Use OpenAPI (Swagger)](#use-openapi-swagger)
-    - [Add OpenAPI descriptions from .proto comments](#add-openapi-descriptions-from-proto-comments)
-    - [Use HttpBody](#use-httpbody)
-  - [Fluent Validation](#fluent-validation)
-- [Development](#development)
-  - [Build](#build)
-  - [Run](#run)
-  - [How the project was initialized](#how-the-project-was-initialized)
-
-## Overview
+## Overview and Purpose
 
 This project is intended for testing and learning the functionality of the ASP.NET gRPC API.
 
@@ -317,54 +299,4 @@ Run this project from the repository root:
 
 ```shell
 dotnet run --project src/Examples.Web.WebApi.Grpc/ -lp https
-```
-
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Examples.Web.Infrastructure
-dotnet new classlib -o src/Examples.Web.Infrastructure
-dotnet sln add src/Examples.Web.Infrastructure/
-cd src/Examples.Web.Infrastructure
-cd ../../
-
-## Examples.Web.Infrastructure.Swagger
-dotnet new classlib -o src/Examples.Web.Infrastructure.Swagger
-dotnet sln add src/Examples.Web.Infrastructure.Swagger/
-cd src/Examples.Web.Infrastructure.Swagger
-dotnet add package Swashbuckle.AspNetCore
-dotnet add package Swashbuckle.AspNetCore.Annotations
-cd ../../
-
-## Examples.Web.Infrastructure.GrpcClient
-dotnet new classlib -o src/Examples.Web.Infrastructure.GrpcClient
-dotnet sln add src/Examples.Web.Infrastructure.GrpcClient/
-cd src/Examples.Web.Infrastructure.GrpcClient
-dotnet add package Grpc.Net.Client
-dotnet add package Google.Protobuf
-dotnet add package Grpc.Tools
-cd ../../
-
-## Examples.Web.WebApi.Grpc
-dotnet new webapp -o src/Examples.Web.WebApi.Grpc
-dotnet sln add src/Examples.Web.WebApi.Grpc/
-cd src/Examples.Web.WebApi.Grpc
-dotnet add reference ../Examples.Web.Infrastructure
-dotnet add reference ../Examples.Web.Infrastructure.Swagger
-dotnet add reference ../Examples.Web.Infrastructure.GrpcClient
-dotnet add package Microsoft.AspNetCore.Grpc.JsonTranscoding
-dotnet add package Microsoft.AspNetCore.Grpc.Swagger
-dotnet add package FluentValidation
-dotnet add package FluentValidation.DependencyInjectionExtensions
-
-dotnet user-secrets init
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
 ```

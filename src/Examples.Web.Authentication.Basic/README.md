@@ -1,19 +1,5 @@
 # Examples.Web.Authentication.Basic
 
-## Table of Contents <!-- omit in toc -->
-
-- [AspNetCore.Authentication.Basic](#aspnetcoreauthenticationbasic)
-  - [Set up this project](#set-up-this-project)
-    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
-    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
-    - [3. Configure appsettings.json](#3-configure-appsettingsjson)
-  - [Authentication flow](#authentication-flow)
-- [Development](#development)
-  - [Build](#build)
-  - [Run](#run)
-  - [How the project was initialized](#how-the-project-was-initialized)
-- [References](#references)
-
 ## AspNetCore.Authentication.Basic
 
 Easy to use and very light weight Microsoft style Basic Scheme Authentication Implementation for ASP.NET Core.
@@ -120,29 +106,6 @@ Run this project from the repository root:
 
 ```shell
 dotnet run --project src/Examples.Web.Authentication.Basic/ -lp https
-```
-
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Examples.Web.Authentication.Basic
-dotnet new webapp -o src/Examples.Web.Authentication.Basic
-dotnet sln add src/Examples.Web.Authentication.Basic/
-cd src/Examples.Web.Authentication.Basic
-dotnet add reference ../Examples.Web.Infrastructure/
-dotnet add reference ../Examples.Web.Infrastructure.Assets/
-dotnet add package AspNetCore.Authentication.Basic
-
-dotnet user-secrets init
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
 ```
 
 ## References

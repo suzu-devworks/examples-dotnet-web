@@ -1,42 +1,5 @@
 # Examples.Web.Authentication.JwtBearer
 
-## Table of Contents <!-- omit in toc -->
-
-- [Microsoft.AspNetCore.Authentication.JwtBearer](#microsoftaspnetcoreauthenticationjwtbearer)
-  - [Set up this project](#set-up-this-project)
-    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
-    - [2. Set up authorization (Program.cs)](#2-set-up-authorization-programcs)
-    - [3. Set up middleware pipeline (Program.cs)](#3-set-up-middleware-pipeline-programcs)
-    - [4. Configure appsettings.json](#4-configure-appsettingsjson)
-  - [Authentication flows](#authentication-flows)
-- [Scenarios](#scenarios)
-  - [1. Local testing with `dotnet user-jwts`](#1-local-testing-with-dotnet-user-jwts)
-    - [1.1. Set up Authorization](#11-set-up-authorization)
-    - [1.2. Create a token](#12-create-a-token)
-    - [1.3. Call the API](#13-call-the-api)
-  - [2. JWT Bearer authentication with Auth0](#2-jwt-bearer-authentication-with-auth0)
-    - [2.1. Set up Auth0](#21-set-up-auth0)
-    - [2.2. Set up Authorization](#22-set-up-authorization)
-    - [2.3. Set in user-secrets](#23-set-in-user-secrets)
-    - [2.4. Create a token](#24-create-a-token)
-    - [2.5. Call the API](#25-call-the-api)
-  - [3. Simulating OIDC JWT authentication with a custom JWKS endpoint](#3-simulating-oidc-jwt-authentication-with-a-custom-jwks-endpoint)
-    - [3.1. Create JWKS](#31-create-jwks)
-    - [3.2. Configure the Discovery Document](#32-configure-the-discovery-document)
-    - [3.3. Set up Authorization](#33-set-up-authorization)
-    - [3.4. Generate an access token](#34-generate-an-access-token)
-  - [4. Custom AuthenticationHandler - Blacklist JWT Handler](#4-custom-authenticationhandler---blacklist-jwt-handler)
-    - [4.1. Implement `AuthenticationHandler<TOptions>`](#41-implement-authenticationhandlertoptions)
-    - [4.2. Set up Authentication](#42-set-up-authentication)
-    - [4.3. Create a token](#43-create-a-token)
-    - [4.4. Register a token in the blacklist](#44-register-a-token-in-the-blacklist)
-  - [5. Automatically select multiple authentication schemes](#5-automatically-select-multiple-authentication-schemes)
-- [Development](#development)
-  - [Build](#build)
-  - [Run](#run)
-  - [How the project was initialized](#how-the-project-was-initialized)
-- [References](#references)
-
 ## Microsoft.AspNetCore.Authentication.JwtBearer
 
 Contains types that support JWT Bearer token authentication.
@@ -465,32 +428,7 @@ Run this project from the repository root:
 dotnet run --project src/Examples.Web.Authentication.JwtBearer/ -lp https
 ```
 
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Project
-dotnet new webapi -o src/Examples.Web.Authentication.JwtBearer
-dotnet sln add src/Examples.Web.Authentication.JwtBearer/
-cd src/Examples.Web.Authentication.JwtBearer
-dotnet add reference ../Examples.Web.Infrastructure/
-dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
-dotnet add package Microsoft.Extensions.ApiDescription.Server
-dotnet add package Swashbuckle.AspNetCore.SwaggerUI
-dotnet add package Scalar.AspNetCore
-
-dotnet user-secrets init
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
-```
-
 ## References
 
 - [JWT Bearer authentication in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/jwt-authn)
-- [Overview of ASP.NET Core authentication | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/)
+- [Overview and Purpose of ASP.NET Core authentication | Microsoft Learn](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/)

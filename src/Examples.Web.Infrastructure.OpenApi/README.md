@@ -1,14 +1,6 @@
 # Examples.Web.Infrastructure.OpenApi
 
-## Table of Contents <!-- omit in toc -->
-
-- [Overview](#overview)
-- [How to use](#how-to-use)
-  - [To add security requirements](#to-add-security-requirements)
-- [Development](#development)
-  - [How the project was initialized](#how-the-project-was-initialized)
-
-## Overview
+## Overview and Purpose
 
 This project provides reusable OpenAPI transformers for authentication-related settings.
 
@@ -65,26 +57,4 @@ builder.Services.AddOpenApi(options =>
 
   options.AddOperationTransformer(new SecurityRequirementOperationTransformer("ApiKey"));
 });
-```
-
-## Development
-
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Examples.Web.Infrastructure.OpenApi
-dotnet new classlib -o src/Examples.Web.Infrastructure.OpenApi
-dotnet sln add src/Examples.Web.Infrastructure.OpenApi/
-cd src/Examples.Web.Infrastructure.OpenApi
-dotnet add package Microsoft.AspNetCore.OpenApi
-
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
 ```
