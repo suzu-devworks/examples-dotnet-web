@@ -4,47 +4,37 @@
 [![build](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/dotnet-build.yml)
 [![CodeQL](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-web/actions/workflows/github-code-scanning/codeql)
 
-## What is the purpose of this repository?
+## What is this repository?
 
-This repository is just my personal playground for learning ASP.NET web programming.
+This repository is a personal knowledge base for ASP.NET and .NET web development.
 
-The content here might actually be helpful to other developers facing similar issues.
+It collects practical examples, experiments, and implementation notes that are useful when exploring real-world web scenarios.
 
-However, please keep in mind that this code is based solely on my own perspective
-and probably has lots of inaccurate or questionable parts.
+The code reflects current understanding and may evolve over time.
+Use samples at your own risk.
 
-This repository is provided as-is without warranty; use the sample code at your own risk.
+## What topics are covered?
 
-## Technology Stack
+- Authentication and authorization patterns
+- ASP.NET Core hosting and request pipeline behavior
+- Filters, logging, and infrastructure integrations
+- Web API, gRPC, OpenAPI, and Swagger usage
+- Web UI examples including Razor Pages, MVC, and Blazor
 
-- Language: C#
-- Frameworks: .NET (net8.0, net10.0)
-- APIs and protocols: gRPC, OpenAPI/Swagger
+## Why use Dev Containers?
 
-## Setup
+Using Dev Containers is recommended when working with this repository.
+They provide the tools and dependencies required to build and run these examples without changing your local environment.
 
-### Prerequisites
+Configuration details are in [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json).
 
-- .NET SDK installed
-- Optional: Visual Studio Code with Remote - Containers extension
-- Optional: Docker for devcontainer usage
-
-### Build
-
-From the repository root:
+Before starting the container, generate local SSL certificate files:
 
 ```bash
-dotnet build
+./.devcontainer/ssl/ssl-cert-generate.sh
 ```
 
-### Dev Container setup
+After certificates are generated in `.devcontainer/ssl`, start the container.
 
-Before starting the devcontainer, prepare the local SSL certificate files used by the container environment.
-
-1. Run the certificate generation script from the repository root.
-
-   ```bash
-   ./.devcontainer/ssl/ssl-cert-generate.sh
-   ```
-
-2. After the certificate files are generated in `.devcontainer/ssl`, start the devcontainer.
+Once the container is up, run [`.devcontainer/postCreateCommand.sh`](.devcontainer/postCreateCommand.sh)
+and follow the terminal instructions.

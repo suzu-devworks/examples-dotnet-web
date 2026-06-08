@@ -19,6 +19,7 @@
     "Antiforgery",
     "appsettings",
     "ASPNETCORE",
+    "Blazor",
     "classlib",
     "HSTS",
     "Linq",
