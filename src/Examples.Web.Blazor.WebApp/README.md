@@ -1,19 +1,6 @@
 # Examples.Web.Blazor.WebApp
 
-## Table of Contents <!-- omit in toc -->
-
-- [Overview](#overview)
-- [Examples](#examples)
-  - [JavaScript Interop](#javascript-interop)
-  - [Components](#components)
-  - [State](#state)
-  - [Tutorials](#tutorials)
-- [Development](#development)
-  - [Build](#build)
-  - [Run](#run)
-  - [How the project was initialized](#how-the-project-was-initialized)
-
-## Overview
+## Overview and Purpose
 
 This project is intended for experimenting with and learning the features of ASP.NET Blazor Web Apps.
 
@@ -64,25 +51,4 @@ Run this project from the repository root:
 
 ```shell
 dotnet run --project src/Examples.Web.Blazor.WebApp/ -lp https
-```
-
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Examples.Web.Blazor.WebApp
-dotnet new blazor -o src/Examples.Web.Blazor.WebApp
-dotnet sln add src/Examples.Web.Blazor.WebApp/
-cd src/Examples.Web.Blazor.WebApp
-dotnet add reference ../Examples.Web.Infrastructure.Assets/
-
-dotnet user-secrets init
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
 ```

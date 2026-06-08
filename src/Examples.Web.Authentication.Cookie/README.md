@@ -1,21 +1,5 @@
 # Examples.Web.Authentication.Cookie
 
-## Table of Contents <!-- omit in toc -->
-
-- [Microsoft.AspNetCore.Authentication.Cookies](#microsoftaspnetcoreauthenticationcookies)
-  - [Cookie Policy Middleware](#cookie-policy-middleware)
-  - [Set up this project](#set-up-this-project)
-    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
-    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
-    - [3. Configure appsettings.json](#3-configure-appsettingsjson)
-      - [Expiration settings](#expiration-settings)
-  - [Authentication flow](#authentication-flow)
-- [Development](#development)
-  - [Build](#build)
-  - [Run](#run)
-  - [How the project was initialized](#how-the-project-was-initialized)
-- [References](#references)
-
 ## Microsoft.AspNetCore.Authentication.Cookies
 
 Contains types that support cookie based authentication.
@@ -190,28 +174,6 @@ Run this project from the repository root:
 
 ```shell
 dotnet run --project src/Examples.Web.Authentication.Cookie/ -lp https
-```
-
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Examples.Web.Authentication.Cookie
-dotnet new webapp -o src/Examples.Web.Authentication.Cookie
-dotnet sln add src/Examples.Web.Authentication.Cookie/
-cd src/Examples.Web.Authentication.Cookie
-dotnet add reference ../Examples.Web.Infrastructure/
-dotnet add reference ../Examples.Web.Infrastructure.Assets/
-
-dotnet user-secrets init
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
 ```
 
 ## References

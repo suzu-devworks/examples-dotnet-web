@@ -1,26 +1,5 @@
 # Examples.Web.Authentication.Oidc
 
-## Table of Contents <!-- omit in toc -->
-
-- [Microsoft.AspNetCore.Authentication.OpenIdConnect](#microsoftaspnetcoreauthenticationopenidconnect)
-  - [Set up OIDC Authentication Server (Identity Provider)](#set-up-oidc-authentication-server-identity-provider)
-    - [Case of Microsoft Entra ID](#case-of-microsoft-entra-id)
-    - [Case of Auth0](#case-of-auth0)
-  - [Set up this project](#set-up-this-project)
-    - [1. Set up authentication (Program.cs)](#1-set-up-authentication-programcs)
-    - [2. Set up middleware pipeline (Program.cs)](#2-set-up-middleware-pipeline-programcs)
-    - [3. Set up Authorization (Program.cs)](#3-set-up-authorization-programcs)
-    - [4. Create `Logout.cshtml`](#4-create-logoutcshtml)
-    - [5. Create `SignedOut.cshtml`](#5-create-signedoutcshtml)
-    - [6. (Optional) Create `Login.cshtml`](#6-optional-create-logincshtml)
-    - [7. Create `_LoginPartial.cshtml`](#7-create-_loginpartialcshtml)
-  - [Set up secrets](#set-up-secrets)
-- [Development](#development)
-  - [Build](#build)
-  - [Run](#run)
-  - [How the project was initialized](#how-the-project-was-initialized)
-- [References](#references)
-
 ## Microsoft.AspNetCore.Authentication.OpenIdConnect
 
 Contains types that enable support for OpenIdConnect based authentication.
@@ -266,29 +245,6 @@ Run this project from the repository root:
 
 ```shell
 dotnet run --project src/Examples.Web.Authentication.Oidc/ -lp https
-```
-
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Examples.Web.Authentication.Oidc
-dotnet new webapp -o src/Examples.Web.Authentication.Oidc
-dotnet sln add src/Examples.Web.Authentication.Oidc/
-cd src/Examples.Web.Authentication.Oidc
-dotnet add reference ../Examples.Web.Infrastructure/
-dotnet add reference ../Examples.Web.Infrastructure.Assets/
-dotnet add package Microsoft.AspNetCore.Authentication.OpenIdConnect
-
-dotnet user-secrets init
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
 ```
 
 ## References

@@ -1,20 +1,6 @@
 # Examples.Web.WebApp
 
-## Table of Contents <!-- omit in toc -->
-
-- [Overview](#overview)
-- [Examples](#examples)
-  - [Logging](#logging)
-  - [Environments](#environments)
-    - [A scenario for adding modules through Hosting Startup](#a-scenario-for-adding-modules-through-hosting-startup)
-  - [Laboratories](#laboratories)
-    - [Learn the order of filter execution and how to use them](#learn-the-order-of-filter-execution-and-how-to-use-them)
-- [Development](#development)
-  - [Build](#build)
-  - [Run](#run)
-  - [How the project was initialized](#how-the-project-was-initialized)
-
-## Overview
+## Overview and Purpose
 
 This application is intended for testing and exploring the functionality of ASP.NET web applications (Razor).
 
@@ -69,46 +55,4 @@ Run this project from the repository root:
 
 ```shell
 dotnet run --project src/Examples.Web.WebApp/ -lp https
-```
-
-### How the project was initialized
-
-This project was initialized with the following commands:
-
-```shell
-## Solution
-dotnet new sln -o .
-
-## Examples.Web.Infrastructure
-dotnet new classlib -o src/Examples.Web.Infrastructure
-dotnet sln add src/Examples.Web.Infrastructure/
-cd src/Examples.Web.Infrastructure
-cd ../../
-
-## Examples.Web.HostingStartup1
-dotnet new classlib -o src/fixtures/Examples.Web.HostingStartup1
-dotnet sln add src/fixtures/Examples.Web.HostingStartup1/
-cd src/fixtures/Examples.Web.HostingStartup1
-cd ../../../
-
-## Examples.Web.HostingStartup2
-dotnet new classlib -o src/fixtures/Examples.Web.HostingStartup2
-dotnet sln add src/fixtures/Examples.Web.HostingStartup2/
-cd src/fixtures/Examples.Web.HostingStartup2
-cd ../../../
-
-## Examples.Web.WebApp
-dotnet new webapp -o src/Examples.Web.WebApp
-dotnet sln add src/Examples.Web.WebApp/
-cd src/Examples.Web.WebApp
-dotnet add reference ../Examples.Web.Infrastructure
-dotnet add reference ../Examples.Web.Infrastructure.Assets/
-dotnet add reference ../fixtures/Examples.Web.HostingStartup1
-dotnet add reference ../fixtures/Examples.Web.HostingStartup2
-
-dotnet user-secrets init
-cd ../../
-
-# Check outdated packages
-dotnet list package --outdated
 ```
