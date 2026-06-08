@@ -52,7 +52,7 @@ jobs:
         env:
           TEST_ASSETS_PATH: ${{ env.TEST_ASSETS_PATH }}
       - name: Report Test Results
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@v3
         if: always()
         with:
           name: .NET Tests
