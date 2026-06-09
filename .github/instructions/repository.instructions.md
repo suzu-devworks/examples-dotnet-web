@@ -3,6 +3,8 @@ description: Repository-specific constraints for examples-dotnet-web.
 applyTo: "**"
 ---
 
+# Repository Instructions
+
 - Keep framework versions centralized. In `src/**/*.csproj`, use `$(LatestFramework)` or `$(LTSFrameworks)` from `src/Directory.Build.props`. Do not hardcode `netX.Y` unless intentionally diverging.
 - Do not upgrade `Grpc.Tools` in `src/Examples.Web.Infrastructure.GrpcClient/Examples.Web.Infrastructure.GrpcClient.csproj` from `2.67.0` without explicit confirmation. This pin exists for Apple Silicon compatibility.
 - For gRPC client contract changes, update `src/Examples.Web.WebApi.Grpc/Protos/greet.proto` and keep `Examples.Web.Infrastructure.GrpcClient` consuming it via `SharedProtoRoot`. Do not fork or copy the same proto into multiple projects.
