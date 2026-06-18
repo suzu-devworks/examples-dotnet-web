@@ -25,7 +25,7 @@
     }
   },
   "features": {
-    "ghcr.io/devcontainers/features/node:2": {},
+    "ghcr.io/devcontainers/features/node:": {},
     "ghcr.io/devcontainers/features/copilot-cli:": {},
     "ghcr.io/devcontainers/features/github-cli:1": {}
   }
