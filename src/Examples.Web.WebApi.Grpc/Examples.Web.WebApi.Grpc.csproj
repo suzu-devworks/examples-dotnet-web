@@ -26,8 +26,8 @@
       unless the (https://github.com/grpc/grpc/issues/38538) issue is resolved.
       In other words, Grpc.AspNetCore only works up to version 2.67.0. -->
     <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="10.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.10.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="10.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.10.9" />
   </ItemGroup>
 
   <ItemGroup>

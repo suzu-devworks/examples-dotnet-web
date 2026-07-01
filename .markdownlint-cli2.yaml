@@ -1,0 +1,27 @@
+globs:
+  - "**/*.md"
+
+ignores:
+  - ".github/instructions/*.md"
+
+gitignore: true
+
+config:
+  default: true
+
+  MD013:
+    line_length: 120
+    code_blocks: false
+    tables: false
+    headings: false
+
+  MD024:
+    siblings_only: true
+
+  MD029:
+    style: ordered
+
+  MD046:
+    style: fenced
+
+  MD060: false

@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <PackageReference Include="Crayon" Version="2.0.69" />
-    <PackageReference Include="Spectre.Console" Version="0.55.2" />
-    <PackageReference Include="Spectre.Console.Json" Version="0.55.2" />
-    <PackageReference Include="System.CommandLine" Version="2.0.8" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
+    <PackageReference Include="Spectre.Console" Version="0.57.1" />
+    <PackageReference Include="Spectre.Console.Json" Version="0.57.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.9" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.19.1" />
   </ItemGroup>
 
 </Project>
